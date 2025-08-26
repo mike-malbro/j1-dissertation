@@ -77,123 +77,34 @@ class J1PhDStudyOrchestrator:
         
         print("✅ Output directory cleaned")
         
-        # Define the J1 PhD Study structure based on Google Sheet with named hierarchical folders
-        self.j1_modules = {
-            'main.py': {
-                'name': 'Main',
-                'path': '.',
-                'description': 'Runs every module and compiles a .pdf output for review',
-                'type': 'main',
-                'priority': 0
-            },
-            '00.00': {
-                'name': 'Cover',
-                'path': '00.00_Cover',
-                'description': 'Cover page generation',
-                'type': 'module',
-                'priority': 1
-            },
-
-            '00.0B': {
-                'name': 'Table of Contents Generator',
-                'path': '00.00_Cover/00.0B_Table_of_Contents_Generator',
-                'description': 'Table of Contents of the PDF run. Based on the active/inactive column, develop a simple table of contents.',
-                'type': 'submodule',
-                'priority': 1.2
-            },
-            '01.00': {
-                'name': 'J1 - Journal 1',
-                'path': '01.00_J1_Journal_1',
-                'description': 'The first Journal Paper. This will be the most important. As much of the future work will look at this as a base.',
-                'type': 'module',
-                'priority': 2
-            },
-            '01.0A': {
-                'name': 'Abstract',
-                'path': '01.00_J1_Journal_1/01.0A_Abstract',
-                'description': 'Contain a working title and working abstract of what the work is, which must clearly identify what is the current state of the art, what are its deficiencies, what methods have been applied, what are the results, and what is the lasting contribution of the submission.',
-                'type': 'submodule',
-                'priority': 2.1
-            },
-            '01.0B': {
-                'name': 'Graphical Abstract',
-                'path': '01.00_J1_Journal_1/01.0B_Graphical_Abstract',
-                'description': 'Graphical abstract generation',
-                'type': 'submodule',
-                'priority': 2.2
-            },
-            '0R.00': {
-                'name': 'References',
-                'path': '0R.00_References',
-                'description': 'References module',
-                'type': 'module',
-                'priority': 3
-            },
-            '0R.0A': {
-                'name': 'Abbreviations',
-                'path': '0R.00_References/0R.0A_Abbreviations',
-                'description': 'Abbreviations and acronyms',
-                'type': 'submodule',
-                'priority': 3.1
-            },
-            '0R.01': {
-                'name': 'J1 References',
-                'path': '0R.00_References/0R.01_J1_References',
-                'description': 'J1 specific references',
-                'type': 'submodule',
-                'priority': 3.2
-            },
-            '0R.0Z': {
-                'name': 'General References',
-                'path': '0R.00_References/0R.0Z_General_References',
-                'description': 'General references',
-                'type': 'submodule',
-                'priority': 3.3
-            },
-            '0R.0F': {
-                'name': 'Figures',
-                'path': '0R.00_References/0R.0F_Figures',
-                'description': 'Figures and diagrams',
-                'type': 'submodule',
-                'priority': 3.4
-            },
-            '0R.0C': {
-                'name': 'Calculations',
-                'path': '0R.00_References/0R.0C_Calculations',
-                'description': 'Calculations and formulas',
-                'type': 'submodule',
-                'priority': 3.5
-            },
-            '0Z.00': {
-                'name': 'Google Sheet Helper Functions',
-                'path': '0Z.00_Google_Sheet_Helper_Functions',
-                'description': 'Google Sheet helper functions',
-                'type': 'module',
-                'priority': 4
-            },
-            '0Z.0A': {
-                'name': 'Read',
-                'path': '0Z.00_Google_Sheet_Helper_Functions/0Z.0A_Read',
-                'description': 'Read operations for Google Sheets',
-                'type': 'submodule',
-                'priority': 4.1
-            },
-            '0Z.0B': {
-                'name': 'Write',
-                'path': '0Z.00_Google_Sheet_Helper_Functions/0Z.0B_Write',
-                'description': 'Write operations for Google Sheets',
-                'type': 'submodule',
-                'priority': 4.2
-            },
-            '0Z.0X': {
-                'name': 'Misc Google Sheet Interactive Scripts',
-                'path': '0Z.00_Google_Sheet_Helper_Functions/0Z.0X_Misc_Google_Sheet_Interactive_Scripts',
-                'description': 'Miscellaneous Google Sheet interactive scripts',
-                'type': 'submodule',
-                'priority': 4.3
-            }
-        }
+        # Load dynamic module configuration from Google Sheet and module_inputs.json
+        self.module_config = self.load_dynamic_module_config()
         
+        # Import Google Sheet helper functions
+        sys.path.append(str(self.base_dir / "0Z.00_Google_Sheet_Helper_Functions"))
+        try:
+            from google_drive_helpers import GoogleDriveHelpers
+            self.google_helpers = GoogleDriveHelpers()
+        except ImportError as e:
+            print(f"⚠️ Warning: Google Drive helpers not available: {e}")
+            self.google_helpers = None
+        pass  # Module configuration now loaded dynamically
+        
+    def load_dynamic_module_config(self):
+        """Load dynamic module configuration from module_inputs.json and Google Sheet"""
+        print("🔄 Loading dynamic module configuration...")
+        
+        # Load from module_inputs.json
+        module_inputs_file = self.base_dir / "module_inputs.json"
+        if module_inputs_file.exists():
+            with open(module_inputs_file, 'r') as f:
+                module_data = json.load(f)
+                print(f"✅ Loaded {len(module_data.get('modules', {}))} modules from module_inputs.json")
+                return module_data.get('modules', {})
+        else:
+            print("⚠️ module_inputs.json not found, using empty configuration")
+            return {}
+    
     def load_config(self):
         """Load advanced configuration from YAML file"""
         if not self.config_file.exists():
@@ -402,7 +313,7 @@ class J1PhDStudyOrchestrator:
                         ha='center', va='center', color='darkgreen')
                 plt.text(0.5, 0.6, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", 
                         fontsize=14, ha='center', va='center')
-                plt.text(0.5, 0.5, f"Total Modules: {len(self.j1_modules)}", 
+                plt.text(0.5, 0.5, f"Total Modules: {len(self.module_config)}", 
                         fontsize=12, ha='center', va='center')
                 plt.text(0.5, 0.4, f"Total PDFs: {len(pdf_files)}", 
                         fontsize=12, ha='center', va='center')
@@ -454,11 +365,11 @@ class J1PhDStudyOrchestrator:
                 status = "✅ SUCCESS" if result['success'] else "❌ FAILED"
                 
                 # Get module path - check main modules first
-                module_path = self.j1_modules.get(module_id, {}).get('path', '')
+                module_path = self.module_config.get(module_id, {}).get('path', '')
                 
                 # If not found in main modules, check submodules
                 if not module_path:
-                    for container_id, container_info in self.j1_modules.items():
+                    for container_id, container_info in self.module_config.items():
                         if container_info.get('type') == 'container' and 'submodules' in container_info:
                             if module_id in container_info['submodules']:
                                 module_path = container_info['submodules'][module_id]['path']
@@ -847,8 +758,12 @@ class J1PhDStudyOrchestrator:
         print("\n📥 STEP 1: Downloading Google Drive Assets...")
         self.download_google_drive_assets()
         
-        # Execute all modules
-        for module_id, module_info in self.j1_modules.items():
+        # Filter only active modules and execute them
+        active_modules = {k: v for k, v in self.module_config.items() if v.get('active', False)}
+        print(f"📊 Found {len(active_modules)} active modules out of {len(self.module_config)} total modules")
+        
+        # Execute all active modules
+        for module_id, module_info in active_modules.items():
             # Skip the main.py module to avoid infinite loop
             if module_id == 'main.py':
                 print(f"\n📋 Skipping main.py module (orchestrator)")
@@ -1377,7 +1292,7 @@ class J1PhDStudyOrchestrator:
                 
                 for module_id, result in self.module_results.items():
                     if result['success']:
-                        module_info = self.j1_modules.get(module_id, {})
+                        module_info = self.module_config.get(module_id, {})
                         module_name = module_info.get('name', module_id)
                         
                         plt.text(0.1, y_pos, f"{module_id}: {module_name}", fontsize=12, 
@@ -1405,7 +1320,7 @@ class J1PhDStudyOrchestrator:
                 print("   📄 Adding Module Content Pages...")
                 for module_id, result in self.module_results.items():
                     if result['success']:
-                        module_info = self.j1_modules.get(module_id, {})
+                        module_info = self.module_config.get(module_id, {})
                         module_name = module_info.get('name', module_id)
                         
                         # Create module page
@@ -1515,7 +1430,7 @@ class J1PhDStudyOrchestrator:
                 
                 for module_id, result in self.module_results.items():
                     status = "✅" if result['success'] else "❌"
-                    module_info = self.j1_modules.get(module_id, {})
+                    module_info = self.module_config.get(module_id, {})
                     module_name = module_info.get('name', module_id)
                     
                     plt.text(0.1, y_pos, f"{status} {module_id}: {module_name}", fontsize=10, 

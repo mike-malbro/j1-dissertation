@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "project_name": "CRCS[n] - Computer Room Cooling System",
+    "author": "Michael Maloney",
+    "institution": "Penn State Architectural Engineering Department",
+    "focus": "Mechanical System Engineering",
+    "last_sync": "2025-08-05 20:55:54",
+    "version": "1.0.0"
+  },
+  "categories": {
+    "SIMBUILD_2026": {
+      "name": "SIMBUILD 2026 Conference Paper",
+      "priority": "high",
+      "deadline": "2026-01-15",
+      "description": "Conference paper and supporting materials"
+    },
+    "ALERIFY_DATA": {
+      "name": "Alerify Data Collection",
+      "priority": "high",
+      "deadline": "2025-12-01",
+      "description": "Data center analysis and equipment documentation"
+    },
+    "SCENARIO_MODELING": {
+      "name": "Scenario Modeling System",
+      "priority": "medium",
+      "deadline": "2025-11-15",
+      "description": "CRAC unit configuration analysis"
+    },
+    "PYTHON_SCRIPTS": {
+      "name": "Python Analysis Scripts",
+      "priority": "medium",
+      "deadline": "2025-11-30",
+      "description": "Data analysis and modeling scripts"
+    }
+  },
+  "resources": {
+    "files": {},
+    "scenarios": {
+      "scenario_1": {
+        "scenario_id": "scenario_1",
+        "scenario_name": "Scenario 1: A Only",
+        "operating_conditions": {
+          "ambient_temp_f": 75,
+          "humidity_percent": 50,
+          "load_percentage": 80
+        },
+        "unit_performances": {
+          "A": {
+            "capacity_kw": 28.160000000000004,
+            "power_kw": 12.4,
+            "cop": 2.27,
+            "efficiency_percent": 227.09677419354838,
+            "load_distribution": 1.0,
+            "status": "active"
+          }
+        },
+        "system_metrics": {
+          "total_cooling_capacity_kw": 28.160000000000004,
+          "total_power_consumption_kw": 12.4,
+          "system_cop": 2.270967741935484,
+          "energy_efficiency_ratio": 2.270967741935484,
+          "redundancy_factor": 1.0,
+          "active_units": 1,
+          "total_units": 1
+        },
+        "reliability_metrics": {
+          "expected_uptime": 0.99,
+          "redundancy_level": "N",
+          "maintenance_schedule": "quarterly"
+        }
+      },
+      "scenario_2": {
+        "scenario_id": "scenario_2",
+        "scenario_name": "Scenario 2: B1+B2+B3+B4",
+        "operating_conditions": {
+          "ambient_temp_f": 75,
+          "humidity_percent": 50,
+          "load_percentage": 80
+        },
+        "unit_performances": {
+          "B1": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.25,
+            "status": "active"
+          },
+          "B2": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.25,
+            "status": "active"
+          },
+          "B3": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.25,
+            "status": "active"
+          },
+          "B4": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.25,
+            "status": "active"
+          }
+        },
+        "system_metrics": {
+          "total_cooling_capacity_kw": 168.64000000000001,
+          "total_power_consumption_kw": 70.4,
+          "system_cop": 2.3954545454545455,
+          "energy_efficiency_ratio": 2.3954545454545455,
+          "redundancy_factor": 1.0,
+          "active_units": 4,
+          "total_units": 4
+        },
+        "reliability_metrics": {
+          "expected_uptime": 0.999,
+          "redundancy_level": "N+1",
+          "maintenance_schedule": "rotating"
+        }
+      },
+      "scenario_3": {
+        "scenario_id": "scenario_3",
+        "scenario_name": "Scenario 3: A + B1+B2",
+        "operating_conditions": {
+          "ambient_temp_f": 75,
+          "humidity_percent": 50,
+          "load_percentage": 80
+        },
+        "unit_performances": {
+          "A": {
+            "capacity_kw": 28.160000000000004,
+            "power_kw": 12.4,
+            "cop": 2.27,
+            "efficiency_percent": 227.09677419354838,
+            "load_distribution": 0.33,
+            "status": "active"
+          },
+          "B1": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.33,
+            "status": "active"
+          },
+          "B2": {
+            "capacity_kw": 42.160000000000004,
+            "power_kw": 17.6,
+            "cop": 2.4,
+            "efficiency_percent": 239.54545454545456,
+            "load_distribution": 0.34,
+            "status": "active"
+          }
+        },
+        "system_metrics": {
+          "total_cooling_capacity_kw": 112.48000000000002,
+          "total_power_consumption_kw": 47.6,
+          "system_cop": 2.363025210084034,
+          "energy_efficiency_ratio": 2.363025210084034,
+          "redundancy_factor": 1.0,
+          "active_units": 3,
+          "total_units": 3
+        },
+        "reliability_metrics": {
+          "expected_uptime": 0.995,
+          "redundancy_level": "N+1",
+          "maintenance_schedule": "staggered"
+        }
+      }
+    },
+    "reports": {
+      "overview": "/Users/michaelmaloney/Desktop/Michael Logan Maloney.Ph.D. Dissertation Notebook/MLM J1 - Michael Maloneys First Journal Paper/data/master_hub/project_overview_20250805_205557.json",
+      "resources": "/Users/michaelmaloney/Desktop/Michael Logan Maloney.Ph.D. Dissertation Notebook/MLM J1 - Michael Maloneys First Journal Paper/data/master_hub/resource_status_20250805_205557.json",
+      "scenarios": "/Users/michaelmaloney/Desktop/Michael Logan Maloney.Ph.D. Dissertation Notebook/MLM J1 - Michael Maloneys First Journal Paper/data/master_hub/scenario_analysis_20250805_205557.json",
+      "dashboard": "/Users/michaelmaloney/Desktop/Michael Logan Maloney.Ph.D. Dissertation Notebook/MLM J1 - Michael Maloneys First Journal Paper/data/master_hub/progress_dashboard_20250805_205557.png"
+    },
+    "dashboards": {}
+  },
+  "sync_status": {
+    "last_master_sync": null,
+    "files_downloaded": 0,
+    "scenarios_analyzed": 3,
+    "reports_generated": 4
+  }
+}

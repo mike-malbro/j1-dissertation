@@ -11,7 +11,7 @@
       "id": "module_inputs.json",
       "name": "module_inputs",
       "type": "database",
-      "active": true,
+      "active": false,
       "description": "a internal database - that the script will use to select active/inactive modules. Update this manually by reading me pasting int in."
     },
     "00.00": {
@@ -19,6 +19,7 @@
       "name": "Cover",
       "type": "Module",
       "active": true,
+      "path": "00.00_Cover",
       "description": "Cover page generation"
     },
     "00.0A": {
@@ -26,6 +27,7 @@
       "name": "cover_generator",
       "type": "Submodule",
       "active": true,
+      "path": "00.00_Cover/00.0A_Cover_Generator",
       "description": "have a very python submodule to make the cover. where it can be arranged. Cover Title: Michael Logan Maloney PhD. Dissertation Notebook. Report Generated on DATE XXXX."
     },
     "00.0B": {
@@ -33,6 +35,7 @@
       "name": "table of contents generator",
       "type": "Submodule",
       "active": true,
+      "path": "00.00_Cover/00.0B_Table_of_Contents_Generator",
       "description": "Table of Contents of the PDF run. Based on Active/Inactive Column Google Sheet."
     },
     "01.00": {
@@ -40,6 +43,7 @@
       "name": "J1 - Journal 1",
       "type": "Module",
       "active": true,
+      "path": "01.00_J1_Journal_1",
       "description": "The first Journal Paper. This will be the most important. As much of the future work will look at this as a base."
     },
     "01.0A": {
@@ -47,6 +51,7 @@
       "name": "Abstract",
       "type": "Submodule",
       "active": true,
+      "path": "01.00_J1_Journal_1/01.0A_Abstract",
       "description": "Contain a working title and working abstract of what the work is, which must clearly identify what is the current state of the art, what are its deficiencies, what methods have been applied, what are the results, and what is the lasting contribution of the submission."
     },
     "01.0B": {
@@ -54,6 +59,7 @@
       "name": "Graphical Abstract",
       "type": "Submodule",
       "active": true,
+      "path": "01.00_J1_Journal_1/01.0B_Graphical_Abstract",
       "description": "Graphical abstract generation"
     },
     "01.0C": {
@@ -61,6 +67,7 @@
       "name": "Problem System Model",
       "type": "Submodule",
       "active": true,
+      "path": "01.00_J1_Journal_1/01.0C_Problem_System_Model",
       "description": "Problem System Model - Download Link: https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit. Insert png into pdf as Figure."
     },
     "01.0D": {
@@ -68,13 +75,63 @@
       "name": "Model Library Diagram",
       "type": "Submodule",
       "active": true,
+      "path": "01.00_J1_Journal_1/01.0D_Model_Library_Diagram",
       "description": "Model Library Diagram - Download Link: https://docs.google.com/drawings/d/1la5TOLOvfLjC9-IUAdIHMXR63o-SdUFJeVahzvAO0Fk/edit. Insert png into pdf as Figure."
+    },
+    "01.0E.1": {
+      "id": "01.0E.1",
+      "name": "Scenario_1",
+      "type": "Submodule",
+      "active": false,
+      "path": "01.00_J1_Journal_1/01.0E.1_Scenario_1",
+      "description": "Scenario 1 analysis and results"
+    },
+    "01.01": {
+      "id": "01.01",
+      "name": "Simulation 1. Model_1_Scenario_1",
+      "type": "Module",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1",
+      "description": "Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, Supply and Return Water Temperature, PUE."
+    },
+    "01.02": {
+      "id": "01.02",
+      "name": "Annual",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02_Annual",
+      "description": "Annual simulation analysis"
+    },
+    "01.03": {
+      "id": "01.03",
+      "name": "Typical Week",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.03_Typical_Week",
+      "description": "Typical week simulation analysis"
+    },
+    "01.04": {
+      "id": "01.04",
+      "name": "Critical Day",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.04_Critical_Day",
+      "description": "Critical day simulation analysis"
+    },
+    "01.05": {
+      "id": "01.05",
+      "name": "Results Summary",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.05_Results_Summary",
+      "description": "Results summary and analysis"
     },
     "0R.00": {
       "id": "0R.00",
       "name": "References",
       "type": "Module",
       "active": true,
+      "path": "0R.00_References",
       "description": "References module"
     },
     "0R.0A": {
@@ -82,6 +139,7 @@
       "name": "Abbreviations",
       "type": "Submodule",
       "active": true,
+      "path": "0R.00_References/0R.0A_Abbreviations",
       "description": "Abbreviations and acronyms"
     },
     "0R.01": {
@@ -89,6 +147,7 @@
       "name": "J1 References",
       "type": "Submodule",
       "active": true,
+      "path": "0R.00_References/0R.01_J1_References",
       "description": "J1 specific references"
     },
     "0R.0Z": {
@@ -96,6 +155,7 @@
       "name": "General References",
       "type": "Submodule",
       "active": true,
+      "path": "0R.00_References/0R.0Z_General_References",
       "description": "General references"
     },
     "0R.0F": {
@@ -103,6 +163,7 @@
       "name": "Figures",
       "type": "Submodule",
       "active": true,
+      "path": "0R.00_References/0R.0F_Figures",
       "description": "Figures and diagrams"
     },
     "0R.0C": {
@@ -110,13 +171,87 @@
       "name": "Calculations",
       "type": "Submodule",
       "active": true,
+      "path": "0R.00_References/0R.0C_Calculations",
       "description": "Calculations and formulas"
+    },
+    "02.01": {
+      "id": "02.01",
+      "name": "Reference Data Center Room Alerify",
+      "type": "Module",
+      "active": false,
+      "path": "02.01_Reference_Data_Center_Room_Alerify",
+      "description": "Reference data center room analysis"
+    },
+    "02.01.01": {
+      "id": "02.01.01",
+      "name": "Summary",
+      "type": "Submodule",
+      "active": false,
+      "description": "Summary of reference data center"
+    },
+    "02.01.02": {
+      "id": "02.01.02",
+      "name": "Equipment Analysis",
+      "type": "Submodule",
+      "active": false,
+      "description": "Equipment analysis for reference data center"
+    },
+    "02.01.03": {
+      "id": "02.01.03",
+      "name": "Performance Data",
+      "type": "Submodule",
+      "active": false,
+      "description": "Performance data analysis"
+    },
+    "02.01.04": {
+      "id": "02.01.04",
+      "name": "Energy Analysis",
+      "type": "Submodule",
+      "active": false,
+      "description": "Energy analysis for reference data center"
+    },
+    "02.01.05": {
+      "id": "02.01.05",
+      "name": "Thermal Analysis",
+      "type": "Submodule",
+      "active": false,
+      "description": "Thermal analysis for reference data center"
+    },
+    "02.01.06": {
+      "id": "02.01.06",
+      "name": "Control Analysis",
+      "type": "Submodule",
+      "active": false,
+      "description": "Control system analysis"
+    },
+    "02.01.07": {
+      "id": "02.01.07",
+      "name": "Optimization Results",
+      "type": "Submodule",
+      "active": false,
+      "description": "Optimization results analysis"
+    },
+    "02.01.08": {
+      "id": "02.01.08",
+      "name": "Conclusions",
+      "type": "Submodule",
+      "active": false,
+      "description": "Conclusions from reference data center analysis"
+    },
+    "02.0Z": {
+      "id": "02.0Z",
+      "name": "DX Economizer Sample",
+      "type": "Module",
+      "active": false,
+      "path": "02.0Z_DX_Economizer_Sample",
+      "description": "DX Economizer sample analysis"
     },
     "0Z.00": {
       "id": "0Z.00",
       "name": "Google Sheet Helper Functions",
       "type": "Module",
       "active": true,
+      "path": "0Z.00_Google_Sheet_Helper_Functions",
       "description": "Google Sheet helper functions"
     },
     "0Z.0A": {
@@ -124,6 +259,7 @@
       "name": "Read",
       "type": "Submodule",
       "active": true,
+      "path": "0Z.00_Google_Sheet_Helper_Functions/0Z.0A_Read",
       "description": "Read operations for Google Sheets"
     },
     "0Z.0B": {
@@ -131,6 +267,7 @@
       "name": "Write",
       "type": "Submodule",
       "active": true,
+      "path": "0Z.00_Google_Sheet_Helper_Functions/0Z.0B_Write",
       "description": "Write operations for Google Sheets"
     },
     "0Z.0X": {
@@ -138,6 +275,7 @@
       "name": "misc Gsheet interactive scripts",
       "type": "Submodule series",
       "active": true,
+      "path": "0Z.00_Google_Sheet_Helper_Functions/0Z.0X_Misc_Google_Sheet_Interactive_Scripts",
       "description": "misc Gsheet interactive scripts here"
     }
   },
