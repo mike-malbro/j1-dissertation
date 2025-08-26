@@ -1,0 +1,272 @@
+# J1 Generic Engineering Notebook Configuration
+# Mike's PhD Foundation for Hundreds of Papers
+# Penn State Architectural Engineering Department - Mechanical System Focus
+
+# Project Metadata
+project:
+  name: "J1 - Michael Maloneys First Journal Paper"
+  version: "2.0.0"
+  author: "Michael Maloney"
+  institution: "Penn State Architectural Engineering Department"
+  focus: "Mechanical System Focus"
+  fellowship: "Penn State Fellowship Recipient"
+  goal: "World's Latest and Greatest Data Center Thermodynamic Modeling Tool"
+  target_audience: "Dr. Wangda Zuo, Michael Weter (LBNL National Labs)"
+  stage: "Preliminary - Building Foundation for 4-Year PhD Journey"
+
+# Data Center Specifications
+data_center_specs:
+  name: "Harrisburg Data Center"
+  location: "Harrisburg, Pennsylvania"
+  type: "2N · 1 MW Data Center"
+  dimensions:
+    white_space:
+      length: 34
+      width: 44
+      height: 7
+    ceiling_height: 7
+  layout:
+    rows: 4
+    servers: 44
+    crac_units:
+      main: 1
+      supplemental: 4
+  energy_pricing:
+    rate_per_kwh: 0.1
+    meter_doubling: true
+  current_results:
+    energy_savings: "15% versus conventional control"
+    methodology: "Modelica-based optimization"
+    innovation: "Rule-based optimization with CRAC rotation"
+
+# Module Configuration - Based on Google Sheets Structure
+modules:
+  # Module 00.00 - Cover Page
+  "00.00_cover":
+    enabled: true
+    priority: 1
+    description: "Cover page generation"
+    main_file: "main.py"
+    output_pattern: "cover_*.pdf"
+    metadata:
+      title: "J1 - Michael Maloneys First Journal Paper"
+      subtitle: "Cover Page"
+      stage: "Preliminary"
+      modules_included: true
+    
+  # Module 00.0A - Background Data Center Study
+  "00.0A_background_study":
+    enabled: true
+    priority: 1.1
+    description: "Background Data Center Study"
+    main_file: "main.py"
+    output_pattern: "background_study_*.txt"
+    metadata:
+      title: "Background Data Center Study"
+      purpose: "Background research and analysis"
+      stage: "Research"
+    
+  # Module 01.00 - J1 Journal 1
+  "01.00_journal_1":
+    enabled: true
+    priority: 2
+    description: "J1 - Journal 1 (Main Conference Paper)"
+    is_container: true
+    metadata:
+      conference: "SIMBUILD 2027"
+      paper_type: "Journal Paper"
+      background: "Main journal paper for J1"
+      target: "High-level engineering work for industry recognition"
+    submodules:
+      "01.0A_abstract":
+        enabled: true
+        priority: 2.1
+        description: "Abstract - SIMBUILD 2027 submission"
+        main_file: "main.py"
+        output_pattern: "abstract_*.pdf"
+        user_input:
+          abstract_text: "Effective data center cooling requires precise control of Computer Room Air Conditioning (CRAC) units to balance energy efficiency and equipment runtime. This paper employs Modelica to optimize a multi-CRAC system—one primary unit and four supplemental split air conditioners—for a 2N . 1 MW data center modeled after a reference facility located in Harrisburg, Pennsylvania. Current Models consider single type CRAC systems which may limit potential performance and reliability optimization of data centers. The Modelcia model will contain a rule based optimization based on optimal performance for each CRAC Main and 4 Supplemental Units with rotation. Current Steady State Results indicate (15%) energy savings potential versus conventional control. This work can enhance future building performance research on heterogeneous equipment and systems in data centers."
+        
+      "1.0B_graphical_abstract":
+        enabled: true
+        priority: 2.2
+        description: "Graphical Abstract - Will be a supplied image, place a placeholder here"
+        main_file: "main.py"
+        output_pattern: "graphical_abstract_*.pdf"
+        placeholder: "Will be a supplied image"
+        
+      "1.1_performance_curves":
+        enabled: true
+        priority: 2.3
+        description: "Performance Curve Optimization Figure - Will be a supplied image, place a placeholder here"
+        main_file: "main.py"
+        output_pattern: "performance_curves_*.pdf"
+        placeholder: "Will be a supplied image"
+        
+      "1.2_hvac_state_graph":
+        enabled: true
+        priority: 2.4
+        description: "HVAC System State Graph"
+        main_file: "main.py"
+        output_pattern: "hvac_state_graph_*.pdf"
+        calculation_type: "State-based analysis"
+        
+      "1.3_supplemental_substate":
+        enabled: true
+        priority: 2.5
+        description: "Supplemental System Substate Graph"
+        main_file: "main.py"
+        output_pattern: "supplemental_substate_*.pdf"
+        calculation_type: "Substate analysis"
+        
+      "1.4_volume_q_cooling":
+        enabled: true
+        priority: 2.6
+        description: "Volume Q Cooling Load Based Control"
+        main_file: "main.py"
+        output_pattern: "volume_q_cooling_*.pdf"
+        calculation_type: "Volume-based cooling load control"
+        
+  # Reference Modules - Based on Google Sheets Structure
+  "0R.00_references":
+    enabled: true
+    priority: 3
+    description: "References - Main Reference Module"
+    is_container: true
+    metadata:
+      purpose: "Reference materials and documentation"
+      target_audience: "Dr. Wangda Zuo, Michael Weter (LBNL)"
+    submodules:
+      "0R.0A_abbreviations":
+        enabled: true
+        priority: 3.1
+        description: "Abbreviations Reference"
+        main_file: "main.py"
+        output_pattern: "abbreviations_*.txt"
+        metadata:
+          title: "J1 System Abbreviations"
+          purpose: "Abbreviations and acronyms used throughout the system"
+      
+      "0R.01_j1_references":
+        enabled: true
+        priority: 3.2
+        description: "J1 References"
+        main_file: "main.py"
+        output_pattern: "j1_references_*.txt"
+        metadata:
+          title: "J1 Journal Paper References"
+          purpose: "References specific to the J1 journal paper"
+      
+      "0R.0Z_general_references":
+        enabled: true
+        priority: 3.3
+        description: "General References"
+        main_file: "main.py"
+        output_pattern: "general_references_*.txt"
+        metadata:
+          title: "General References for Data Center Research"
+          purpose: "General references for data center and thermodynamic research"
+      
+      "0R.0F_figures":
+        enabled: true
+        priority: 3.4
+        description: "Figures Reference"
+        main_file: "main.py"
+        output_pattern: "figures_*.txt"
+        metadata:
+          title: "Figures Reference"
+          purpose: "Figure references and documentation"
+      
+      "0R.0C_calculations":
+        enabled: true
+        priority: 3.5
+        description: "Calculations Reference"
+        main_file: "main.py"
+        output_pattern: "calculations_*.txt"
+        metadata:
+          title: "Calculations Reference"
+          purpose: "Calculation references and documentation"
+  
+  # Appendix - Background Materials
+  "appendix":
+    enabled: true
+    priority: 4
+    description: "Appendix - Background Materials"
+    is_container: true
+    metadata:
+      purpose: "Supporting documentation for stamping work"
+      target_audience: "Dr. Wangda Zuo, Michael Weter (LBNL)"
+    submodules:
+      "A.1_modelica_library":
+        enabled: true
+        priority: 3.1
+        description: "Appendix 1 - Modelica Library Standard Performance Curves"
+        main_file: "main.py"
+        output_pattern: "modelica_library_*.pdf"
+        
+      "A.2_performance_curve_a":
+        enabled: true
+        priority: 3.2
+        description: "Appendix 2 - Sample Performance Curve A - Main Unit"
+        main_file: "main.py"
+        output_pattern: "performance_curve_a_*.pdf"
+        
+      "A.3_performance_curve_b":
+        enabled: true
+        priority: 3.3
+        description: "Appendix 3 - Sample Performance Curve B - Supplemental Units"
+        main_file: "main.py"
+        output_pattern: "performance_curve_b_*.pdf"
+        
+      "A.4_summary_performance_curves":
+        enabled: true
+        priority: 3.4
+        description: "Appendix 4 - Summary of All Performance Curves Together"
+        main_file: "main.py"
+        output_pattern: "summary_performance_curves_*.pdf"
+        calculation_type: "Comprehensive performance analysis"
+
+# Legacy modules (excluded from main run)
+legacy_modules:
+  "Z_legacy_scripts":
+    enabled: false
+    description: "Legacy scripts - not included in module run"
+    submodules:
+      "Z.1_libert_analysis":
+        enabled: false
+        description: "Legacy Liebert analysis"
+        main_file: "main.py"
+        output_pattern: "libert_analysis_*.pdf"
+        
+      "Z.2_energy_bills":
+        enabled: false
+        description: "Legacy energy bills analysis"
+        main_file: "main6.py"
+        output_pattern: "energy_bills_analysis_*.pdf"
+
+# Advanced Output Settings
+output:
+  create_comprehensive_pdf: true
+  cleanup_old_files: true
+  include_timestamp: true
+  professional_formatting: true
+  include_metadata: true
+  target_quality: "Dr. Wangda Zuo approval level"
+  calculation_verification: true
+  stamp_ready: true
+
+# Calculation Engine Settings
+calculations:
+  precision: "High precision for stamping work"
+  verification: "All calculations must be verifiable"
+  documentation: "Every number must be traceable"
+  methodology: "Modelica-based optimization"
+  innovation: "Rule-based optimization with CRAC rotation"
+
+# Future Paper Foundation
+future_papers:
+  foundation: "This notebook will serve as foundation for hundreds of papers"
+  ai_integration: "Cursor AI will enable rapid paper generation"
+  trajectory: "Aim trajectory for maximum paper output"
+  industry_impact: "Show industry highest quality diverse engineer"
+  cutting_edge: "Bring cutting edge solutions to market"

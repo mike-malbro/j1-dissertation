@@ -1,0 +1,151 @@
+{
+  "modules": {
+    "main.py": {
+      "id": "main.py",
+      "name": "Main",
+      "type": "Main",
+      "active": true,
+      "description": "runs every module and compiles a .pdf output for review."
+    },
+    "module_inputs.json": {
+      "id": "module_inputs.json",
+      "name": "module_inputs",
+      "type": "database",
+      "active": true,
+      "description": "a internal database - that the script will use to select active/inactive modules. Update this manually by reading me pasting int in."
+    },
+    "00.00": {
+      "id": "00.00",
+      "name": "Cover",
+      "type": "Module",
+      "active": true,
+      "description": "Cover page generation"
+    },
+    "00.0A": {
+      "id": "00.0A",
+      "name": "cover_generator",
+      "type": "Submodule",
+      "active": true,
+      "description": "have a very python submodule to make the cover. where it can be arranged. Cover Title: Michael Logan Maloney PhD. Dissertation Notebook. Report Generated on DATE XXXX."
+    },
+    "00.0B": {
+      "id": "00.0B",
+      "name": "table of contents generator",
+      "type": "Submodule",
+      "active": true,
+      "description": "Table of Contents of the PDF run. Based on Active/Inactive Column Google Sheet."
+    },
+    "01.00": {
+      "id": "01.00",
+      "name": "J1 - Journal 1",
+      "type": "Module",
+      "active": true,
+      "description": "The first Journal Paper. This will be the most important. As much of the future work will look at this as a base."
+    },
+    "01.0A": {
+      "id": "01.0A",
+      "name": "Abstract",
+      "type": "Submodule",
+      "active": true,
+      "description": "Contain a working title and working abstract of what the work is, which must clearly identify what is the current state of the art, what are its deficiencies, what methods have been applied, what are the results, and what is the lasting contribution of the submission."
+    },
+    "01.0B": {
+      "id": "01.0B",
+      "name": "Graphical Abstract",
+      "type": "Submodule",
+      "active": true,
+      "description": "Graphical abstract generation"
+    },
+    "01.0C": {
+      "id": "01.0C",
+      "name": "Problem System Model",
+      "type": "Submodule",
+      "active": true,
+      "description": "Problem System Model - Download Link: https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit. Insert png into pdf as Figure."
+    },
+    "01.0D": {
+      "id": "01.0D",
+      "name": "Model Library Diagram",
+      "type": "Submodule",
+      "active": true,
+      "description": "Model Library Diagram - Download Link: https://docs.google.com/drawings/d/1la5TOLOvfLjC9-IUAdIHMXR63o-SdUFJeVahzvAO0Fk/edit. Insert png into pdf as Figure."
+    },
+    "0R.00": {
+      "id": "0R.00",
+      "name": "References",
+      "type": "Module",
+      "active": true,
+      "description": "References module"
+    },
+    "0R.0A": {
+      "id": "0R.0A",
+      "name": "Abbreviations",
+      "type": "Submodule",
+      "active": true,
+      "description": "Abbreviations and acronyms"
+    },
+    "0R.01": {
+      "id": "0R.01",
+      "name": "J1 References",
+      "type": "Submodule",
+      "active": true,
+      "description": "J1 specific references"
+    },
+    "0R.0Z": {
+      "id": "0R.0Z",
+      "name": "General References",
+      "type": "Submodule",
+      "active": true,
+      "description": "General references"
+    },
+    "0R.0F": {
+      "id": "0R.0F",
+      "name": "Figures",
+      "type": "Submodule",
+      "active": true,
+      "description": "Figures and diagrams"
+    },
+    "0R.0C": {
+      "id": "0R.0C",
+      "name": "Calculations",
+      "type": "Submodule",
+      "active": true,
+      "description": "Calculations and formulas"
+    },
+    "0Z.00": {
+      "id": "0Z.00",
+      "name": "Google Sheet Helper Functions",
+      "type": "Module",
+      "active": true,
+      "description": "Google Sheet helper functions"
+    },
+    "0Z.0A": {
+      "id": "0Z.0A",
+      "name": "Read",
+      "type": "Submodule",
+      "active": true,
+      "description": "Read operations for Google Sheets"
+    },
+    "0Z.0B": {
+      "id": "0Z.0B",
+      "name": "Write",
+      "type": "Submodule",
+      "active": true,
+      "description": "Write operations for Google Sheets"
+    },
+    "0Z.0X": {
+      "id": "0Z.0X",
+      "name": "misc Gsheet interactive scripts",
+      "type": "Submodule series",
+      "active": true,
+      "description": "misc Gsheet interactive scripts here"
+    }
+  },
+  "metadata": {
+    "created": "2025-08-16",
+    "version": "1.0",
+    "description": "Module inputs database for J1 PhD Dissertation Notebook - Updated with J1 focus starting with Abstract",
+    "focus": "J1 - Journal 1 starting with Abstract module",
+    "priority_modules": ["01.0A", "01.0B", "01.00"]
+  }
+}

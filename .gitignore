@@ -1,0 +1,71 @@
+# J1 PhD Dissertation Notebook - Git Ignore File
+# Michael Maloney - Penn State Architectural Engineering Department
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+venv/
+env/
+
+# Output files
+output/
+**/output/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Data files
+data/downloads/
+data/figures/
+data/scenarios/
+downloads/
+*.csv
+*.xlsx
+*.xls
+*.json
+*.pkl
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+*~
+
+# IDE files
+.vscode/
+.idea/
+
+# Log files
+*.log
+logs/
+
+# Sensitive files
+.env
+credentials.json
+token.json
+
+# LaTeX files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+
+# Keep important files
+!config.yaml
+!module_inputs.json
+!requirements.txt
+!README.md
+!LICENSE
+!data/master_hub/master_project_data.json
+!*.py
+!*.md
+!*.txt
+!*.yaml
+!*.yml
