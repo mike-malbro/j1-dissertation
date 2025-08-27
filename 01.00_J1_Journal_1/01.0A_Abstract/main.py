@@ -358,7 +358,7 @@ def generate_simple_simbuild_abstract():
                     fontsize=10, ha='center', va='center',
                     color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
-            pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+            pdf.savefig(fig, facecolor='white')
             plt.close(fig)
         
         print(f"✅ Generated SIMBUILD 2027 abstract: {pdf_path}")

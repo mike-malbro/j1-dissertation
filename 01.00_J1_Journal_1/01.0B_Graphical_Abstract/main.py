@@ -123,7 +123,7 @@ def generate_graphical_abstract_document():
                 fontsize=10, ha='center', va='center',
                 color='black', fontfamily='Arial', transform=plt.gca().transAxes)
         
-        pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+        pdf.savefig(fig, facecolor='white')
         plt.close(fig)
     
     print(f"✅ Generated graphical abstract placeholder: {pdf_path}")

@@ -25,53 +25,74 @@ def generate_cover_page():
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Create figure with professional styling - NO BORDER
+    # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
-    ax.set_xlim(0, 8.5)
-    ax.set_ylim(0, 11)
     ax.axis('off')
     
-    # MAIN TITLE - Left aligned, smaller font, unbold
+    # MAIN TITLE - Centered, large font, bold
     title_text = "PhD Dissertation Notebook"
-    ax.text(1, 9, title_text, fontsize=14, fontweight='normal', 
-            ha='left', va='center', fontfamily='Arial', color='black')
+    ax.text(0.5, 0.86, title_text, fontsize=24, fontweight='bold', 
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
     
-    # AUTHOR INFORMATION - Left aligned, smaller font, unbold
+    # SUBTITLE - Centered, medium font
+    subtitle_text = "Advanced Data Center Thermodynamic Modeling Framework"
+    ax.text(0.5, 0.8, subtitle_text, fontsize=16, fontweight='normal', 
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
+    
+    # RESEARCH FOCUS - Centered, medium font
+    focus_text = "J1 - An Optimal Load Allocation for Multi CRAC System for Harrisburg DC"
+    ax.text(0.5, 0.75, focus_text, fontsize=14, fontweight='normal', 
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
+    
+    # AUTHOR INFORMATION - Centered, medium font
     author_info = [
-        "Author: Michael Maloney",
-        "Institution: Pennsylvania State University",
-        "Department: Architectural Engineering"
+        "Michael Logan Maloney",
+        "PhD Student",
+        "Pennsylvania State University",
+        "Architectural Engineering Department",
+        "Mechanical System Focus",
+        "Sustainable Buildings and Society Library (SBS Lab)"
     ]
     
-    # Position author info with left alignment
+    # Position author info with center alignment
     for i, info in enumerate(author_info):
-        y_pos = 7.5 - (i * 0.5)
-        ax.text(1, y_pos, info, fontsize=14, fontweight='normal', 
-                ha='left', va='center', fontfamily='Arial', color='black')
+        y_pos = 0.59 - (i * 0.036)
+        ax.text(0.5, y_pos, info, fontsize=14, fontweight='normal', 
+                ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
     
-    # REPORT GENERATION DATE - Left aligned, smaller font, unbold
+    # ADVISOR INFORMATION - Centered, medium font
+    advisor_text = "Advisor: Dr. Wangda Zuo"
+    ax.text(0.5, 0.35, advisor_text, fontsize=14, fontweight='normal',
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
+    
+    # REPORT GENERATION DATE - Centered, medium font
     date_text = f"Report Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}"
-    ax.text(1, 5.5, date_text, fontsize=14, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='black')
+    ax.text(0.5, 0.29, date_text, fontsize=12, fontweight='normal',
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
+    
+    # RESEARCH STATUS - Centered, medium font
+    status_text = "Status: ADVANCED RESEARCH MODE ACTIVATED"
+    ax.text(0.5, 0.24, status_text, fontsize=12, fontweight='bold',
+            ha='center', va='center', fontfamily='Arial', color='darkblue', transform=ax.transAxes)
     
     # Page number
-    ax.text(4.25, 0.5, "1", fontsize=14, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial', color='black')
+    ax.text(0.5, 0.05, "1", fontsize=14, fontweight='normal',
+            ha='center', va='center', fontfamily='Arial', color='black', transform=ax.transAxes)
     
     # Timestamp
     timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    ax.text(1, 0.3, timestamp_text, fontsize=10, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='gray')
+    ax.text(0.06, 0.03, timestamp_text, fontsize=10, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='gray', transform=ax.transAxes)
     
     # Module identifier
     module_text = "Module: 00.00 - Cover"
-    ax.text(1, 0.1, module_text, fontsize=10, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='gray')
+    ax.text(0.06, 0.01, module_text, fontsize=10, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='gray', transform=ax.transAxes)
     
     # Save as PDF
     output_file = output_dir / f"cover_page_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

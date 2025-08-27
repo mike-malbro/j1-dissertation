@@ -89,7 +89,7 @@ def generate_critical_day_analysis():
     # Save as PDF
     output_file = output_dir / f"critical_day_analysis_01.04_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

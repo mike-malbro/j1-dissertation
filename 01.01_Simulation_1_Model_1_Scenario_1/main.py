@@ -103,7 +103,7 @@ def generate_simulation_overview():
     # Save as PDF
     output_file = output_dir / f"simulation_1_overview_01.01_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

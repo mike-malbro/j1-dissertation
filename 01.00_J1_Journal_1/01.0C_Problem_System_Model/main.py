@@ -27,7 +27,7 @@ def generate_problem_system_model():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     # Path to downloaded asset
-    asset_path = Path(__file__).parent.parent.parent.parent / "downloads" / "problem_system_model.png"
+    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "problem_system_model.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -105,7 +105,7 @@ def generate_problem_system_model():
     # Save as PDF
     output_file = output_dir / f"problem_system_model_01.0C_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

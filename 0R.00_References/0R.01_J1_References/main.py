@@ -45,7 +45,7 @@ def main():
         from matplotlib.backends.backend_pdf import PdfPages
         
         with PdfPages(output_file) as pdf:
-            fig = plt.figure(figsize=(12, 8))
+            fig = plt.figure(figsize=(8.5, 11))
             plt.axis('off')
             
             plt.text(0.5, 0.8, "J1 References", fontsize=20, 

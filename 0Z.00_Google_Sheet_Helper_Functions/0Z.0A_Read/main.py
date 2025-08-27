@@ -215,16 +215,20 @@ def main():
     
     if not modules:
         print("⚠️ No modules found or sheet reading failed")
-        return
+        modules = {}  # Initialize empty dict instead of returning
+        assets = {}   # Initialize empty dict for assets
     
     print(f"✅ Found {len(modules)} active modules")
     
-    # Download assets
-    print("🔄 Downloading assets...")
-    assets = reader.download_module_assets(modules)
-    
-    # Update module_inputs.json
-    reader.update_module_inputs(modules, assets)
+    # Download assets (only if modules exist)
+    if modules:
+        print("🔄 Downloading assets...")
+        assets = reader.download_module_assets(modules)
+        
+        # Update module_inputs.json
+        reader.update_module_inputs(modules, assets)
+    else:
+        assets = {}  # Empty assets dict
     
     # Generate report
     report_file = output_dir / f"google_sheet_read_0Z.0A_{timestamp}.txt"
@@ -257,7 +261,7 @@ def main():
         pdf_file = output_dir / f"google_sheet_read_0Z.0A_{timestamp}.pdf"
         
         with PdfPages(pdf_file) as pdf:
-            fig = plt.figure(figsize=(12, 8))
+            fig = plt.figure(figsize=(8.5, 11))
             plt.axis('off')
             
             plt.text(0.5, 0.9, "Google Sheet Read Report", fontsize=20, 

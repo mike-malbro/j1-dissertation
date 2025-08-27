@@ -26,7 +26,7 @@ def generate_performance_curve_a():
     
     # Professional figure setup
     plt.style.use('default')
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(8.5, 11))
     
     # Main Unit Performance Curve A
     x = np.linspace(0, 100, 100)
@@ -65,8 +65,8 @@ def generate_performance_curve_a():
     # Save professional quality output
     output_file = output_dir / f"performance_curve_a_{timestamp}.pdf"
     plt.tight_layout()
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
-    plt.savefig(output_file.with_suffix('.png'), dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300)
+    plt.savefig(output_file.with_suffix('.png'), dpi=300)
     plt.close()
     
     print(f"✅ Generated professional performance curve A: {output_file}")

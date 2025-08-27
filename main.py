@@ -927,7 +927,7 @@ class J1PhDStudyOrchestrator:
                             plt.figtext(0.5, 0.02, caption, fontsize=10, ha='center', va='bottom',
                                       bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
                             
-                            pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+                            pdf.savefig(fig, facecolor='white')
                             plt.close(fig)
                             
                             figure_number += 1
@@ -1058,7 +1058,7 @@ class J1PhDStudyOrchestrator:
                                 plt.figtext(0.5, 0.02, caption, fontsize=10, ha='center', va='bottom',
                                           bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
                                 
-                                pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+                                pdf.savefig(fig, facecolor='white')
                                 plt.close(fig)
                             
                             # Add the asset PDF to the merger
@@ -1207,7 +1207,7 @@ class J1PhDStudyOrchestrator:
                                 plt.figtext(0.5, 0.02, caption, fontsize=10, ha='center', va='bottom',
                                           bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
                                 
-                                pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+                                pdf.savefig(fig, facecolor='white')
                                 plt.close(fig)
                                 print(f"   ✅ Added Figure {i}: {title}")
                         
@@ -1391,7 +1391,7 @@ class J1PhDStudyOrchestrator:
                             plt.figtext(0.5, 0.02, caption, fontsize=10, ha='center', va='bottom',
                                       bbox=dict(boxstyle="round,pad=0.5", facecolor="white", alpha=0.8))
                             
-                            pdf.savefig(fig, facecolor='white', bbox_inches='tight')
+                            pdf.savefig(fig, facecolor='white')
                             plt.close(fig)
                 
                 # FINAL PAGE: EXECUTION SUMMARY

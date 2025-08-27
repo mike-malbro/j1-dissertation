@@ -86,7 +86,7 @@ def generate_j1_cover_page():
     # Save as PDF
     output_file = output_dir / f"journal_1_01.00_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

@@ -141,7 +141,7 @@ def generate_table_of_contents():
     # Save as PDF
     output_file = output_dir / f"table_of_contents_00.0B_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

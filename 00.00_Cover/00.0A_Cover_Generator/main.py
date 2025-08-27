@@ -68,7 +68,7 @@ def generate_cover_page():
     # Save as PDF
     output_file = output_dir / f"cover_page_00.0A_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

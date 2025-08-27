@@ -27,7 +27,7 @@ def generate_model_library_diagram():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     # Path to downloaded asset
-    asset_path = Path(__file__).parent.parent.parent.parent / "downloads" / "01.0D_asset.png"
+    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0D_asset.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -106,7 +106,7 @@ def generate_model_library_diagram():
     # Save as PDF
     output_file = output_dir / f"model_library_diagram_01.0D_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

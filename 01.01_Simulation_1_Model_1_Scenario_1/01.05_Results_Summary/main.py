@@ -95,7 +95,7 @@ def generate_results_summary():
     # Save as PDF
     output_file = output_dir / f"results_summary_01.05_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     

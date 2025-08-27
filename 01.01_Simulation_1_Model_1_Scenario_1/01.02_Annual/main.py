@@ -89,7 +89,7 @@ def generate_annual_analysis():
     # Save as PDF
     output_file = output_dir / f"annual_analysis_01.02_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300, bbox_inches='tight')
+        pdf.savefig(fig, dpi=300)
     
     plt.close()
     
