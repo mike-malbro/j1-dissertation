@@ -83,6 +83,8 @@ class GoogleDriveHelpers:
             return 'presentation'
         elif 'forms' in url:
             return 'form'
+        elif 'file/d/' in url:
+            return 'file'
         else:
             return 'unknown'
     
@@ -222,6 +224,71 @@ class GoogleDriveHelpers:
             print(f"❌ Failed to download {url}: {e}")
             return None
     
+    def download_google_file(self, url: str, filename: str = None, module_id: str = None) -> Optional[Path]:
+        """Download Google Drive file (CSV, etc.) directly"""
+        drive_id = self.extract_drive_id(url)
+        if not drive_id:
+            print(f"❌ Could not extract Drive ID from: {url}")
+            return None
+        
+        # For CSV files, always download fresh (don't cache)
+        if filename and filename.endswith('.csv'):
+            print(f"📥 CSV file detected - forcing fresh download")
+        else:
+            # Check if already downloaded (for non-CSV files)
+            if drive_id in self.assets_db['assets']:
+                existing_path = Path(self.assets_db['assets'][drive_id]['file_path'])
+                if existing_path.exists():
+                    print(f"✅ Already downloaded: {existing_path}")
+                    return existing_path
+        
+        # Generate filename if not provided
+        if not filename:
+            filename = f"google_file_{drive_id}.csv"
+        
+        # Create module-specific directory
+        if module_id:
+            module_dir = self.download_dir / module_id
+            module_dir.mkdir(exist_ok=True)
+            file_path = module_dir / filename
+        else:
+            file_path = self.download_dir / filename
+        
+        try:
+            # Convert Google Drive URL to direct download URL
+            direct_url = f"https://drive.google.com/uc?export=download&id={drive_id}"
+            
+            print(f"📥 Downloading file from: {direct_url}")
+            response = requests.get(direct_url, stream=True)
+            response.raise_for_status()
+            
+            # Write file
+            with open(file_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            # Get file size
+            file_size = file_path.stat().st_size
+            
+            # Update assets database
+            self.assets_db['assets'][drive_id] = {
+                'file_path': str(file_path),
+                'file_type': 'file',
+                'module_id': module_id,
+                'filename': filename,
+                'file_size': file_size,
+                'downloaded_at': datetime.now().isoformat(),
+                'url': url
+            }
+            self.save_assets_database()
+            
+            print(f"✅ File downloaded successfully: {file_path}")
+            return file_path
+            
+        except Exception as e:
+            print(f"❌ Failed to download file {url}: {e}")
+            return None
+    
     def download_asset(self, url: str, module_id: str = None, filename: str = None) -> Optional[Path]:
         """Universal download function that determines file type and downloads appropriately"""
         file_type = self.get_file_type_from_url(url)
@@ -232,6 +299,8 @@ class GoogleDriveHelpers:
             return self.download_google_doc_as_pdf(url, filename, module_id)
         elif file_type == 'spreadsheet':
             return self.download_google_sheet_as_pdf(url, filename, module_id)
+        elif file_type == 'file':
+            return self.download_google_file(url, filename, module_id)
         else:
             print(f"⚠️ Unsupported file type: {file_type}")
             return None

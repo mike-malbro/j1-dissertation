@@ -245,13 +245,19 @@ class J1PhDStudyOrchestrator:
         
         print(f"📄 Ph.D. Study Engineers Notebook found {len(pdf_files)} PDFs to compile")
         
-        # Try to import PDF libraries
+        # Try to import PDF libraries (pypdf preserves hyperlinks better than PyPDF2)
         try:
-            from PyPDF2 import PdfMerger
+            from pypdf import PdfMerger
             PDF_MERGER_AVAILABLE = True
+            print("✅ Using pypdf for PDF merging (hyperlinks preserved)")
         except ImportError:
-            PDF_MERGER_AVAILABLE = False
-            print("⚠️ PyPDF2 not available - will create file list instead")
+            try:
+                from PyPDF2 import PdfMerger
+                PDF_MERGER_AVAILABLE = True
+                print("⚠️ Using PyPDF2 for PDF merging (hyperlinks may not be preserved)")
+            except ImportError:
+                PDF_MERGER_AVAILABLE = False
+                print("⚠️ No PDF merger available - will create file list instead")
         
         try:
             from matplotlib.backends.backend_pdf import PdfPages
@@ -269,9 +275,16 @@ class J1PhDStudyOrchestrator:
             return self.create_j1_summary()
     
     def merge_pdfs_with_pypdf2(self, pdf_files: list) -> str:
-        """Merge PDFs using PyPDF2"""
+        """Merge PDFs using pypdf (preserves hyperlinks better than PyPDF2)"""
         try:
-            from PyPDF2 import PdfMerger
+            # Try pypdf first, fallback to PyPDF2
+            try:
+                from pypdf import PdfMerger
+                print("   🔗 Using pypdf (hyperlinks preserved)")
+            except ImportError:
+                from PyPDF2 import PdfMerger
+                print("   ⚠️ Using PyPDF2 (hyperlinks may not be preserved)")
+            
             merger = PdfMerger()
             
             # Add each PDF
@@ -683,11 +696,19 @@ class J1PhDStudyOrchestrator:
         print(f"📄 Creating Comprehensive PDF: {comprehensive_pdf}")
         print(f"   📊 Merging {len(self.generated_pdfs)} PDF files")
         
-        # Try to import PyPDF2 here
+        # Try to import pypdf first, then PyPDF2
         try:
-            import PyPDF2
-            if hasattr(PyPDF2, 'PdfMerger'):
-                merger = PyPDF2.PdfMerger()
+            try:
+                from pypdf import PdfMerger
+                merger = PdfMerger()
+                print("   🔗 Using pypdf (hyperlinks preserved)")
+            except ImportError:
+                import PyPDF2
+                if hasattr(PyPDF2, 'PdfMerger'):
+                    merger = PyPDF2.PdfMerger()
+                    print("   ⚠️ Using PyPDF2 (hyperlinks may not be preserved)")
+                else:
+                    raise ImportError("PdfMerger not found")
                 
                 # Add PDFs in order
                 for pdf_path in self.generated_pdfs:

@@ -8,6 +8,7 @@ PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
 Problem System Model with Google Drawing integration.
+BOILERPLATE FOR FIGURE IMPORTS - Reusable template for future figure modules.
 """
 
 import sys
@@ -29,77 +30,90 @@ def generate_problem_system_model():
     # Path to downloaded asset
     asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "problem_system_model.png"
     
+    # Google Drawing link
+    drawing_link = "https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit"
+    
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
     ax.set_xlim(0, 8.5)
     ax.set_ylim(0, 11)
     ax.axis('off')
     
-    # Title
+    # Title - Left justified with book-style spacing (like 01.00)
     title_text = "Problem System Model"
-    ax.text(4.25, 10, title_text, fontsize=18, fontweight='bold', 
-            ha='center', va='center', fontfamily='Arial', color='black')
+    ax.text(0.1, 9.9, title_text, fontsize=18, fontweight='bold', 
+            ha='left', va='center', fontfamily='Arial', color='black')
     
-    # Description
-    description = [
-        "This figure illustrates the problem system model for the",
-        "heterogeneous data center cooling system analysis.",
-        "",
-        "The model shows the relationship between:",
-        "• Main CRAC unit and supplemental units",
-        "• Temperature and humidity control zones",
-        "• Energy flow and optimization opportunities"
-    ]
-    
-    # Position description
-    for i, line in enumerate(description):
-        y_pos = 8.5 - (i * 0.4)
-        ax.text(4.25, y_pos, line, fontsize=12, fontweight='normal', 
-                ha='center', va='center', fontfamily='Arial', color='black')
-    
-    # Add the Google Drawing if available
+    # Add the Google Drawing - prominently displayed with book-style spacing
     if asset_path.exists():
         try:
             img = Image.open(asset_path)
-            # Calculate position and size for the image
-            img_width = 6.0
-            img_height = 4.0
+            
+            # Calculate optimal size to fit page width with margins
+            img_width = 6.5  # Slightly smaller for better spacing
+            aspect_ratio = img.height / img.width
+            img_height = img_width * aspect_ratio
+            
+            # Ensure image doesn't exceed available vertical space
+            max_height = 5.5  # Reduced for better book spacing
+            if img_height > max_height:
+                img_height = max_height
+                img_width = img_height / aspect_ratio
+            
+            # Center the image horizontally
             x_pos = (8.5 - img_width) / 2
-            y_pos = 3.5
+            # Position image below title with book-style spacing (like 01.00)
+            y_pos = 8 - img_height  # More space from title
             
             # Add image
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
-            # Add caption
-            ax.text(4.25, 2.5, "Figure 1: Problem System Model", fontsize=12, fontweight='bold',
-                    ha='center', va='center', fontfamily='Arial', color='black')
+            # Figure number - clean and simple with book spacing
+            ax.text(0.1, y_pos - 0.8, "Figure 1", fontsize=14, fontweight='bold',
+                    ha='left', va='center', fontfamily='Arial', color='black')
+            
+            # Small one-sentence description with book spacing
+            ax.text(0.1, y_pos - 1.2, "Problem system model for heterogeneous data center cooling system analysis.", 
+                    fontsize=12, fontweight='normal', ha='left', va='center', 
+                    fontfamily='Arial', color='black')
+            
+            # Google Drawing link - small and clean with book spacing
+            ax.text(0.1, y_pos - 1.6, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
+                    ha='left', va='center', fontfamily='Arial', color='blue', 
+                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
             
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
-            # Add placeholder text
-            ax.text(4.25, 4, "Problem System Model Image", fontsize=14, fontweight='bold',
-                    ha='center', va='center', fontfamily='Arial', color='gray')
-            ax.text(4.25, 3.5, "(Image will be integrated from Google Drawing)", fontsize=10,
-                    ha='center', va='center', fontfamily='Arial', color='gray')
+            # Add placeholder text with book spacing
+            ax.text(0.1, 6, "Problem System Model Image", fontsize=14, fontweight='bold',
+                    ha='left', va='center', fontfamily='Arial', color='gray')
+            ax.text(0.1, 5.5, "(Image will be integrated from Google Drawing)", fontsize=10,
+                    ha='left', va='center', fontfamily='Arial', color='gray')
+            ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
+                    ha='left', va='center', fontfamily='Arial', color='blue',
+                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
-        # Add placeholder text
-        ax.text(4.25, 4, "Problem System Model Image", fontsize=14, fontweight='bold',
-                ha='center', va='center', fontfamily='Arial', color='gray')
-        ax.text(4.25, 3.5, "(Image will be integrated from Google Drawing)", fontsize=10,
-                ha='center', va='center', fontfamily='Arial', color='gray')
+        # Add placeholder text with book spacing
+        ax.text(0.1, 6, "Problem System Model Image", fontsize=14, fontweight='bold',
+                ha='left', va='center', fontfamily='Arial', color='gray')
+        ax.text(0.1, 5.5, "(Image will be integrated from Google Drawing)", fontsize=10,
+                ha='left', va='center', fontfamily='Arial', color='gray')
+        ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
+                ha='left', va='center', fontfamily='Arial', color='blue',
+                url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
-    # Page number
-    ax.text(4.25, 0.5, "1", fontsize=14, fontweight='normal',
+    # Page number - centered like 01.00
+    ax.text(4.25, 0.5, "5", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
-    # Timestamp
+    # Timestamp - left justified like 01.00
     timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    ax.text(1, 0.3, timestamp_text, fontsize=10, fontweight='normal',
+    ax.text(0.1, 0.3, timestamp_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
-    # Module identifier
+    # Module identifier - left justified like 01.00
     module_text = "Module: 01.0C - Problem System Model"
-    ax.text(1, 0.1, module_text, fontsize=10, fontweight='normal',
+    ax.text(0.1, 0.1, module_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Save as PDF

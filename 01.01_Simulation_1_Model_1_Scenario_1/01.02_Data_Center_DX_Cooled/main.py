@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-Module 01.01 - Simulation 1: Model_1_Scenario_1
+Module 01.01.01 - Data Center DX Cooled Model
 Michael Logan Maloney PhD Dissertation Notebook
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, 
-Supply and Return Water Temperature, PUE.
+Data Center DX Cooled Model with Google Drawing integration.
 """
 
 import sys
@@ -20,18 +19,18 @@ from PIL import Image
 import warnings
 warnings.filterwarnings('ignore')
 
-def generate_simulation_overview():
-    """Generate Simulation 1 overview page with Google Drawing integration"""
+def generate_data_center_dx_cooled_model():
+    """Generate Data Center DX Cooled Model page with integrated Google Drawing"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     # Path to downloaded asset
-    asset_path = Path(__file__).parent / ".." / "downloads" / "01.01_asset.png"
+    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.02_asset.png"
     
     # Google Drawing link
-    drawing_link = "https://docs.google.com/drawings/d/17F4UI7aX-wR1IsW_iglvUHX2LfB_NByiMFJLqZkAKQM/edit"
+    drawing_link = "https://docs.google.com/drawings/d/1P6be-G9qq5yPdPBGwFF-H38EXmlyKe2j0QvuKAm04kg/edit"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -40,12 +39,12 @@ def generate_simulation_overview():
     ax.axis('off')
     
     # Title - Left justified with book-style spacing (like 01.00)
-    title_text = "Simulation 1: Model_1_Scenario_1"
+    title_text = "Data Center DX Cooled Model"
     ax.text(0.1, 9.9, title_text, fontsize=18, fontweight='bold', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
     # Subtitle
-    subtitle_text = "Baseline AI - No Performance Curve"
+    subtitle_text = "mo_01_Data Center_DX cooled_without_ASE_1N_homogenous"
     ax.text(0.1, 9.5, subtitle_text, fontsize=14, fontweight='normal', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
@@ -74,11 +73,11 @@ def generate_simulation_overview():
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
             # Figure number - clean and simple with book spacing
-            ax.text(0.1, y_pos - 0.8, "Figure 4", fontsize=14, fontweight='bold',
+            ax.text(0.1, y_pos - 0.8, "Figure 5", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='black')
             
             # Small one-sentence description with book spacing
-            ax.text(0.1, y_pos - 1.2, "Simulation 1 baseline analysis for heterogeneous data center cooling system.", 
+            ax.text(0.1, y_pos - 1.2, "Data center DX cooled model for 1N homogeneous system analysis.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
@@ -90,7 +89,7 @@ def generate_simulation_overview():
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
             # Add placeholder text with book spacing
-            ax.text(0.1, 6, "Simulation 1 Model Image", fontsize=14, fontweight='bold',
+            ax.text(0.1, 6, "Data Center DX Cooled Model Image", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='gray')
             ax.text(0.1, 5.5, "(Image will be integrated from Google Drawing)", fontsize=10,
                     ha='left', va='center', fontfamily='Arial', color='gray')
@@ -99,7 +98,7 @@ def generate_simulation_overview():
                     url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
-        ax.text(0.1, 6, "Simulation 1 Model Image", fontsize=14, fontweight='bold',
+        ax.text(0.1, 6, "Data Center DX Cooled Model Image", fontsize=14, fontweight='bold',
                 ha='left', va='center', fontfamily='Arial', color='gray')
         ax.text(0.1, 5.5, "(Image will be integrated from Google Drawing)", fontsize=10,
                 ha='left', va='center', fontfamily='Arial', color='gray')
@@ -107,43 +106,44 @@ def generate_simulation_overview():
                 ha='left', va='center', fontfamily='Arial', color='blue',
                 url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
-    # Key Parameters section
-    params_title = "Key Parameters:"
-    ax.text(0.1, 4.5, params_title, fontsize=12, fontweight='bold',
+    # Model Description
+    model_title = "Model Description:"
+    ax.text(0.1, 4.5, model_title, fontsize=12, fontweight='bold',
             ha='left', va='center', fontfamily='Arial', color='black')
     
-    params = [
-        "• Energy consumption analysis",
-        "• Power demand patterns", 
-        "• Room temperature profiles",
-        "• Supply and return water temperatures",
-        "• Power Usage Effectiveness (PUE)"
+    model_desc = [
+        "• DX (Direct Expansion) cooling system",
+        "• 1N homogeneous configuration",
+        "• Without ASE (Air Side Economizer)",
+        "• Baseline cooling performance analysis",
+        "• Energy efficiency evaluation"
     ]
     
-    for i, param in enumerate(params):
+    for i, desc in enumerate(model_desc):
         y_pos = 4.2 - (i * 0.25)
-        ax.text(0.1, y_pos, param, fontsize=10, fontweight='normal',
+        ax.text(0.1, y_pos, desc, fontsize=10, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='black')
     
-    # Submodules section
-    submodules_title = "Submodules:"
-    ax.text(0.1, 2.8, submodules_title, fontsize=12, fontweight='bold',
+    # Technical Specifications
+    specs_title = "Technical Specifications:"
+    ax.text(0.1, 2.8, specs_title, fontsize=12, fontweight='bold',
             ha='left', va='center', fontfamily='Arial', color='black')
     
-    submodules = [
-        "• 01.02: Annual simulation analysis",
-        "• 01.03: Typical week analysis",
-        "• 01.04: Critical day analysis", 
-        "• 01.05: Results summary"
+    specs = [
+        "• Cooling Type: Direct Expansion (DX)",
+        "• Redundancy: 1N (No redundancy)",
+        "• Economizer: Disabled",
+        "• Configuration: Homogeneous",
+        "• Analysis: Steady-state performance"
     ]
     
-    for i, submodule in enumerate(submodules):
+    for i, spec in enumerate(specs):
         y_pos = 2.5 - (i * 0.25)
-        ax.text(0.1, y_pos, submodule, fontsize=10, fontweight='normal',
+        ax.text(0.1, y_pos, spec, fontsize=10, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='black')
     
     # Page number - centered like 01.00
-    ax.text(4.25, 0.5, "8", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.5, "9", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified like 01.00
@@ -152,30 +152,30 @@ def generate_simulation_overview():
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Module identifier - left justified like 01.00
-    module_text = "Module: 01.01 - Simulation 1: Model_1_Scenario_1"
+    module_text = "Module: 01.02 - Data Center DX Cooled Model"
     ax.text(0.1, 0.1, module_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Save as PDF
-    output_file = output_dir / f"simulation_1_01.01_{timestamp}.pdf"
+    output_file = output_dir / f"data_center_dx_cooled_01.02_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
         pdf.savefig(fig, dpi=300)
     
     plt.close()
     
-    print(f"✅ Simulation 1 generated: {output_file}")
+    print(f"✅ Data Center DX Cooled Model generated: {output_file}")
     return str(output_file)
 
 def main():
-    """Main function to generate Simulation 1"""
-    print("🎨 Generating Simulation 1: Model_1_Scenario_1...")
+    """Main function to generate Data Center DX Cooled Model"""
+    print("🎨 Generating Data Center DX Cooled Model...")
     
     try:
-        output_file = generate_simulation_overview()
-        print(f"📄 Simulation 1 created successfully: {output_file}")
+        output_file = generate_data_center_dx_cooled_model()
+        print(f"📄 Data Center DX Cooled Model created successfully: {output_file}")
         return True
     except Exception as e:
-        print(f"❌ Error generating Simulation 1: {e}")
+        print(f"❌ Error generating Data Center DX Cooled Model: {e}")
         return False
 
 if __name__ == "__main__":

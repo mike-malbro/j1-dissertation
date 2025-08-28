@@ -28,25 +28,28 @@ def generate_cover_page():
     ax.set_ylim(0, 11)
     ax.axis('off')
     
-    # MAIN TITLE - Left aligned, smaller font, unbold
-    title_text = "PhD Dissertation Notebook"
-    ax.text(1, 9, title_text, fontsize=14, fontweight='normal', 
+    # MAIN TITLE - Left aligned, Arial font
+    title_text = "Report"
+    ax.text(1, 9.5, title_text, fontsize=16, fontweight='normal', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
-    # AUTHOR INFORMATION - Left aligned, smaller font, unbold
+    # AUTHOR INFORMATION - Left aligned, Arial font
     author_info = [
-        "Author: Michael Maloney",
+        "Author: Michael Logan Maloney",
+        "Position: PhD Student",
         "Institution: Pennsylvania State University",
-        "Department: Architectural Engineering"
+        "Department: Architectural Engineering",
+        "Laboratory: Sustainable Buildings and Societies Laboratory (SBS Lab)",
+        "Advisor: Dr. Wangda Zuo"
     ]
     
     # Position author info with left alignment
     for i, info in enumerate(author_info):
-        y_pos = 7.5 - (i * 0.5)
+        y_pos = 8.5 - (i * 0.4)
         ax.text(1, y_pos, info, fontsize=14, fontweight='normal', 
                 ha='left', va='center', fontfamily='Arial', color='black')
     
-    # REPORT GENERATION DATE - Left aligned, smaller font, unbold
+    # REPORT GENERATION DATE - Left aligned, Arial font
     date_text = f"Report Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}"
     ax.text(1, 5.5, date_text, fontsize=14, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='black')

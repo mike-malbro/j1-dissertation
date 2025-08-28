@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 """
-Submodule 1.0A: Abstract - SIMBUILD 2027 Conference Paper
-J1 - Conference Paper 1 SIMBUILD 2027
+Submodule 1.0A: Abstract - J1 Concept Development
+J1 - Working Version to develop the J1 Concept on Paper
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-SIMBUILD 2027 Conference Paper Abstract Generator
+J1 Concept Development Abstract Generator
 """
 
 # =============================================================================
 # USER INPUTS - EDIT THESE VALUES MANUALLY
 # =============================================================================
 
-# CONFERENCE INFORMATION
-CONFERENCE_NAME = "SIMBUILD 2027 Conference Paper"
-CONFERENCE_YEAR = "2027"
+# PAPER INFORMATION
+PAPER_TYPE = "Working Version to develop the J1 Concept on Paper"
+PAPER_YEAR = "2025"
 
 # PAPER TITLE
-WORKING_TITLE = "Multi-System Modeling of Data Center Cooling: Optimizing Control of Five CRAC Units for Energy Efficiency and Runtime in Harrisburg"
+WORKING_TITLE = "J1 Working Title: An Optimal Load Allocation for Multi CRAC for Harrisburg Data Center"
 
 # AUTHOR INFORMATION
 AUTHOR_NAME = "Michael Maloney"
@@ -27,15 +27,15 @@ AUTHOR_INSTITUTION = "Penn State Architectural Engineering Department"
 AUTHOR_FOCUS = "Mechanical System Focus"
 
 # ABSTRACT TEXT - Main abstract content
-ABSTRACT_TEXT = """Effective data center cooling requires precise control of Computer Room Air Conditioning (CRAC) units to balance energy efficiency and equipment runtime. This paper employs Modelica to optimize a multi-CRAC system—one primary unit and four supplemental split air conditioners—for a 2N · 1 MW data center modeled after a reference facility located in Harrisburg, Pennsylvania. Current Models consider single type CRAC systems which may limit potential performance and reliability optimization of data centers. The Modelica model will contain a rule based optimization based on optimal performance for each CRAC Main and 4 Supplemental Units with rotation. Current Steady State Results indicate (15%) energy savings potential versus conventional control. This work can enhance future building performance research on heterogeneous equipment and systems in data centers."""
+ABSTRACT_TEXT = """Data center cooling demands efficient load distribution across Computer Room Air Conditioning (CRAC) units to achieve optimal energy use and balanced equipment runtime. This paper develops a Modelica-based framework for optimal load allocation in a heterogeneous multi-CRAC system—one primary unit and four supplemental split air conditioners—for a 2N · 1 MW data center modeled after a reference facility in Harrisburg, Pennsylvania. Existing models typically address uniform CRAC setups, limiting their ability to handle diverse unit configurations and simultaneous optimization of efficiency and reliability. The proposed approach implements a rule-based load allocation strategy that dynamically assigns cooling loads based on individual unit performance curves, incorporating rotation to even out runtime. Current steady-state results indicate a 15% improvement in energy efficiency compared to conventional controls."""
 
 # ABSTRACT REQUIREMENTS ANALYSIS - The 5 key elements
 ABSTRACT_REQUIREMENTS = {
-    "current_state_of_art": "Current data center cooling models focus on single-type CRAC systems with conventional control strategies that prioritize either energy efficiency or equipment runtime, but not both simultaneously.",
-    "deficiencies": "Existing models lack consideration of heterogeneous CRAC configurations and fail to optimize for both energy efficiency and equipment runtime in multi-unit systems.",
-    "methods_applied": "Modelica-based modeling approach with rule-based optimization for a multi-CRAC system (1 primary + 4 supplemental units) with rotation strategies.",
-    "results": "Current steady-state results indicate 15% energy savings potential versus conventional control methods.",
-    "lasting_contribution": "This work establishes a framework for heterogeneous equipment optimization in data centers, enhancing future building performance research on multi-system configurations."
+    "current_state_of_art": "Current data center cooling models focus on uniform CRAC setups with conventional control strategies that limit their ability to handle diverse unit configurations.",
+    "deficiencies": "Existing models lack the ability to simultaneously optimize efficiency and reliability in heterogeneous multi-CRAC systems.",
+    "methods_applied": "Modelica-based framework with rule-based load allocation strategy that dynamically assigns cooling loads based on individual unit performance curves, incorporating rotation.",
+    "results": "Current steady-state results indicate a 15% improvement in energy efficiency compared to conventional controls.",
+    "lasting_contribution": "This work establishes a framework for optimal load allocation in heterogeneous multi-CRAC systems, enhancing data center cooling optimization capabilities."
 }
 
 # TECHNICAL SPECIFICATIONS
@@ -43,15 +43,15 @@ TECHNICAL_SPECS = {
     "data_center": "2N · 1 MW facility in Harrisburg, Pennsylvania",
     "crac_configuration": "1 primary + 4 supplemental split air conditioners",
     "modeling_platform": "Modelica",
-    "optimization_strategy": "Rule-based optimization with CRAC rotation",
-    "energy_savings": "15% versus conventional control",
-    "target_application": "Heterogeneous equipment and systems in data centers"
+    "optimization_strategy": "Rule-based load allocation with dynamic assignment and rotation",
+    "energy_savings": "15% improvement versus conventional controls",
+    "target_application": "Heterogeneous multi-CRAC systems in data centers"
 }
 
 # MODULE INFORMATION
 MODULE_ID = "01.0A"
 MODULE_NAME = "Abstract"
-MODULE_DESCRIPTION = "SIMBUILD 2027 Conference Paper Abstract"
+MODULE_DESCRIPTION = "J1 Concept Development Abstract"
 
 # =============================================================================
 # END USER INPUTS - DO NOT EDIT BELOW THIS LINE
@@ -65,8 +65,8 @@ from jinja2 import Template
 import warnings
 warnings.filterwarnings('ignore')
 
-def generate_simbuild_abstract():
-    """Generate SIMBUILD 2027 Conference Paper abstract"""
+def generate_j1_abstract():
+    """Generate J1 Concept Development abstract"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
@@ -75,7 +75,7 @@ def generate_simbuild_abstract():
     # Generate PDF
     pdf_path = output_dir / f"abstract_{MODULE_ID}_{timestamp}.pdf"
     
-    # SIMBUILD 2027 LaTeX template - Simplified to avoid syntax issues
+    # J1 Concept Development LaTeX template
     latex_content = f"""
 \\documentclass[12pt]{{article}}
 \\usepackage[utf8]{{inputenc}}
@@ -94,19 +94,7 @@ def generate_simbuild_abstract():
 
 \\vspace{{0.5cm}}
 
-\\normalsize\\textit{{{CONFERENCE_NAME}}}
-
-\\vspace{{0.3cm}}
-
 \\large\\textbf{{{WORKING_TITLE}}}
-
-\\vspace{{0.3cm}}
-
-\\normalsize\\textbf{{Author: {AUTHOR_NAME}}}
-
-{AUTHOR_INSTITUTION}
-
-{AUTHOR_FOCUS}
 
 \\vspace{{0.5cm}}
 \\end{{center}}
@@ -119,31 +107,16 @@ def generate_simbuild_abstract():
 
 \\vspace{{0.5cm}}
 
-\\textbf{{Abstract Requirements Analysis:}}
+\\textbf{{Abstract Questions and Response:}}
 
 \\vspace{{0.2cm}}
 
 \\begin{{itemize}}[leftmargin=0.5in, itemsep=0.1cm]
-\\item \\textbf{{Current State of the Art:}} {ABSTRACT_REQUIREMENTS['current_state_of_art']}
-\\item \\textbf{{Deficiencies:}} {ABSTRACT_REQUIREMENTS['deficiencies']}
-\\item \\textbf{{Methods Applied:}} {ABSTRACT_REQUIREMENTS['methods_applied']}
-\\item \\textbf{{Results:}} {ABSTRACT_REQUIREMENTS['results']}
-\\item \\textbf{{Lasting Contribution:}} {ABSTRACT_REQUIREMENTS['lasting_contribution']}
-\\end{{itemize}}
-
-\\vspace{{0.5cm}}
-
-\\textbf{{Technical Specifications:}}
-
-\\vspace{{0.2cm}}
-
-\\begin{{itemize}}[leftmargin=0.5in, itemsep=0.1cm]
-\\item \\textbf{{Data Center:}} {TECHNICAL_SPECS['data_center']}
-\\item \\textbf{{CRAC Configuration:}} {TECHNICAL_SPECS['crac_configuration']}
-\\item \\textbf{{Modeling Platform:}} {TECHNICAL_SPECS['modeling_platform']}
-\\item \\textbf{{Optimization Strategy:}} {TECHNICAL_SPECS['optimization_strategy']}
-\\item \\textbf{{Energy Savings:}} {TECHNICAL_SPECS['energy_savings']}
-\\item \\textbf{{Target Application:}} {TECHNICAL_SPECS['target_application']}
+\\item \\textbf{{What is the current state of the art:}} {ABSTRACT_REQUIREMENTS['current_state_of_art']}
+\\item \\textbf{{What are its deficiencies:}} {ABSTRACT_REQUIREMENTS['deficiencies']}
+\\item \\textbf{{What methods have been applied:}} {ABSTRACT_REQUIREMENTS['methods_applied']}
+\\item \\textbf{{What are the results:}} {ABSTRACT_REQUIREMENTS['results']}
+\\item \\textbf{{What is the lasting contribution of the submission:}} {ABSTRACT_REQUIREMENTS['lasting_contribution']}
 \\end{{itemize}}
 
 \\vspace{{0.5cm}}
@@ -151,7 +124,7 @@ def generate_simbuild_abstract():
 \\begin{{center}}
 \\small\\textit{{Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}}}
 
-\\small\\textit{{Module: {MODULE_ID} - {MODULE_NAME} ({CONFERENCE_NAME})}}
+\\small\\textit{{Module: {MODULE_ID} - {MODULE_NAME} ({MODULE_DESCRIPTION})}}
 \\end{{center}}
 
 \\end{{document}}
@@ -177,15 +150,15 @@ def generate_simbuild_abstract():
         generated_pdf = output_dir / Path(tex_file).with_suffix('.pdf').name
         if generated_pdf.exists():
             generated_pdf.rename(pdf_path)
-            print(f"✅ Generated SIMBUILD 2027 abstract: {pdf_path}")
+            print(f"✅ Generated J1 abstract: {pdf_path}")
             return str(pdf_path)
         else:
             print(f"❌ LaTeX compilation failed: {result.stderr}")
-            return generate_simple_simbuild_abstract()
+            return generate_simple_j1_abstract()
             
     except Exception as e:
         print(f"❌ LaTeX generation failed: {e}")
-        return generate_simple_simbuild_abstract()
+        return generate_simple_j1_abstract()
     finally:
         # Clean up temporary files
         try:
@@ -199,8 +172,8 @@ def generate_simbuild_abstract():
         except:
             pass
 
-def generate_simple_simbuild_abstract():
-    """Simple matplotlib fallback for SIMBUILD 2027 abstract"""
+def generate_simple_j1_abstract():
+    """Simple matplotlib fallback for J1 abstract"""
     try:
         import matplotlib.pyplot as plt
         from matplotlib.backends.backend_pdf import PdfPages
@@ -232,36 +205,14 @@ def generate_simple_simbuild_abstract():
                     fontsize=24, weight='bold', ha='center', va='center',
                     color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
-            # Conference info - properly positioned
-            y_pos = TOP_MARGIN - LINE_HEIGHT
-            plt.text(0.5, y_pos, CONFERENCE_NAME, 
-                    fontsize=16, ha='center', va='center',
-                    color='black', fontfamily='Arial', transform=plt.gca().transAxes)
-            
             # Paper title - properly positioned with spacing
-            y_pos -= LINE_HEIGHT
+            y_pos = TOP_MARGIN - LINE_HEIGHT
             title_lines = textwrap.wrap(WORKING_TITLE, width=50)
             for line in title_lines:
                 plt.text(0.5, y_pos, line, 
                         fontsize=18, weight='bold', ha='center', va='center',
                         color='black', fontfamily='Arial', transform=plt.gca().transAxes)
                 y_pos -= LINE_HEIGHT
-            
-            # Author info - properly positioned
-            y_pos -= SECTION_SPACING
-            plt.text(0.5, y_pos, f"Author: {AUTHOR_NAME}", 
-                    fontsize=14, weight='bold', ha='center', va='center',
-                    color='black', fontfamily='Arial', transform=plt.gca().transAxes)
-            
-            y_pos -= LINE_HEIGHT
-            plt.text(0.5, y_pos, AUTHOR_INSTITUTION, 
-                    fontsize=12, ha='center', va='center',
-                    color='black', fontfamily='Arial', transform=plt.gca().transAxes)
-            
-            y_pos -= LINE_HEIGHT
-            plt.text(0.5, y_pos, AUTHOR_FOCUS, 
-                    fontsize=12, ha='center', va='center',
-                    color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
             # Abstract section - properly positioned
             y_pos -= SECTION_SPACING
@@ -296,18 +247,18 @@ def generate_simple_simbuild_abstract():
                     # Add extra space between sentences
                     y_pos -= 0.02
             
-            # Abstract Requirements Analysis section
+            # Abstract Questions and Response section
             y_pos -= SECTION_SPACING
-            plt.text(0.5, y_pos, 'Abstract Requirements Analysis:', 
+            plt.text(0.5, y_pos, 'Abstract Questions and Response:', 
                     fontsize=14, weight='bold', ha='center', va='center',
                     color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
             requirements = [
-                f"• Current State of the Art: {ABSTRACT_REQUIREMENTS['current_state_of_art']}",
-                f"• Deficiencies: {ABSTRACT_REQUIREMENTS['deficiencies']}",
-                f"• Methods Applied: {ABSTRACT_REQUIREMENTS['methods_applied']}",
-                f"• Results: {ABSTRACT_REQUIREMENTS['results']}",
-                f"• Lasting Contribution: {ABSTRACT_REQUIREMENTS['lasting_contribution']}"
+                f"• What is the current state of the art: {ABSTRACT_REQUIREMENTS['current_state_of_art']}",
+                f"• What are its deficiencies: {ABSTRACT_REQUIREMENTS['deficiencies']}",
+                f"• What methods have been applied: {ABSTRACT_REQUIREMENTS['methods_applied']}",
+                f"• What are the results: {ABSTRACT_REQUIREMENTS['results']}",
+                f"• What is the lasting contribution of the submission: {ABSTRACT_REQUIREMENTS['lasting_contribution']}"
             ]
             
             y_pos -= LINE_HEIGHT
@@ -322,30 +273,8 @@ def generate_simple_simbuild_abstract():
                         y_pos -= LINE_HEIGHT
                 y_pos -= 0.02
             
-            # Technical Specifications section
-            y_pos -= SECTION_SPACING
-            plt.text(0.5, y_pos, 'Technical Specifications:', 
-                    fontsize=14, weight='bold', ha='center', va='center',
-                    color='black', fontfamily='Arial', transform=plt.gca().transAxes)
-            
-            specs = [
-                f"• Data Center: {TECHNICAL_SPECS['data_center']}",
-                f"• CRAC Configuration: {TECHNICAL_SPECS['crac_configuration']}",
-                f"• Modeling Platform: {TECHNICAL_SPECS['modeling_platform']}",
-                f"• Optimization Strategy: {TECHNICAL_SPECS['optimization_strategy']}",
-                f"• Energy Savings: {TECHNICAL_SPECS['energy_savings']}",
-                f"• Target Application: {TECHNICAL_SPECS['target_application']}"
-            ]
-            
-            y_pos -= LINE_HEIGHT
-            for spec in specs:
-                plt.text(0.5, y_pos, spec, 
-                        fontsize=11, ha='center', va='center',
-                        color='black', fontfamily='Arial', transform=plt.gca().transAxes)
-                y_pos -= LINE_HEIGHT
-            
             # Page number
-            plt.text(0.5, 0.05, "3", fontsize=14, fontweight='normal',
+            plt.text(0.5, 0.05, "4", fontsize=14, fontweight='normal',
                     ha='center', va='center', fontfamily='Arial', transform=plt.gca().transAxes)
             
             # Timestamp - properly positioned at bottom
@@ -354,14 +283,14 @@ def generate_simple_simbuild_abstract():
                     color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
             # Module identifier
-            plt.text(0.5, 0.01, f'Module: {MODULE_ID} - {MODULE_NAME} ({CONFERENCE_NAME})', 
+            plt.text(0.5, 0.01, f'Module: {MODULE_ID} - {MODULE_NAME} ({MODULE_DESCRIPTION})', 
                     fontsize=10, ha='center', va='center',
                     color='black', fontfamily='Arial', transform=plt.gca().transAxes)
             
             pdf.savefig(fig, facecolor='white')
             plt.close(fig)
         
-        print(f"✅ Generated SIMBUILD 2027 abstract: {pdf_path}")
+        print(f"✅ Generated J1 abstract: {pdf_path}")
         return str(pdf_path)
         
     except Exception as e:
@@ -369,13 +298,13 @@ def generate_simple_simbuild_abstract():
         return None
 
 def main():
-    """Main function to generate SIMBUILD 2027 abstract"""
-    print("🎨 Generating SIMBUILD 2027 Conference Paper Abstract...")
+    """Main function to generate J1 abstract"""
+    print("🎨 Generating J1 Concept Development Abstract...")
     
     try:
-        output_file = generate_simbuild_abstract()
+        output_file = generate_j1_abstract()
         if output_file:
-            print(f"📄 SIMBUILD 2027 abstract created successfully: {output_file}")
+            print(f"📄 J1 abstract created successfully: {output_file}")
             return True
         else:
             print("❌ Failed to generate abstract")

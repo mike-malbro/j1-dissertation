@@ -12,86 +12,124 @@ As much of the future work will look at this as a base.
 """
 
 import sys
+import subprocess
+import tempfile
 from datetime import datetime
 from pathlib import Path
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 import warnings
 warnings.filterwarnings('ignore')
 
 def generate_j1_cover_page():
-    """Generate a professional J1 cover page matching the main cover format"""
+    """Generate a professional J1 cover page using LaTeX formatting like the abstract"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Create figure with professional styling - NO BORDER
-    fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
-    ax.set_xlim(0, 8.5)
-    ax.set_ylim(0, 11)
-    ax.axis('off')
+    # Generate PDF
+    pdf_path = output_dir / f"journal_1_01.00_{timestamp}.pdf"
     
-    # MAIN TITLE - Left aligned, smaller font, unbold
-    title_text = "J1 - Journal 1"
-    ax.text(1, 9, title_text, fontsize=14, fontweight='normal', 
-            ha='left', va='center', fontfamily='Arial', color='black')
+    # J1 Journal 1 Cover Page LaTeX template - Nice formatting like abstract
+    latex_content = f"""
+\\documentclass[12pt]{{article}}
+\\usepackage[utf8]{{inputenc}}
+\\usepackage[margin=1in]{{geometry}}
+\\usepackage{{times}}
+\\usepackage{{setspace}}
+
+\\doublespacing
+
+\\begin{{document}}
+
+\\vspace{{2cm}}
+
+\\noindent\\Large\\textbf{{J1 - Working Title: An Optimal Load Allocation for Multi CRAC for Harrisburg Data Center}}
+
+\\vspace{{2cm}}
+
+\\noindent\\normalsize\\textit{{Report Generated on {datetime.now().strftime("%B %d, %Y at %I:%M %p")}}}
+
+\\vspace{{1cm}}
+
+\\noindent\\small\\textit{{Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}}}
+
+\\noindent\\small\\textit{{Module: 01.00 - J1 Journal 1}}
+
+\\end{{document}}
+"""
     
-    # SUBTITLE - Left aligned, smaller font, unbold
-    subtitle_text = "Multi-System Modeling of Data Center Cooling"
-    ax.text(1, 8.5, subtitle_text, fontsize=14, fontweight='normal', 
-            ha='left', va='center', fontfamily='Arial', color='black')
+    # Create temporary LaTeX file
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.tex', delete=False) as f:
+        f.write(latex_content)
+        tex_file = f.name
     
-    # AUTHOR INFORMATION - Left aligned, smaller font, unbold
-    author_info = [
-        "Author: Michael Maloney",
-        "Institution: Pennsylvania State University",
-        "Department: Architectural Engineering"
-    ]
+    try:
+        # Compile LaTeX to PDF using pdflatex
+        result = subprocess.run([
+            'pdflatex',
+            '-interaction=nonstopmode',
+            '-output-directory=' + str(output_dir),
+            tex_file
+        ], capture_output=True, text=True, timeout=60)
+        
+        # Look for the generated PDF in the output directory
+        generated_pdf = output_dir / Path(tex_file).with_suffix('.pdf').name
+        if generated_pdf.exists():
+            generated_pdf.rename(pdf_path)
+            print(f"✅ J1 cover page generated: {pdf_path}")
+            return str(pdf_path)
+        else:
+            print(f"❌ LaTeX compilation failed: {result.stderr}")
+            return generate_simple_j1_cover_page()
+            
+    except Exception as e:
+        print(f"❌ LaTeX generation failed: {e}")
+        return generate_simple_j1_cover_page()
+    finally:
+        # Clean up temporary files
+        try:
+            Path(tex_file).unlink()
+            aux_file = Path(tex_file).with_suffix('.aux')
+            log_file = Path(tex_file).with_suffix('.log')
+            if aux_file.exists():
+                aux_file.unlink()
+            if log_file.exists():
+                log_file.unlink()
+        except:
+            pass
+
+def generate_simple_j1_cover_page():
+    """Fallback simple cover page generation"""
+    output_dir = Path(__file__).parent / "output"
+    output_dir.mkdir(exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Position author info with left alignment
-    for i, info in enumerate(author_info):
-        y_pos = 7.5 - (i * 0.5)
-        ax.text(1, y_pos, info, fontsize=14, fontweight='normal', 
-                ha='left', va='center', fontfamily='Arial', color='black')
+    # Simple text file as fallback
+    text_path = output_dir / f"journal_1_01.00_{timestamp}.txt"
     
-    # PAPER DESCRIPTION - Left aligned, smaller font, unbold
-    description_text = "The first Journal Paper. This will be the most important."
-    ax.text(1, 6, description_text, fontsize=14, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='black')
+    content = f"""
+================================================================================
+J1 - WORKING TITLE: AN OPTIMAL LOAD ALLOCATION FOR MULTI CRAC FOR HARRISBURG DATA CENTER
+================================================================================
+
+Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+Module: 01.00 - J1 Journal 1
+
+Author: Michael Logan Maloney
+Position: PhD Student
+Institution: Pennsylvania State University
+Department: Architectural Engineering
+Laboratory: Sustainable Buildings and Societies Laboratory (SBS Lab)
+Advisor: Dr. Wangda Zuo
+
+Report Generated on {datetime.now().strftime("%B %d, %Y at %I:%M %p")}
+"""
     
-    description_text2 = "As much of the future work will look at this as a base."
-    ax.text(1, 5.5, description_text2, fontsize=14, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='black')
+    with open(text_path, 'w') as f:
+        f.write(content)
     
-    # REPORT GENERATION DATE - Left aligned, smaller font, unbold
-    date_text = f"Report Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}"
-    ax.text(1, 4.5, date_text, fontsize=14, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='black')
-    
-    # Page number
-    ax.text(4.25, 0.5, "3", fontsize=14, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial', color='black')
-    
-    # Timestamp
-    timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    ax.text(1, 0.3, timestamp_text, fontsize=10, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='gray')
-    
-    # Module identifier
-    module_text = "Module: 01.00 - J1 Journal 1"
-    ax.text(1, 0.1, module_text, fontsize=10, fontweight='normal',
-            ha='left', va='center', fontfamily='Arial', color='gray')
-    
-    # Save as PDF
-    output_file = output_dir / f"journal_1_01.00_{timestamp}.pdf"
-    with PdfPages(output_file) as pdf:
-        pdf.savefig(fig, dpi=300)
-    
-    plt.close()
-    
-    print(f"✅ J1 cover page generated: {output_file}")
-    return str(output_file)
+    print(f"✅ Simple J1 cover page generated: {text_path}")
+    return str(text_path)
 
 def main():
     """Main function to generate J1 cover page"""

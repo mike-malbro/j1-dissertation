@@ -26,7 +26,7 @@
       "id": "00.0A",
       "name": "cover_generator",
       "type": "Submodule",
-      "active": true,
+      "active": false,
       "path": "00.00_Cover/00.0A_Cover_Generator",
       "description": "have a very python submodule to make the cover. where it can be arranged. Cover Title: Michael Logan Maloney PhD. Dissertation Notebook. Report Generated on DATE XXXX."
     },
@@ -60,7 +60,7 @@
       "type": "Submodule",
       "active": true,
       "path": "01.00_J1_Journal_1/01.0B_Graphical_Abstract",
-      "description": "Graphical abstract generation"
+      "description": "Graphical Abstract - Download Link: https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lW4ucHM/edit. Insert png into pdf as Figure."
     },
     "01.0C": {
       "id": "01.0C",
@@ -92,34 +92,66 @@
       "type": "Module",
       "active": true,
       "path": "01.01_Simulation_1_Model_1_Scenario_1",
-      "description": "Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, Supply and Return Water Temperature, PUE."
+      "description": "Simulation 1 - Download Link: https://docs.google.com/drawings/d/17F4UI7aX-wR1IsW_iglvUHX2LfB_NByiMFJLqZkAKQM/edit. Insert png into pdf as Figure. Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, Supply and Return Water Temperature, PUE."
+    },
+    "01.01.01": {
+      "id": "01.01.01",
+      "name": "Simulation Input Summary",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.01_Simulation_Input_Summary",
+      "description": "Simulation input parameters and configuration summary"
     },
     "01.02": {
       "id": "01.02",
+      "name": "mo_01_Data Center_DX cooled_without_ASE_1N_homogenous",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02_Data_Center_DX_Cooled",
+      "description": "Data Center DX Cooled Model - Download Link: https://docs.google.com/drawings/d/1P6be-G9qq5yPdPBGwFF-H38EXmlyKe2j0QvuKAm04kg/edit. Insert png into pdf as Figure."
+    },
+    "01.03": {
+      "id": "01.03",
+      "name": "simulation_data_csv",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.03_Simulation_Data_CSV",
+      "description": "Simulation Data CSV Processing - Download Link: https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link. Process a fresh CSV from Google Drive link, ensuring up to date data and I can swap out the links via Google Drive."
+    },
+    "01.04": {
+      "id": "01.04",
+      "name": "Figure 1 - Room Temperature Versus Timestep",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.04_Room_Temperature_Figure",
+      "description": "Professional PDF generation for Room Temperature Versus Timestep analysis"
+    },
+    "01.05": {
+      "id": "01.05",
       "name": "Annual",
       "type": "Submodule",
       "active": true,
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02_Annual",
       "description": "Annual simulation analysis"
     },
-    "01.03": {
-      "id": "01.03",
+    "01.06": {
+      "id": "01.06",
       "name": "Typical Week",
       "type": "Submodule",
       "active": true,
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.03_Typical_Week",
       "description": "Typical week simulation analysis"
     },
-    "01.04": {
-      "id": "01.04",
+    "01.07": {
+      "id": "01.07",
       "name": "Critical Day",
       "type": "Submodule",
       "active": true,
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.04_Critical_Day",
       "description": "Critical day simulation analysis"
     },
-    "01.05": {
-      "id": "01.05",
+    "01.08": {
+      "id": "01.08",
       "name": "Results Summary",
       "type": "Submodule",
       "active": true,

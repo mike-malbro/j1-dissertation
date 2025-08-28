@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Research](https://img.shields.io/badge/Research-PhD%20Dissertation-orange.svg)](https://www.ae.psu.edu/)
 [![Dynamic](https://img.shields.io/badge/Dynamic-Google%20Sheet%20Driven-brightgreen.svg)](https://github.com/mike-malbro/j1-dissertation)
+[![Professional](https://img.shields.io/badge/Professional-LaTeX%20PDF%20Generation-red.svg)](https://www.latex-project.org/)
 
 **Author:** Michael Maloney  
 **Institution:** Penn State Architectural Engineering Department  
@@ -29,6 +30,8 @@ This repository contains the foundation for **"The World's Latest and Greatest D
 - **Modelica-based optimization** methodology
 - **Rule-based optimization** with CRAC rotation
 - **Heterogeneous equipment** analysis (1 main + 4 supplemental CRAC units)
+- **Professional PDF generation** with LaTeX formatting
+- **Figure import boilerplate** for consistent research document layout
 
 ---
 
@@ -64,15 +67,15 @@ This system is designed to evolve over your 4-year PhD journey. **All modules ar
 - **Google Sheet Integration** - External control system
 
 #### **📄 Document Generation (00.xx)**
-- **00.00** - Cover page generation
-- **00.0A** - Cover generator with dynamic titles
+- **00.00** - Cover page generation (LaTeX professional formatting)
+- **00.0A** - Cover generator with dynamic titles (currently inactive)
 - **00.0B** - Table of Contents (auto-generated from active modules)
 
 #### **📊 Research Modules (01.xx)**
-- **01.00** - J1 Journal 1 (Main conference paper)
-- **01.0A** - Abstract with state-of-art analysis
+- **01.00** - J1 Journal 1 (Main conference paper - LaTeX formatting)
+- **01.0A** - Abstract with state-of-art analysis (LaTeX professional layout)
 - **01.0B** - Graphical Abstract
-- **01.0C** - Problem System Model (Google Drawing integration)
+- **01.0C** - Problem System Model (Figure import boilerplate)
 - **01.0D** - Model Library Diagram (Google Drawing integration)
 - **01.0E.1** - Scenario_1 analysis
 - **01.01** - Simulation 1: Model_1_Scenario_1 (Baseline AI)
@@ -171,10 +174,10 @@ This system is designed to evolve over your 4-year PhD journey. **All modules ar
 - **CRAC System:** 1 main unit + 4 supplemental split air conditioners
 
 ### Key Research Areas
-- **Abstract Generation:** SIMBUILD 2027 conference paper
+- **Abstract Generation:** J1 Concept Development with professional LaTeX formatting
 - **Performance Analysis:** CRAC efficiency curves and optimization
 - **Scenario Modeling:** Multiple operating condition analysis
-- **Figure Generation:** Professional visualization tools
+- **Figure Generation:** Professional visualization tools with boilerplate templates
 - **Data Integration:** Google Sheets connectivity
 - **Asset Management:** Automatic Google Drive integration
 
@@ -205,6 +208,43 @@ The framework generates:
 - **Visual abstracts** for conference presentations
 - **Data integration** with Google Sheets for collaboration
 - **Automatic asset downloads** from Google Drive
+- **Professional LaTeX formatting** for all documents
+- **Figure import boilerplate** for consistent research layout
+
+---
+
+## 🎨 Professional Document Generation
+
+### **LaTeX Integration**
+- **Professional formatting** for all research documents
+- **Consistent typography** and layout across modules
+- **Automatic text wrapping** and spacing
+- **Professional margins** and page layout
+
+### **Figure Import Boilerplate (01.0C)**
+The Problem System Model module serves as a **reusable boilerplate** for figure imports:
+
+**Features:**
+- **Image-first layout** with prominent figure display
+- **Professional spacing** with book-style margins
+- **Text wrapping** to prevent cutoff issues
+- **Source attribution** with Google Drawing links
+- **Consistent formatting** across all figure modules
+- **No overlapping text** or layout issues
+
+**Layout Structure:**
+1. **Title** (left-justified, professional positioning)
+2. **Image** (centered, maximum width, proper aspect ratio)
+3. **Figure Number** (clean, bold formatting)
+4. **Description** (one-sentence, secondary importance)
+5. **Source Link** (small blue text, Google Drawing attribution)
+6. **Page Elements** (timestamp, module ID, page number)
+
+### **Text Handling Improvements**
+- **01.0A Style Integration**: Professional text wrapping and spacing
+- **No Text Cutoff**: Proper line breaks and positioning
+- **Consistent Margins**: Matches 01.00 module positioning
+- **Professional Appearance**: Clean, organized research document layout
 
 ---
 
@@ -238,6 +278,7 @@ This system is designed to grow with your research:
 - Python 3.8+
 - Required packages (see `requirements.txt`)
 - Google Sheets API credentials
+- LaTeX installation (for professional PDF generation)
 
 ### Installation
 ```bash
@@ -260,6 +301,13 @@ python main.py
 2. **Update Google Sheet** for ACTIVE/INACTIVE control
 3. **Run main.py** - system automatically adapts
 4. **No code changes needed** for new research modules!
+
+### **Figure Module Template**
+To create new figure modules using the boilerplate:
+1. **Copy 01.0C_Problem_System_Model** directory
+2. **Update module_inputs.json** with new module ID
+3. **Replace image path** and description text
+4. **Run main.py** - professional figure layout automatically applied
 
 ---
 
