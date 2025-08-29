@@ -110,6 +110,14 @@
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02_Data_Center_DX_Cooled",
       "description": "Data Center DX Cooled Model - Download Link: https://docs.google.com/drawings/d/1P6be-G9qq5yPdPBGwFF-H38EXmlyKe2j0QvuKAm04kg/edit. Insert png into pdf as Figure."
     },
+    "01.02.01": {
+      "id": "01.02.01",
+      "name": "J1 Data Center Room Volume",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02.01_Data_Center_Room_Volume",
+      "description": "J1 Data Center Room Volume - Download Link: https://docs.google.com/drawings/d/1ZgghbDOSyghwulohx7NoQ19p9pPdS2nZlsCwmFUxMHA/edit. Insert png into pdf as Figure."
+    },
     "01.03": {
       "id": "01.03",
       "name": "simulation_data_csv",
