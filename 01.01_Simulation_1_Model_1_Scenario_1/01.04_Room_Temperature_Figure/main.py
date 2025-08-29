@@ -244,9 +244,7 @@ def create_room_temperature_figure(df):
     # Create Annual Analysis plot
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
-    ax.axhline(y=22, color='red', linestyle='--', linewidth=1.5, label='Target (22°C)')
-    ax.axhline(y=24, color='orange', linestyle=':', linewidth=1, label='Upper Limit (24°C)')
-    ax.axhline(y=20, color='orange', linestyle=':', linewidth=1, label='Lower Limit (20°C)')
+    ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
     ax.set_xlabel('Timestep (Minutes)', fontsize=14, fontweight='bold')
     ax.set_ylabel('Temperature (°C)', fontsize=14, fontweight='bold')
     ax.set_title(f'{annual_period["name"]} - Temperature vs Timestep (Minute Resolution)', fontsize=16, fontweight='bold')
@@ -288,9 +286,7 @@ def create_room_temperature_figure(df):
         # Plot on subplot
         ax = axes[i]
         ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
-        ax.axhline(y=22, color='red', linestyle='--', linewidth=1.5, label='Target (22°C)')
-        ax.axhline(y=24, color='orange', linestyle=':', linewidth=1, label='Upper Limit (24°C)')
-        ax.axhline(y=20, color='orange', linestyle=':', linewidth=1, label='Lower Limit (20°C)')
+        ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
         ax.set_xlabel('Timestep (Minutes)', fontsize=12, fontweight='bold')
         ax.set_ylabel('Temperature (°C)', fontsize=12, fontweight='bold')
         ax.set_title(f'{period["name"]} (Days {period["start_day"]}-{period["end_day"]})', fontsize=14, fontweight='bold')
@@ -328,9 +324,7 @@ def create_room_temperature_figure(df):
     # Create Critical Day plot
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
-    ax.axhline(y=22, color='red', linestyle='--', linewidth=1.5, label='Target (22°C)')
-    ax.axhline(y=24, color='orange', linestyle=':', linewidth=1, label='Upper Limit (24°C)')
-    ax.axhline(y=20, color='orange', linestyle=':', linewidth=1, label='Lower Limit (20°C)')
+    ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
     ax.set_xlabel('Timestep (Minutes)', fontsize=14, fontweight='bold')
     ax.set_ylabel('Temperature (°C)', fontsize=14, fontweight='bold')
     ax.set_title(f'{critical_period["name"]} - Temperature vs Timestep (Minute Resolution)', fontsize=16, fontweight='bold')
