@@ -34,7 +34,7 @@ def download_fresh_csv_data():
         from google_drive_helpers import download_asset
         
         # Google Drive CSV link - Simulation 2 Data Source
-        csv_url = "https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link"
+        csv_url = "https://drive.google.com/file/d/1_CV-YHWUw2477T0PsaiXoErSM0hgoUvA/view?usp=sharing"
         
         print(f"📥 Downloading fresh CSV data from Google Drive: {csv_url}")
         
@@ -75,7 +75,15 @@ def load_simulation_data():
         
         if csv_path.exists():
             print(f"📊 Loading simulation data from: {csv_path}")
-            df = pd.read_csv(csv_path)
+            try:
+                df = pd.read_csv(csv_path)
+            except pd.errors.ParserError:
+                # Handle inconsistent field counts by reading with error_bad_lines=False
+                print(f"⚠️ CSV has inconsistent field counts, using robust parsing...")
+                df = pd.read_csv(csv_path, error_bad_lines=False, warn_bad_lines=True)
+                # Clean up any rows with NaN values
+                df = df.dropna()
+                print(f"✅ Cleaned CSV data, shape: {df.shape}")
             print(f"📊 CSV loaded successfully. Shape: {df.shape}, Columns: {df.columns.tolist()}")
             
             # Handle different CSV formats
@@ -100,6 +108,26 @@ def load_simulation_data():
                 df = df.rename(columns={
                     'Time|min': 'timestep',
                     'roo.rooVol.T|°C': 'Temperature'
+                })
+                
+                # Convert timestep from minutes to hours
+                df['timestep'] = df['timestep'] / 60.0
+                
+                # Convert to datetime index for professional plotting
+                start_time = pd.Timestamp('2024-01-01 00:00:00')
+                time_index = [start_time + pd.Timedelta(hours=t) for t in df['timestep']]
+                df.index = time_index
+                
+                # Add Hour column for analysis
+                df['Hour'] = df['timestep']
+                
+            elif 'Time|min' in df.columns and 'roo.TRooAir|°C' in df.columns:
+                # Simulation 2 format (version 3)
+                print(f"📊 Using Simulation 2 CSV format (version 3)")
+                # Rename columns for consistency
+                df = df.rename(columns={
+                    'Time|min': 'timestep',
+                    'roo.TRooAir|°C': 'Temperature'
                 })
                 
                 # Convert timestep from minutes to hours

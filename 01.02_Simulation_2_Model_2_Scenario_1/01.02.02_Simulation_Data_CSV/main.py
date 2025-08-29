@@ -28,7 +28,7 @@ def download_csv_from_google_drive():
         from google_drive_helpers import download_asset
         
         # Google Drive CSV link - Simulation 2 Data Source
-        csv_url = "https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link"
+        csv_url = "https://drive.google.com/file/d/1_CV-YHWUw2477T0PsaiXoErSM0hgoUvA/view?usp=sharing"
         
         print(f"📥 Attempting to download CSV from Google Drive: {csv_url}")
         
@@ -69,8 +69,16 @@ def process_simulation_data(csv_path):
     try:
         print(f"📊 Processing CSV data: {csv_path}")
         
-        # Read CSV file
-        df = pd.read_csv(csv_path)
+        # Read CSV file with error handling for inconsistent field counts
+        try:
+            df = pd.read_csv(csv_path)
+        except pd.errors.ParserError:
+            # Handle inconsistent field counts by reading with error_bad_lines=False
+            print(f"⚠️ CSV has inconsistent field counts, using robust parsing...")
+            df = pd.read_csv(csv_path, error_bad_lines=False, warn_bad_lines=True)
+            # Clean up any rows with NaN values
+            df = df.dropna()
+            print(f"✅ Cleaned CSV data, shape: {df.shape}")
         
         # Basic data analysis
         data_summary = {
@@ -125,7 +133,7 @@ def generate_csv_processing_report(df, data_summary):
     
     source_info = [
         "• Source: Google Drive CSV File - SIMULATION 2 DATA",
-        "• Link: https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link",
+        "• Link: https://drive.google.com/file/d/1_CV-YHWUw2477T0PsaiXoErSM0hgoUvA/view?usp=sharing",
         "• Update Method: Fresh download on each run",
         "• Integration: Automated via Google Drive API",
         "• Data Type: Simulation 2 results and parameters (NEW DATA SOURCE)"
