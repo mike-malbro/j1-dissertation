@@ -126,6 +126,14 @@
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02.01_Data_Center_Room_Volume",
       "description": "J1 Data Center Room Volume - Download Link: https://docs.google.com/drawings/d/1ZgghbDOSyghwulohx7NoQ19p9pPdS2nZlsCwmFUxMHA/edit. Insert png into pdf as Figure."
     },
+    "01.02.02": {
+      "id": "01.02.02",
+      "name": "J1 IT Load",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02.02_IT_Load",
+      "description": "J1 IT Load - Python script generates PNG of IT load analysis, then inserts into PDF as Figure."
+    },
     "01.03": {
       "id": "01.03",
       "name": "simulation_data_csv",
