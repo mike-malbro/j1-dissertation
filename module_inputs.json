@@ -102,36 +102,36 @@
       "path": "01.01_Simulation_1_Model_1_Scenario_1",
       "description": "Simulation 1 - Download Link: https://docs.google.com/drawings/d/17F4UI7aX-wR1IsW_iglvUHX2LfB_NByiMFJLqZkAKQM/edit. Insert png into pdf as Figure. Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, Supply and Return Water Temperature, PUE."
     },
-    "01.01.01": {
-      "id": "01.01.01",
+    "01.01.00": {
+      "id": "01.01.00",
       "name": "Simulation Input Summary",
       "type": "Submodule",
       "active": true,
-      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.01_Simulation_Input_Summary",
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.00_Simulation_Input_Summary",
       "description": "Simulation input parameters and configuration summary"
     },
-    "01.02": {
-      "id": "01.02",
+    "01.01.01": {
+      "id": "01.01.01",
       "name": "mo_01_Data Center_DX cooled_without_ASE_1N_homogenous",
       "type": "Submodule",
       "active": true,
-      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02_Data_Center_DX_Cooled",
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.01_Data_Center_DX_Cooled",
       "description": "Data Center DX Cooled Model - Download Link: https://docs.google.com/drawings/d/1P6be-G9qq5yPdPBGwFF-H38EXmlyKe2j0QvuKAm04kg/edit. Insert png into pdf as Figure."
     },
-    "01.02.01": {
-      "id": "01.02.01",
+    "01.01.02": {
+      "id": "01.01.02",
       "name": "J1 Data Center Room Volume",
       "type": "Submodule",
       "active": true,
-      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02.01_Data_Center_Room_Volume",
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.02_Data_Center_Room_Volume",
       "description": "J1 Data Center Room Volume - Download Link: https://docs.google.com/drawings/d/1ZgghbDOSyghwulohx7NoQ19p9pPdS2nZlsCwmFUxMHA/edit. Insert png into pdf as Figure."
     },
-    "01.02.02": {
-      "id": "01.02.02",
+    "01.01.03": {
+      "id": "01.01.03",
       "name": "J1 IT Load",
       "type": "Submodule",
       "active": true,
-      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.02.02_IT_Load",
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.01.03_IT_Load",
       "description": "J1 IT Load - Python script generates PNG of IT load analysis, then inserts into PDF as Figure."
     },
     "01.03": {
@@ -149,6 +149,46 @@
       "active": true,
       "path": "01.01_Simulation_1_Model_1_Scenario_1/01.04_Room_Temperature_Figure",
       "description": "Professional PDF generation for Room Temperature Versus Timestep analysis"
+    },
+    "01.02": {
+      "id": "01.02",
+      "name": "Simulation 2. Model_2_Scenario_1",
+      "type": "Module",
+      "active": true,
+      "path": "01.02_Simulation_2_Model_2_Scenario_1",
+      "description": "Simulation 2 - Performance Curve/Staging Analysis"
+    },
+    "01.02.00": {
+      "id": "01.02.00",
+      "name": "Simulation Input Summary",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.02_Simulation_2_Model_2_Scenario_1/01.02.00_Simulation_Input_Summary",
+      "description": "Simulation 2 input parameters and configuration summary"
+    },
+    "01.02.01": {
+      "id": "01.02.01",
+      "name": "Model",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.02_Simulation_2_Model_2_Scenario_1/01.02.01_Model",
+      "description": "Model - Download Link: https://docs.google.com/drawings/d/1Gnj8q1U-MqWTPZfZLIMfJChh5iMW2DC3f9drRm8MhNU/edit. Insert png into pdf as Figure."
+    },
+    "01.02.02": {
+      "id": "01.02.02",
+      "name": "simulation_data_csv",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.02_Simulation_2_Model_2_Scenario_1/01.02.02_Simulation_Data_CSV",
+      "description": "Simulation 2 Data CSV Processing - Download Link: https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link. Process a fresh CSV from Google Drive link, ensuring up to date data and I can swap out the links via Google Drive."
+    },
+    "01.02.03": {
+      "id": "01.02.03",
+      "name": "Figure 1 - Room Temperature Versus Timestep",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.02_Simulation_2_Model_2_Scenario_1/01.02.03_Room_Temperature_Figure",
+      "description": "Simulation 2 Professional PDF generation for Room Temperature Versus Timestep analysis"
     },
     "01.05": {
       "id": "01.05",
