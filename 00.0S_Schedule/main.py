@@ -22,6 +22,7 @@ import requests
 import pandas as pd
 import io
 import base64
+from pdf2image import convert_from_path
 warnings.filterwarnings('ignore')
 
 def download_google_spreadsheet_as_pdf():
@@ -60,32 +61,45 @@ def convert_pdf_to_jpg(pdf_path):
     """Convert PDF to JPG image"""
     
     try:
-        # For now, we'll create a placeholder image since PDF to JPG conversion
-        # requires additional libraries like pdf2image or similar
-        # In a full implementation, you would use:
-        # from pdf2image import convert_from_path
-        # images = convert_from_path(pdf_path)
-        # image = images[0]  # First page
+        # Convert PDF to images using pdf2image
+        images = convert_from_path(pdf_path, dpi=150)
         
-        # Create a placeholder image for demonstration
-        fig, ax = plt.subplots(figsize=(8, 6))
-        ax.text(0.5, 0.5, 'Schedule Spreadsheet\n(Converted from PDF)', 
-                ha='center', va='center', fontsize=16, transform=ax.transAxes)
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.axis('off')
-        
-        # Save as JPG
-        jpg_path = pdf_path.parent / "00.0S_schedule.jpg"
-        plt.savefig(jpg_path, dpi=150, bbox_inches='tight', format='jpg')
-        plt.close()
-        
-        print(f"✅ Converted PDF to JPG: {jpg_path}")
-        return jpg_path
+        if images:
+            # Take the first page
+            image = images[0]
+            
+            # Save as JPG
+            jpg_path = pdf_path.parent / "00.0S_schedule.jpg"
+            image.save(jpg_path, 'JPEG', quality=95)
+            
+            print(f"✅ Converted PDF to JPG: {jpg_path}")
+            return jpg_path
+        else:
+            print("❌ No pages found in PDF")
+            return None
         
     except Exception as e:
         print(f"❌ Error converting PDF to JPG: {e}")
-        return None
+        # Fallback to placeholder image
+        try:
+            fig, ax = plt.subplots(figsize=(8, 6))
+            ax.text(0.5, 0.5, 'Schedule Spreadsheet\n(PDF Conversion Failed)', 
+                    ha='center', va='center', fontsize=16, transform=ax.transAxes)
+            ax.set_xlim(0, 1)
+            ax.set_ylim(0, 1)
+            ax.axis('off')
+            
+            # Save as JPG
+            jpg_path = pdf_path.parent / "00.0S_schedule.jpg"
+            plt.savefig(jpg_path, dpi=150, bbox_inches='tight', format='jpg')
+            plt.close()
+            
+            print(f"⚠️ Created fallback JPG: {jpg_path}")
+            return jpg_path
+            
+        except Exception as fallback_error:
+            print(f"❌ Error creating fallback image: {fallback_error}")
+            return None
 
 def generate_schedule_page():
     """Generate Schedule page with integrated Google Spreadsheet"""
