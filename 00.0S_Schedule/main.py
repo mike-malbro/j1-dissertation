@@ -135,35 +135,35 @@ def generate_schedule_page():
             img = Image.open(jpg_path)
             
             # Calculate optimal size to fit page width with margins
-            img_width = 6.5  # Slightly smaller for better spacing
+            img_width = 7.5  # Larger to reduce whitespace
             aspect_ratio = img.height / img.width
             img_height = img_width * aspect_ratio
             
             # Ensure image doesn't exceed available vertical space
-            max_height = 5.5  # Reduced for better book spacing
+            max_height = 6.5  # Increased to reduce whitespace
             if img_height > max_height:
                 img_height = max_height
                 img_width = img_height / aspect_ratio
             
             # Center the image horizontally
             x_pos = (8.5 - img_width) / 2
-            # Position image below title with book-style spacing
-            y_pos = 8 - img_height  # More space from title
+            # Position image closer to title to reduce whitespace
+            y_pos = 7.5 - img_height  # Reduced space from title
             
             # Add image
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
-            # Figure number - clean and simple with book spacing
-            ax.text(0.1, y_pos - 0.8, "Schedule", fontsize=14, fontweight='bold',
+            # Figure number - clean and simple with reduced spacing
+            ax.text(0.1, y_pos - 0.5, "Schedule", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='black')
             
-            # Small one-sentence description with book spacing
-            ax.text(0.1, y_pos - 1.2, "Project schedule and timeline overview.", 
+            # Small one-sentence description with reduced spacing
+            ax.text(0.1, y_pos - 0.8, "Project schedule and timeline overview.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
-            # Google Spreadsheet link - small and clean with book spacing
-            ax.text(0.1, y_pos - 1.6, f"Source: {spreadsheet_link}", fontsize=9, fontweight='normal',
+            # Google Spreadsheet link - small and clean with reduced spacing
+            ax.text(0.1, y_pos - 1.1, f"Source: {spreadsheet_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=spreadsheet_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
             
