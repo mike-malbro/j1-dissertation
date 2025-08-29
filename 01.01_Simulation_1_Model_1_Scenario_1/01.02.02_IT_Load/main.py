@@ -73,20 +73,22 @@ def generate_it_load_analysis():
     df = generate_it_load_data()
     stats_dict = analyze_load_data(df)
     
-    # Set professional styling
+    # Set professional styling with higher quality
     sns.set_style("whitegrid")
-    plt.rcParams['font.size'] = 12
-    plt.rcParams['axes.titlesize'] = 14
-    plt.rcParams['axes.labelsize'] = 12
-    plt.rcParams['xtick.labelsize'] = 10
-    plt.rcParams['ytick.labelsize'] = 10
-    plt.rcParams['legend.fontsize'] = 10
+    plt.rcParams['font.size'] = 14
+    plt.rcParams['axes.titlesize'] = 16
+    plt.rcParams['axes.labelsize'] = 14
+    plt.rcParams['xtick.labelsize'] = 12
+    plt.rcParams['ytick.labelsize'] = 12
+    plt.rcParams['legend.fontsize'] = 12
+    plt.rcParams['figure.dpi'] = 600
+    plt.rcParams['savefig.dpi'] = 600
     
     # Create hours array for x-axis
     hours = np.arange(TIME_STEPS) / 60.0
     
-    # Create the main IT Load Profile figure
-    fig, ax = plt.subplots(figsize=(12, 8))
+    # Create the main IT Load Profile figure with higher resolution
+    fig, ax = plt.subplots(figsize=(16, 10))
     
     # Plot the IT load profile
     ax.plot(hours, df['Total_Load'], color='#2E86AB', linewidth=2.5, label='Total IT Load')
@@ -102,7 +104,7 @@ def generate_it_load_analysis():
     ax.set_xlabel('Time (hours)', fontweight='bold')
     ax.set_ylabel('IT Load (kW)', fontweight='bold')
     ax.set_title('J1 - Data Center IT Load Profile\nHarrisburg Case Study: 30 kW Base + 12hr 60 kW AI Training Load', 
-                fontsize=16, fontweight='bold', pad=20)
+                fontsize=18, fontweight='bold', pad=20)
     
     # Set axis limits and ticks
     ax.set_xlim(0, 24)
@@ -112,8 +114,8 @@ def generate_it_load_analysis():
     
     # Add statistical annotations
     stats_text = f"Mean Load: {stats_dict['Mean Total Load (kW)']:.1f} kW\nPeak Load: {df['Total_Load'].max():.1f} kW\nTotal Energy: {stats_dict['Total Energy (kWh)']:.0f} kWh"
-    ax.text(0.02, 0.98, stats_text, transform=ax.transAxes, fontsize=10,
-            verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    ax.text(0.02, 0.98, stats_text, transform=ax.transAxes, fontsize=12,
+            verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.9))
     
     # Add legend
     ax.legend(loc='upper right', frameon=True, fancybox=True, shadow=True)
@@ -121,9 +123,10 @@ def generate_it_load_analysis():
     # Tight layout and save
     plt.tight_layout()
     
-    # Save as high-quality PNG
+    # Save as ultra-high-quality PNG
     png_path = "output/it_load_analysis.png"
-    plt.savefig(png_path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig(png_path, dpi=600, bbox_inches='tight', facecolor='white', 
+                format='png', transparent=False, pad_inches=0.1)
     plt.close()
     
     print(f"✅ IT Load analysis PNG generated: {png_path}")
@@ -159,19 +162,19 @@ def generate_it_load_figure():
         img = Image.open(png_path)
         
         # Calculate optimal size to fit page width with margins
-        img_width = 8.0  # Large to fill page width
+        img_width = 7.5  # Large but with margins for centering
         aspect_ratio = img.height / img.width
         img_height = img_width * aspect_ratio
         
         # Ensure image doesn't exceed available vertical space
-        max_height = 7.0  # Large to fill page height
+        max_height = 6.5  # Large but with margins for centering
         if img_height > max_height:
             img_height = max_height
             img_width = img_height / aspect_ratio
         
-        # Position image to fill most of the page
-        x_pos = 0.25  # Small left margin
-        y_pos = 2.0  # Fixed position near bottom
+        # Center the image horizontally and vertically
+        x_pos = (8.5 - img_width) / 2  # Center horizontally
+        y_pos = (11 - img_height) / 2  # Center vertically
         
         # Add image
         ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
