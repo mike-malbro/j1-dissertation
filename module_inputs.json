@@ -38,6 +38,14 @@
       "path": "00.00_Cover/00.0B_Table_of_Contents_Generator",
       "description": "Table of Contents of the PDF run. Based on Active/Inactive Column Google Sheet."
     },
+    "00.0S": {
+      "id": "00.0S",
+      "name": "Schedule",
+      "type": "Module",
+      "active": true,
+      "path": "00.0S_Schedule",
+      "description": "Schedule - Download Link: https://docs.google.com/spreadsheets/d/1IGyQ-Jq-aq6kek80Q1rGnb0eoOUqBPVSolDzVZdJI-s/edit?usp=sharing. Download PDF, convert to JPG, insert into document."
+    },
     "01.00": {
       "id": "01.00",
       "name": "J1 - Journal 1",
