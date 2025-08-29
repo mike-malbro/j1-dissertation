@@ -135,20 +135,20 @@ def generate_schedule_page():
             img = Image.open(jpg_path)
             
             # Calculate optimal size to fit page width with margins
-            img_width = 7.5  # Larger to reduce whitespace
+            img_width = 8.0  # Much larger to fill page width
             aspect_ratio = img.height / img.width
             img_height = img_width * aspect_ratio
             
             # Ensure image doesn't exceed available vertical space
-            max_height = 6.5  # Increased to reduce whitespace
+            max_height = 7.0  # Much larger to fill page height
             if img_height > max_height:
                 img_height = max_height
                 img_width = img_height / aspect_ratio
             
-            # Center the image horizontally
-            x_pos = (8.5 - img_width) / 2
+            # Position image to fill most of the page
+            x_pos = 0.25  # Small left margin
             # Position image closer to title to reduce whitespace
-            y_pos = 7.5 - img_height  # Reduced space from title
+            y_pos = 2.0  # Fixed position near bottom
             
             # Add image
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
