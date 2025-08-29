@@ -51,11 +51,23 @@ class J1PhDStudyOrchestrator:
         for dir_path in [self.output_dir, self.data_dir, self.figures_dir]:
             dir_path.mkdir(exist_ok=True)
         
-        # Clean output directory for fresh start
-        self.clean_output_directory()
-        
         # Load advanced configuration
         self.config = self.load_config()
+        
+        # Load dynamic module configuration from Google Sheet and module_inputs.json
+        self.module_config = self.load_dynamic_module_config()
+        
+        # Import Google Sheet helper functions
+        sys.path.append(str(self.base_dir / "0Z.00_Google_Sheet_Helper_Functions"))
+        try:
+            from google_drive_helpers import GoogleDriveHelpers
+            self.google_helpers = GoogleDriveHelpers()
+        except ImportError as e:
+            print(f"⚠️ Warning: Google Drive helpers not available: {e}")
+            self.google_helpers = None
+        
+        # Clean output directory for fresh start
+        self.clean_output_directory()
         
         # Track generated PDFs for merging
         self.generated_pdfs = []
@@ -76,19 +88,28 @@ class J1PhDStudyOrchestrator:
                         print(f"   ⚠️ Could not remove {file_path.name}: {e}")
         
         print("✅ Output directory cleaned")
-        
-        # Load dynamic module configuration from Google Sheet and module_inputs.json
-        self.module_config = self.load_dynamic_module_config()
-        
-        # Import Google Sheet helper functions
-        sys.path.append(str(self.base_dir / "0Z.00_Google_Sheet_Helper_Functions"))
-        try:
-            from google_drive_helpers import GoogleDriveHelpers
-            self.google_helpers = GoogleDriveHelpers()
-        except ImportError as e:
-            print(f"⚠️ Warning: Google Drive helpers not available: {e}")
-            self.google_helpers = None
-        pass  # Module configuration now loaded dynamically
+    
+    def clean_module_output_directory(self, module_path: Path):
+        """Clean a specific module's output directory for fresh start"""
+        module_output_dir = module_path / "output"
+        if module_output_dir.exists():
+            print(f"🧹 Cleaning module output directory: {module_output_dir}")
+            
+            # Count files before cleaning
+            file_count = len(list(module_output_dir.iterdir()))
+            
+            # Remove all files in module output directory
+            for file_path in module_output_dir.iterdir():
+                if file_path.is_file():
+                    try:
+                        file_path.unlink()
+                    except Exception as e:
+                        print(f"   ⚠️ Could not remove {file_path.name}: {e}")
+            
+            print(f"✅ Module output directory cleaned ({file_count} files removed)")
+        else:
+            print(f"📁 Creating module output directory: {module_output_dir}")
+            module_output_dir.mkdir(exist_ok=True)
         
     def load_dynamic_module_config(self):
         """Load dynamic module configuration from module_inputs.json and Google Sheet"""
@@ -150,6 +171,9 @@ class J1PhDStudyOrchestrator:
             
             if main_file.exists():
                 print(f"🚀 Executing J1 module {module_id}: {module_info['name']}")
+                
+                # Clean module output directory for fresh start
+                self.clean_module_output_directory(module_path)
                 
                 # Execute the module
                 result = subprocess.run(
