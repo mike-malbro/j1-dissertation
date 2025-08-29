@@ -27,7 +27,7 @@ def download_csv_from_google_drive():
         sys.path.append(str(Path(__file__).parent / ".." / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
         from google_drive_helpers import download_asset
         
-        # Google Drive CSV link
+        # Google Drive CSV link - Simulation 2 Data Source
         csv_url = "https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link"
         
         print(f"📥 Attempting to download CSV from Google Drive: {csv_url}")
@@ -114,7 +114,7 @@ def generate_csv_processing_report(df, data_summary):
             ha='left', va='center', fontfamily='Arial', color='black')
     
     # Subtitle
-    subtitle_text = "Model 2 - Google Drive Data Integration and Analysis"
+    subtitle_text = "Model 2 - NEW DATA SOURCE - Google Drive Data Integration and Analysis"
     ax.text(0.1, 9.5, subtitle_text, fontsize=14, fontweight='normal', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
@@ -124,11 +124,11 @@ def generate_csv_processing_report(df, data_summary):
             ha='left', va='center', fontfamily='Arial', color='black')
     
     source_info = [
-        "• Source: Google Drive CSV File",
+        "• Source: Google Drive CSV File - SIMULATION 2 DATA",
         "• Link: https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link",
         "• Update Method: Fresh download on each run",
         "• Integration: Automated via Google Drive API",
-        "• Data Type: Simulation results and parameters"
+        "• Data Type: Simulation 2 results and parameters (NEW DATA SOURCE)"
     ]
     
     for i, info in enumerate(source_info):

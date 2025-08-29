@@ -33,7 +33,7 @@ def download_fresh_csv_data():
         sys.path.append(str(Path(__file__).parent / ".." / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
         from google_drive_helpers import download_asset
         
-        # Google Drive CSV link (same as 01.03)
+        # Google Drive CSV link - Simulation 2 Data Source
         csv_url = "https://drive.google.com/file/d/1M3j1jGtYs6W3xJhjLGt5IbbQOoQ5mAKq/view?usp=drive_link"
         
         print(f"📥 Downloading fresh CSV data from Google Drive: {csv_url}")
@@ -730,7 +730,7 @@ def create_room_temperature_figure(df):
 
 def main():
     """Main function to generate Room Temperature Figure"""
-    print("🎨 Generating Room Temperature Versus Timestep Figure...")
+    print("🎨 Generating Room Temperature Versus Timestep Figure (Simulation 2 - NEW DATA)...")
     
     try:
         # Load simulation data
