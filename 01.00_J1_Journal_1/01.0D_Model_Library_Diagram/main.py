@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Module 01.0D - Model Library Diagram
-Michael Logan Maloney PhD Dissertation Notebook
+Submodule 1.0D: Model Library Diagram - Professional Document
+J1 - Conference Paper 1 SIMBUILD 2027
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-Model Library Diagram with Google Drawing integration.
+Professional model library diagram with Google Drawing integration.
 """
 
 import sys
@@ -19,18 +19,32 @@ from PIL import Image
 import warnings
 warnings.filterwarnings('ignore')
 
-def generate_model_library_diagram():
-    """Generate Model Library Diagram page with integrated Google Drawing"""
+# Add Google Drive helpers to path
+sys.path.append(str(Path(__file__).parent / ".." / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
+from google_drive_helpers import download_asset
+
+def generate_model_library_diagram_document():
+    """Generate professional model library diagram with Google Drawing integration"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Path to downloaded asset
-    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0D_asset.png"
-    
     # Google Drawing link
     drawing_link = "https://docs.google.com/drawings/d/1la5TOLOvfLjC9-IUAdIHMXR63o-SdUFJeVahzvAO0Fk/edit"
+    
+    # Download fresh Google Drawing asset
+    print(f"📥 Downloading fresh Model Library Diagram from Google Drive...")
+    asset_path = download_asset(
+        url=drawing_link,
+        module_id="01.0D",
+        filename="01.0D_asset.png"
+    )
+    
+    if not asset_path or not asset_path.exists():
+        print(f"❌ Failed to download fresh asset for 01.0D")
+        # Fallback to existing asset if download fails
+        asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0D_asset.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -68,11 +82,11 @@ def generate_model_library_diagram():
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
             # Figure number - clean and simple with book spacing
-            ax.text(0.1, y_pos - 0.8, "Figure 3", fontsize=14, fontweight='bold',
+            ax.text(0.1, y_pos - 0.8, "Figure 4", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='black')
             
             # Small one-sentence description with book spacing
-            ax.text(0.1, y_pos - 1.2, "Model library diagram for data center thermodynamic modeling framework.", 
+            ax.text(0.1, y_pos - 1.2, "Model library diagram for data center cooling system components.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
@@ -80,6 +94,8 @@ def generate_model_library_diagram():
             ax.text(0.1, y_pos - 1.6, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+            
+            print(f"✅ Fresh Model Library Diagram loaded successfully")
             
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
@@ -90,7 +106,7 @@ def generate_model_library_diagram():
                     ha='left', va='center', fontfamily='Arial', color='gray')
             ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
-                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
         ax.text(0.1, 6, "Model Library Diagram Image", fontsize=14, fontweight='bold',
@@ -99,10 +115,10 @@ def generate_model_library_diagram():
                 ha='left', va='center', fontfamily='Arial', color='gray')
         ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='blue',
-                url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered like 01.00
-    ax.text(4.25, 0.5, "7", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.5, "8", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified like 01.00
@@ -127,10 +143,10 @@ def generate_model_library_diagram():
 
 def main():
     """Main function to generate Model Library Diagram"""
-    print("🎨 Generating Model Library Diagram...")
+    print("📚 Generating Model Library Diagram...")
     
     try:
-        output_file = generate_model_library_diagram()
+        output_file = generate_model_library_diagram_document()
         print(f"📄 Model Library Diagram created successfully: {output_file}")
         return True
     except Exception as e:

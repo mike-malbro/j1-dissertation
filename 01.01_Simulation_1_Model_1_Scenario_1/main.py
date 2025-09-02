@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-Module 01.01 - Simulation 1: Model_1_Scenario_1
-Michael Logan Maloney PhD Dissertation Notebook
+Module 01.01: Simulation 1 - Model_1_Scenario_1
+J1 - Conference Paper 1 SIMBUILD 2027
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-Baseline AI - No Performance Curve. Data: Energy, Power, Room Temperature, 
-Supply and Return Water Temperature, PUE.
+Simulation 1 overview with Google Drawing integration.
 """
 
 import sys
@@ -20,18 +19,32 @@ from PIL import Image
 import warnings
 warnings.filterwarnings('ignore')
 
-def generate_simulation_overview():
-    """Generate Simulation 1 overview page with Google Drawing integration"""
+# Add Google Drive helpers to path
+sys.path.append(str(Path(__file__).parent / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
+from google_drive_helpers import download_asset
+
+def generate_simulation_1_document():
+    """Generate Simulation 1 overview with Google Drawing integration"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Path to downloaded asset
-    asset_path = Path(__file__).parent / ".." / "downloads" / "01.01_asset.png"
-    
     # Google Drawing link
     drawing_link = "https://docs.google.com/drawings/d/17F4UI7aX-wR1IsW_iglvUHX2LfB_NByiMFJLqZkAKQM/edit"
+    
+    # Download fresh Google Drawing asset
+    print(f"📥 Downloading fresh Simulation 1 Model from Google Drive...")
+    asset_path = download_asset(
+        url=drawing_link,
+        module_id="01.01",
+        filename="01.01_asset.png"
+    )
+    
+    if not asset_path or not asset_path.exists():
+        print(f"❌ Failed to download fresh asset for 01.01")
+        # Fallback to existing asset if download fails
+        asset_path = Path(__file__).parent / ".." / "downloads" / "01.01_asset.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -45,8 +58,8 @@ def generate_simulation_overview():
             ha='left', va='center', fontfamily='Arial', color='black')
     
     # Subtitle
-    subtitle_text = "Baseline AI - No Performance Curve"
-    ax.text(0.1, 9.5, subtitle_text, fontsize=14, fontweight='normal', 
+    subtitle_text = "Baseline AI - No Performance Curve Data: Energy, Power, Room Temperature, Supply and Return Water Temperature, PUE"
+    ax.text(0.1, 9.5, subtitle_text, fontsize=12, fontweight='normal', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
     # Add the Google Drawing - prominently displayed with book-style spacing
@@ -60,7 +73,7 @@ def generate_simulation_overview():
             img_height = img_width * aspect_ratio
             
             # Ensure image doesn't exceed available vertical space
-            max_height = 4.5  # Reduced for better book spacing
+            max_height = 5.5  # Reduced for better book spacing
             if img_height > max_height:
                 img_height = max_height
                 img_width = img_height / aspect_ratio
@@ -68,17 +81,17 @@ def generate_simulation_overview():
             # Center the image horizontally
             x_pos = (8.5 - img_width) / 2
             # Position image below title with book-style spacing (like 01.00)
-            y_pos = 7.5 - img_height  # More space from title
+            y_pos = 8 - img_height  # More space from title
             
             # Add image
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
             # Figure number - clean and simple with book spacing
-            ax.text(0.1, y_pos - 0.8, "Figure 4", fontsize=14, fontweight='bold',
+            ax.text(0.1, y_pos - 0.8, "Figure 5", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='black')
             
             # Small one-sentence description with book spacing
-            ax.text(0.1, y_pos - 1.2, "Simulation 1 baseline analysis for heterogeneous data center cooling system.", 
+            ax.text(0.1, y_pos - 1.2, "Simulation 1 model overview for baseline data center cooling analysis.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
@@ -86,6 +99,8 @@ def generate_simulation_overview():
             ax.text(0.1, y_pos - 1.6, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+            
+            print(f"✅ Fresh Simulation 1 Model loaded successfully")
             
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
@@ -96,7 +111,7 @@ def generate_simulation_overview():
                     ha='left', va='center', fontfamily='Arial', color='gray')
             ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
-                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
         ax.text(0.1, 6, "Simulation 1 Model Image", fontsize=14, fontweight='bold',
@@ -105,45 +120,10 @@ def generate_simulation_overview():
                 ha='left', va='center', fontfamily='Arial', color='gray')
         ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='blue',
-                url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
-    
-    # Key Parameters section
-    params_title = "Key Parameters:"
-    ax.text(0.1, 4.5, params_title, fontsize=12, fontweight='bold',
-            ha='left', va='center', fontfamily='Arial', color='black')
-    
-    params = [
-        "• Energy consumption analysis",
-        "• Power demand patterns", 
-        "• Room temperature profiles",
-        "• Supply and return water temperatures",
-        "• Power Usage Effectiveness (PUE)"
-    ]
-    
-    for i, param in enumerate(params):
-        y_pos = 4.2 - (i * 0.25)
-        ax.text(0.1, y_pos, param, fontsize=10, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial', color='black')
-    
-    # Submodules section
-    submodules_title = "Submodules:"
-    ax.text(0.1, 2.8, submodules_title, fontsize=12, fontweight='bold',
-            ha='left', va='center', fontfamily='Arial', color='black')
-    
-    submodules = [
-        "• 01.02: Annual simulation analysis",
-        "• 01.03: Typical week analysis",
-        "• 01.04: Critical day analysis", 
-        "• 01.05: Results summary"
-    ]
-    
-    for i, submodule in enumerate(submodules):
-        y_pos = 2.5 - (i * 0.25)
-        ax.text(0.1, y_pos, submodule, fontsize=10, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial', color='black')
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered like 01.00
-    ax.text(4.25, 0.5, "8", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.5, "9", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified like 01.00
@@ -163,19 +143,19 @@ def generate_simulation_overview():
     
     plt.close()
     
-    print(f"✅ Simulation 1 generated: {output_file}")
+    print(f"✅ Simulation 1 overview generated: {output_file}")
     return str(output_file)
 
 def main():
-    """Main function to generate Simulation 1"""
-    print("🎨 Generating Simulation 1: Model_1_Scenario_1...")
+    """Main function to generate Simulation 1 overview"""
+    print("🚀 Generating Simulation 1 Overview...")
     
     try:
-        output_file = generate_simulation_overview()
-        print(f"📄 Simulation 1 created successfully: {output_file}")
+        output_file = generate_simulation_1_document()
+        print(f"📄 Simulation 1 overview created successfully: {output_file}")
         return True
     except Exception as e:
-        print(f"❌ Error generating Simulation 1: {e}")
+        print(f"❌ Error generating Simulation 1 overview: {e}")
         return False
 
 if __name__ == "__main__":

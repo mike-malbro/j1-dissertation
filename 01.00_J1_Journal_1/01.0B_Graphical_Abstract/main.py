@@ -19,6 +19,10 @@ from PIL import Image
 import warnings
 warnings.filterwarnings('ignore')
 
+# Add Google Drive helpers to path
+sys.path.append(str(Path(__file__).parent / ".." / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
+from google_drive_helpers import download_asset
+
 def generate_graphical_abstract_document():
     """Generate professional graphical abstract with Google Drawing integration"""
     
@@ -26,11 +30,21 @@ def generate_graphical_abstract_document():
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Path to downloaded asset
-    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0B_asset.png"
-    
     # Google Drawing link
-    drawing_link = "https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lW4ucHM/edit"
+    drawing_link = "https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lWwucHM/edit"
+    
+    # Download fresh Google Drawing asset
+    print(f"📥 Downloading fresh Graphical Abstract from Google Drive...")
+    asset_path = download_asset(
+        url=drawing_link,
+        module_id="01.0B",
+        filename="01.0B_asset.png"
+    )
+    
+    if not asset_path or not asset_path.exists():
+        print(f"❌ Failed to download fresh asset for 01.0B")
+        # Fallback to existing asset if download fails
+        asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0B_asset.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -81,6 +95,8 @@ def generate_graphical_abstract_document():
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
             
+            print(f"✅ Fresh Graphical Abstract loaded successfully")
+            
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
             # Add placeholder text with book spacing
@@ -90,7 +106,7 @@ def generate_graphical_abstract_document():
                     ha='left', va='center', fontfamily='Arial', color='gray')
             ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
-                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
         ax.text(0.1, 6, "Graphical Abstract Image", fontsize=14, fontweight='bold',
@@ -99,7 +115,7 @@ def generate_graphical_abstract_document():
                 ha='left', va='center', fontfamily='Arial', color='gray')
         ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='blue',
-                url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered like 01.00
     ax.text(4.25, 0.5, "6", fontsize=14, fontweight='normal',

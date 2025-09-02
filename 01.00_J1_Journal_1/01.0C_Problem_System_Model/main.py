@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-Module 01.0C - Problem System Model
-Michael Logan Maloney PhD Dissertation Notebook
+Submodule 1.0C: Problem System Model - Professional Document
+J1 - Conference Paper 1 SIMBUILD 2027
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-Problem System Model with Google Drawing integration.
-BOILERPLATE FOR FIGURE IMPORTS - Reusable template for future figure modules.
+Professional problem system model with Google Drawing integration.
 """
 
 import sys
@@ -20,18 +19,32 @@ from PIL import Image
 import warnings
 warnings.filterwarnings('ignore')
 
-def generate_problem_system_model():
-    """Generate Problem System Model page with integrated Google Drawing"""
+# Add Google Drive helpers to path
+sys.path.append(str(Path(__file__).parent / ".." / ".." / "0Z.00_Google_Sheet_Helper_Functions"))
+from google_drive_helpers import download_asset
+
+def generate_problem_system_model_document():
+    """Generate professional problem system model with Google Drawing integration"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Path to downloaded asset
-    asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "problem_system_model.png"
-    
     # Google Drawing link
     drawing_link = "https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit"
+    
+    # Download fresh Google Drawing asset
+    print(f"📥 Downloading fresh Problem System Model from Google Drive...")
+    asset_path = download_asset(
+        url=drawing_link,
+        module_id="01.0C",
+        filename="01.0C_asset.png"
+    )
+    
+    if not asset_path or not asset_path.exists():
+        print(f"❌ Failed to download fresh asset for 01.0C")
+        # Fallback to existing asset if download fails
+        asset_path = Path(__file__).parent / ".." / ".." / "downloads" / "01.0C_asset.png"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -69,18 +82,20 @@ def generate_problem_system_model():
             ax.imshow(img, extent=[x_pos, x_pos + img_width, y_pos, y_pos + img_height])
             
             # Figure number - clean and simple with book spacing
-            ax.text(0.1, y_pos - 0.8, "Figure 1", fontsize=14, fontweight='bold',
+            ax.text(0.1, y_pos - 0.8, "Figure 3", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='black')
             
             # Small one-sentence description with book spacing
-            ax.text(0.1, y_pos - 1.2, "Problem system model for heterogeneous data center cooling system analysis.", 
+            ax.text(0.1, y_pos - 1.2, "Problem system model for heterogeneous data center cooling system.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
             # Google Drawing link - small and clean with book spacing
             ax.text(0.1, y_pos - 1.6, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
-                    ha='left', va='center', fontfamily='Arial', color='blue', 
+                    ha='left', va='center', fontfamily='Arial', color='blue',
                     url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+            
+            print(f"✅ Fresh Problem System Model loaded successfully")
             
         except Exception as e:
             print(f"⚠️ Warning: Could not load image: {e}")
@@ -91,7 +106,7 @@ def generate_problem_system_model():
                     ha='left', va='center', fontfamily='Arial', color='gray')
             ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
-                    url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
         ax.text(0.1, 6, "Problem System Model Image", fontsize=14, fontweight='bold',
@@ -100,10 +115,10 @@ def generate_problem_system_model():
                 ha='left', va='center', fontfamily='Arial', color='gray')
         ax.text(0.1, 5.2, f"Source: {drawing_link}", fontsize=9, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='blue',
-                url=drawing_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered like 01.00
-    ax.text(4.25, 0.5, "5", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.5, "7", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified like 01.00
@@ -128,10 +143,10 @@ def generate_problem_system_model():
 
 def main():
     """Main function to generate Problem System Model"""
-    print("🎨 Generating Problem System Model...")
+    print("🔧 Generating Problem System Model...")
     
     try:
-        output_file = generate_problem_system_model()
+        output_file = generate_problem_system_model_document()
         print(f"📄 Problem System Model created successfully: {output_file}")
         return True
     except Exception as e:
