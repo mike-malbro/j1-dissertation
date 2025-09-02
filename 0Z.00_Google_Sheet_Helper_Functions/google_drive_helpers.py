@@ -95,18 +95,27 @@ class GoogleDriveHelpers:
             print(f"❌ Could not extract Drive ID from: {url}")
             return None
         
-        # Check if already downloaded
-        if drive_id in self.assets_db['assets']:
-            existing_path = Path(self.assets_db['assets'][drive_id]['file_path'])
-            if existing_path.exists():
-                print(f"✅ Already downloaded: {existing_path}")
-                return existing_path
+        # Always download fresh content for drawings (no caching)
+        print(f"🔄 Downloading fresh drawing content for {drive_id}")
         
         # Google Drawing export URL
         export_url = f"https://docs.google.com/drawings/d/{drive_id}/export/png"
         
         try:
-            response = requests.get(export_url, timeout=30)
+            # Use proper headers to mimic browser behavior
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept': 'image/png,image/*,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Referer': f'https://docs.google.com/drawings/d/{drive_id}/edit',
+                'DNT': '1',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1'
+            }
+            
+            # Follow redirects and use proper timeout
+            response = requests.get(export_url, headers=headers, timeout=30, allow_redirects=True)
             response.raise_for_status()
             
             if not filename:
@@ -130,7 +139,7 @@ class GoogleDriveHelpers:
             self.assets_db['metadata']['total_downloads'] += 1
             self.save_assets_database()
             
-            print(f"✅ Downloaded: {file_path}")
+            print(f"✅ Fresh drawing downloaded: {file_path} ({len(response.content)} bytes)")
             return file_path
             
         except Exception as e:

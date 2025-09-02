@@ -93,25 +93,25 @@ def load_simulation_data():
                 # Add Hour column for analysis (timesteps are in 0.25-hour increments)
                 df['Hour'] = df['timestep']  # This is already in hours (0.0, 0.25, 0.5, etc.)
                 
-            elif 'Time|min' in df.columns and 'roo.rooVol.T|°C' in df.columns:
-                # New format (version 2)
-                print(f"📊 Using new CSV format (version 2)")
+            elif 'Time|min' in df.columns and 'roo.TRooAir|°C' in df.columns:
+                # New format (Simulation 2 data)
+                print(f"📊 Using Simulation 2 CSV format")
                 # Rename columns for consistency
                 df = df.rename(columns={
                     'Time|min': 'timestep',
-                    'roo.rooVol.T|°C': 'Temperature'
+                    'roo.TRooAir|°C': 'Temperature'
                 })
                 
-                # Convert timestep from minutes to hours
-                df['timestep'] = df['timestep'] / 60.0
+                # Keep timestep in minutes for consistent analysis
+                # df['timestep'] stays in minutes (0 to 525600)
                 
                 # Convert to datetime index for professional plotting
                 start_time = pd.Timestamp('2024-01-01 00:00:00')
-                time_index = [start_time + pd.Timedelta(hours=t) for t in df['timestep']]
+                time_index = [start_time + pd.Timedelta(minutes=t) for t in df['timestep']]
                 df.index = time_index
                 
-                # Add Hour column for analysis
-                df['Hour'] = df['timestep']
+                # Add Hour column for analysis (convert minutes to hours)
+                df['Hour'] = df['timestep'] / 60.0
                 
             else:
                 print(f"⚠️ Unknown CSV format, columns: {df.columns.tolist()}")
@@ -224,34 +224,27 @@ def create_room_temperature_figure(df):
     
     # Process Annual Analysis (single plot)
     annual_period = time_periods[0]
-    start_hour = (annual_period['start_day'] - 1) * 24
-    end_hour = annual_period['end_day'] * 24
-    annual_data = df[(df['Hour'] >= start_hour) & (df['Hour'] <= end_hour)].copy()
-    annual_data['Relative_Time'] = (annual_data['Hour'] - start_hour) / 24
-    annual_data['Relative_Time_Minutes'] = annual_data['Relative_Time'] * 24 * 60
+    # Convert days to minutes: 1 day = 24 * 60 = 1440 minutes
+    start_minute = (annual_period['start_day'] - 1) * 24 * 60
+    end_minute = annual_period['end_day'] * 24 * 60
+    annual_data = df[(df['timestep'] >= start_minute) & (df['timestep'] <= end_minute)].copy()
     
-    # Create minute-by-minute timesteps for annual
-    start_minutes = annual_data['Relative_Time_Minutes'].min()
-    end_minutes = annual_data['Relative_Time_Minutes'].max()
-    minute_timesteps = np.arange(start_minutes, end_minutes + 1, 1)
-    
-    # Interpolate temperature data to minute resolution
-    from scipy.interpolate import interp1d
-    f_interp = interp1d(annual_data['Relative_Time_Minutes'], annual_data['Temperature'], 
-                       kind='linear', fill_value='extrapolate')
-    temperature_minutes = f_interp(minute_timesteps)
+    # For annual analysis, we'll sample every hour to avoid overwhelming the plot
+    # Sample every 60 minutes (1 hour) for annual view
+    annual_sampled = annual_data[annual_data['timestep'] % 60 == 0].copy()
+    annual_sampled['Relative_Time_Hours'] = (annual_sampled['timestep'] - start_minute) / 60  # Convert to hours
     
     # Create Annual Analysis plot
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
+    ax.plot(annual_sampled['Relative_Time_Hours'], annual_sampled['Temperature'], 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
     ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
-    ax.set_xlabel('Timestep (Minutes)', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Time (Hours)', fontsize=14, fontweight='bold')
     ax.set_ylabel('Temperature (°C)', fontsize=14, fontweight='bold')
-    ax.set_title(f'{annual_period["name"]} - Temperature vs Timestep (Minute Resolution)', fontsize=16, fontweight='bold')
+    ax.set_title(f'{annual_period["name"]} - Temperature vs Time (Hourly Resolution)', fontsize=16, fontweight='bold')
     ax.set_ylim(y_min, y_max)  # Use global y-axis limits
     ax.grid(True, alpha=0.3)
     ax.legend(loc='upper right', fontsize=10)
-    period_info = f"Period: Day {annual_period['start_day']} - Day {annual_period['end_day']} | Resolution: 1 minute"
+    period_info = f"Period: Day {annual_period['start_day']} - Day {annual_period['end_day']} | Resolution: 1 hour"
     ax.text(0.02, 0.98, period_info, transform=ax.transAxes, fontsize=10,
             verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
     plt.tight_layout()
@@ -267,27 +260,16 @@ def create_room_temperature_figure(df):
     axes = axes.flatten()
     
     for i, period in enumerate(weekly_periods):
-        start_hour = (period['start_day'] - 1) * 24
-        end_hour = period['end_day'] * 24
-        period_data = df[(df['Hour'] >= start_hour) & (df['Hour'] <= end_hour)].copy()
-        period_data['Relative_Time'] = (period_data['Hour'] - start_hour) / 24
-        period_data['Relative_Time_Minutes'] = period_data['Relative_Time'] * 24 * 60
-        
-        # Create minute-by-minute timesteps
-        start_minutes = period_data['Relative_Time_Minutes'].min()
-        end_minutes = period_data['Relative_Time_Minutes'].max()
-        minute_timesteps = np.arange(start_minutes, end_minutes + 1, 1)
-        
-        # Interpolate temperature data
-        f_interp = interp1d(period_data['Relative_Time_Minutes'], period_data['Temperature'], 
-                           kind='linear', fill_value='extrapolate')
-        temperature_minutes = f_interp(minute_timesteps)
+        start_minute = (period['start_day'] - 1) * 24 * 60
+        end_minute = period['end_day'] * 24 * 60
+        period_data = df[(df['timestep'] >= start_minute) & (df['timestep'] <= end_minute)].copy()
+        period_data['Relative_Time_Hours'] = (period_data['timestep'] - start_minute) / 60  # Convert to hours
         
         # Plot on subplot
         ax = axes[i]
-        ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
+        ax.plot(period_data['Relative_Time_Hours'], period_data['Temperature'], 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
         ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
-        ax.set_xlabel('Timestep (Minutes)', fontsize=12, fontweight='bold')
+        ax.set_xlabel('Time (Hours)', fontsize=12, fontweight='bold')
         ax.set_ylabel('Temperature (°C)', fontsize=12, fontweight='bold')
         ax.set_title(f'{period["name"]} (Days {period["start_day"]}-{period["end_day"]})', fontsize=14, fontweight='bold')
         ax.set_ylim(y_min, y_max)  # Use global y-axis limits
@@ -305,29 +287,18 @@ def create_room_temperature_figure(df):
     
     # Process Critical Day (single plot)
     critical_period = time_periods[5]
-    start_hour = (critical_period['start_day'] - 1) * 24
-    end_hour = critical_period['end_day'] * 24
-    critical_data = df[(df['Hour'] >= start_hour) & (df['Hour'] <= end_hour)].copy()
-    critical_data['Relative_Time'] = (critical_data['Hour'] - start_hour) / 24
-    critical_data['Relative_Time_Minutes'] = critical_data['Relative_Time'] * 24 * 60
-    
-    # Create minute-by-minute timesteps for critical day
-    start_minutes = critical_data['Relative_Time_Minutes'].min()
-    end_minutes = critical_data['Relative_Time_Minutes'].max()
-    minute_timesteps = np.arange(start_minutes, end_minutes + 1, 1)
-    
-    # Interpolate temperature data
-    f_interp = interp1d(critical_data['Relative_Time_Minutes'], critical_data['Temperature'], 
-                       kind='linear', fill_value='extrapolate')
-    temperature_minutes = f_interp(minute_timesteps)
+    start_minute = (critical_period['start_day'] - 1) * 24 * 60
+    end_minute = critical_period['end_day'] * 24 * 60
+    critical_data = df[(df['timestep'] >= start_minute) & (df['timestep'] <= end_minute)].copy()
+    critical_data['Relative_Time_Hours'] = (critical_data['timestep'] - start_minute) / 60  # Convert to hours
     
     # Create Critical Day plot
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(minute_timesteps, temperature_minutes, 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
+    ax.plot(critical_data['Relative_Time_Hours'], critical_data['Temperature'], 'b-', linewidth=1, label='Room Temperature', alpha=0.8)
     ax.axhline(y=25, color='red', linestyle='--', linewidth=1.5, label='Setpoint (25°C)')
-    ax.set_xlabel('Timestep (Minutes)', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Time (Hours)', fontsize=14, fontweight='bold')
     ax.set_ylabel('Temperature (°C)', fontsize=14, fontweight='bold')
-    ax.set_title(f'{critical_period["name"]} - Temperature vs Timestep (Minute Resolution)', fontsize=16, fontweight='bold')
+    ax.set_title(f'{critical_period["name"]} - Temperature vs Time (Hourly Resolution)', fontsize=16, fontweight='bold')
     ax.set_ylim(y_min, y_max)  # Use global y-axis limits
     ax.grid(True, alpha=0.3)
     ax.legend(loc='upper right', fontsize=10)

@@ -31,7 +31,7 @@ def generate_graphical_abstract_document():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     # Google Drawing link
-    drawing_link = "https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lWwucHM/edit"
+    drawing_link = "https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lW4ucHM/edit"
     
     # Download fresh Google Drawing asset
     print(f"📥 Downloading fresh Graphical Abstract from Google Drive...")
