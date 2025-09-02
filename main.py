@@ -247,21 +247,25 @@ class J1PhDStudyOrchestrator:
             print("⚠️ No PDFs found - creating summary document instead")
             return self.create_j1_summary()
         
-        # Sort PDFs by priority - ensure cover pages come first
+        # Sort PDFs by priority - ensure proper order: Cover -> Module Status Overview -> Table of Contents -> Content
         def get_pdf_priority(pdf_file):
             name = pdf_file.name.lower()
             if 'cover' in name:
-                return 0  # Highest priority
+                return 0  # Highest priority - Cover page
+            elif 'module_status_overview' in name:
+                return 1  # Second priority - Module Status Overview
             elif 'table_of_contents' in name:
-                return 1  # Second priority
+                return 2  # Third priority - Table of Contents
+            elif '00.0s' in name or 'schedule' in name:
+                return 3  # Fourth priority - Schedule
             elif '00.00' in name or '00.0' in name:
-                return 2  # Cover module priority
+                return 4  # Cover module priority
             elif '01.00' in name or '01.0' in name:
-                return 3  # Journal 1 priority
+                return 5  # Journal 1 priority
             elif '0r.00' in name or '0r.0' in name:
-                return 4  # References priority
+                return 6  # References priority
             elif '0z.00' in name or '0z.0' in name:
-                return 5  # Google Sheet helpers priority
+                return 7  # Google Sheet helpers priority
             else:
                 return 999  # Default priority
         
@@ -1023,21 +1027,25 @@ class J1PhDStudyOrchestrator:
         try:
             from PyPDF2 import PdfMerger
             
-            # Sort PDFs by priority (keeping original logic)
+            # Sort PDFs by priority - ensure proper order: Cover -> Module Status Overview -> Table of Contents -> Content
             def get_pdf_priority(pdf_file):
                 name = pdf_file.name.lower()
                 if 'cover' in name:
-                    return 0  # Highest priority
+                    return 0  # Highest priority - Cover page
+                elif 'module_status_overview' in name:
+                    return 1  # Second priority - Module Status Overview
                 elif 'table_of_contents' in name:
-                    return 1  # Second priority
+                    return 2  # Third priority - Table of Contents
+                elif '00.0s' in name or 'schedule' in name:
+                    return 3  # Fourth priority - Schedule
                 elif '00.00' in name or '00.0' in name:
-                    return 2  # Cover module priority
+                    return 4  # Cover module priority
                 elif '01.00' in name or '01.0' in name:
-                    return 3  # Journal 1 priority
+                    return 5  # Journal 1 priority
                 elif '0r.00' in name or '0r.0' in name:
-                    return 4  # References priority
+                    return 6  # References priority
                 elif '0z.00' in name or '0z.0' in name:
-                    return 5  # Google Sheet helpers priority
+                    return 7  # Google Sheet helpers priority
                 else:
                     return 999  # Default priority
             

@@ -7,6 +7,7 @@ Table of Contents generator based on active modules
 
 import os
 import sys
+import json
 import yaml
 from datetime import datetime
 from pathlib import Path
@@ -22,28 +23,33 @@ def load_config():
     return {}
 
 def get_active_modules():
-    """Get list of active modules from the structure"""
-    # Define the module structure based on the Google Sheet
-    modules = {
-        '00.00': {'name': 'Cover', 'type': 'Module', 'active': True},
-        '00.0A': {'name': 'Cover Generator', 'type': 'Submodule', 'active': True},
-        '00.0B': {'name': 'Table of Contents Generator', 'type': 'Submodule', 'active': True},
-        '01.00': {'name': 'J1 - Journal 1', 'type': 'Module', 'active': True},
-        '01.0A': {'name': 'Abstract', 'type': 'Submodule', 'active': True},
-        '01.0B': {'name': 'Graphical Abstract', 'type': 'Submodule', 'active': True},
-        '0R.00': {'name': 'References', 'type': 'Module', 'active': True},
-        '0R.0A': {'name': 'Abbreviations', 'type': 'Submodule', 'active': True},
-        '0R.01': {'name': 'J1 References', 'type': 'Submodule', 'active': True},
-        '0R.0Z': {'name': 'General References', 'type': 'Submodule', 'active': True},
-        '0R.0F': {'name': 'Figures', 'type': 'Submodule', 'active': True},
-        '0R.0C': {'name': 'Calculations', 'type': 'Submodule', 'active': True},
-        '0Z.00': {'name': 'Google Sheet Helper Functions', 'type': 'Module', 'active': True},
-        '0Z.0A': {'name': 'Read', 'type': 'Submodule', 'active': True},
-        '0Z.0B': {'name': 'Write', 'type': 'Submodule', 'active': True},
-        '0Z.0X': {'name': 'Misc Google Sheet Interactive Scripts', 'type': 'Submodule', 'active': True}
-    }
-    
-    return {k: v for k, v in modules.items() if v['active']}
+    """Get list of active modules from module_inputs.json"""
+    try:
+        config_file = Path(__file__).parent / ".." / ".." / "module_inputs.json"
+        if config_file.exists():
+            with open(config_file, 'r') as f:
+                module_config = json.load(f)
+            
+            # Filter only active modules
+            active_modules = {}
+            for module_id, module_info in module_config.items():
+                if module_id == 'main.py':
+                    continue
+                if module_info.get('ACTIVE/INVACTIVE') == 'ACTIVE':
+                    active_modules[module_id] = {
+                        'name': module_info.get('Name', 'Unknown'),
+                        'type': module_info.get('Type', 'Unknown'),
+                        'active': True
+                    }
+            
+            return active_modules
+        else:
+            print(f"⚠️ module_inputs.json not found at {config_file}")
+            return {}
+            
+    except Exception as e:
+        print(f"⚠️ Error loading module config: {e}")
+        return {}
 
 def generate_table_of_contents():
     """Generate a professional table of contents"""

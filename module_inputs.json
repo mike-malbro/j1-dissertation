@@ -24,11 +24,11 @@
     },
     "00.0A": {
       "id": "00.0A",
-      "name": "cover_generator",
+      "name": "Module Status Overview",
       "type": "Submodule",
-      "active": false,
-      "path": "00.00_Cover/00.0A_Cover_Generator",
-      "description": "have a very python submodule to make the cover. where it can be arranged. Cover Title: Michael Logan Maloney PhD. Dissertation Notebook. Report Generated on DATE XXXX."
+      "active": true,
+      "path": "00.00_Cover/00.0A_Module_Status_Overview",
+      "description": "Comprehensive overview of all active and inactive modules before the Table of Contents"
     },
     "00.0B": {
       "id": "00.0B",
@@ -211,7 +211,7 @@
       "name": "Critical Day",
       "type": "Submodule",
       "active": true,
-      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.04_Critical_Day",
+      "path": "01.01_Simulation_1_Model_1_Scenario_1/01.05_Critical_Day",
       "description": "Critical day simulation analysis"
     },
     "01.08": {
