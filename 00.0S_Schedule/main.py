@@ -188,17 +188,17 @@ def generate_schedule_page():
                 url=spreadsheet_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered
-    ax.text(4.25, 0.5, "3", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.8, "3", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified
     timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    ax.text(0.1, 0.3, timestamp_text, fontsize=10, fontweight='normal',
+    ax.text(0.1, 0.6, timestamp_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Module identifier - left justified
     module_text = "Module: 00.0S - Schedule"
-    ax.text(0.1, 0.1, module_text, fontsize=10, fontweight='normal',
+    ax.text(0.1, 0.4, module_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Save as PDF

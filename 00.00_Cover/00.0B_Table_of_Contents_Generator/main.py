@@ -30,15 +30,21 @@ def get_active_modules():
             with open(config_file, 'r') as f:
                 module_config = json.load(f)
             
+            # Get the modules from the correct structure
+            if 'modules' in module_config:
+                modules_data = module_config['modules']
+            else:
+                modules_data = module_config
+            
             # Filter only active modules
             active_modules = {}
-            for module_id, module_info in module_config.items():
+            for module_id, module_info in modules_data.items():
                 if module_id == 'main.py':
                     continue
-                if module_info.get('ACTIVE/INVACTIVE') == 'ACTIVE':
+                if module_info.get('active', False):
                     active_modules[module_id] = {
-                        'name': module_info.get('Name', 'Unknown'),
-                        'type': module_info.get('Type', 'Unknown'),
+                        'name': module_info.get('name', 'Unknown'),
+                        'type': module_info.get('type', 'Unknown'),
                         'active': True
                     }
             

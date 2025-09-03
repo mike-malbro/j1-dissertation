@@ -43,10 +43,13 @@ def generate_module_status_overview():
     
     with PdfPages(pdf_file) as pdf:
         # Create a new figure for the PDF with correct 8.5 x 11 size
-        fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
+        fig = plt.figure(figsize=(8.5, 11), facecolor='white')
+        ax = fig.add_subplot(111)
         ax.set_xlim(0, 8.5)
         ax.set_ylim(0, 11)
         ax.axis('off')
+        
+
         
         # Title
         title_text = "Module Status Overview"
@@ -126,14 +129,17 @@ def generate_module_status_overview():
             # Check if we need a new page
             if y_position < 1.0:
                 # Save current page and start new one
-                pdf.savefig(fig, bbox_inches='tight', dpi=300)
+                pdf.savefig(fig, dpi=300)
                 plt.close()
                 
                 # Create second page
-                fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
+                fig = plt.figure(figsize=(8.5, 11), facecolor='white')
+                ax = fig.add_subplot(111)
                 ax.set_xlim(0, 8.5)
                 ax.set_ylim(0, 11)
                 ax.axis('off')
+                
+
                 
                 # Page 2 header
                 ax.text(4.25, 10.5, "Module Status Overview (Continued)", fontsize=16, fontweight='bold',
@@ -143,8 +149,21 @@ def generate_module_status_overview():
                 
                 y_position = 9.5
 
+        # Footer information for debugging
+        footer_y = 1.0
+        
+        # Timestamp - left justified
+        timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        ax.text(0.1, footer_y, timestamp_text, fontsize=10, fontweight='normal',
+                ha='left', va='center', fontfamily='Arial', color='gray')
+        
+        # Module identifier - left justified
+        module_text = "Module: 00.0A - Module Status Overview"
+        ax.text(0.1, footer_y - 0.3, module_text, fontsize=10, fontweight='normal',
+                ha='left', va='center', fontfamily='Arial', color='gray')
+        
         # Legend
-        legend_y = 1.5
+        legend_y = 2.0
         ax.text(0.5, legend_y, "Legend:", fontsize=10, fontweight='bold',
                 ha='left', va='center', fontfamily='Arial')
         ax.text(0.5, legend_y - 0.2, "• ACTIVE: Module will be executed and included in final PDF", fontsize=9, fontweight='normal',
@@ -157,7 +176,7 @@ def generate_module_status_overview():
         print(f"📊 Processed {modules_processed} modules, saving PDF...")
         
         # Save the final page with high DPI and proper sizing
-        pdf.savefig(fig, bbox_inches='tight', dpi=300)
+        pdf.savefig(fig, dpi=300)
         plt.close()
     
     print(f"✅ PDF saved: {pdf_file}")
@@ -222,8 +241,21 @@ def generate_module_status_overview():
                     ha='center', va='center', fontfamily='Arial', color=status_color)
             y_position -= 0.25
     
+    # Footer information for debugging (PNG version)
+    footer_y = 1.0
+    
+    # Timestamp - left justified
+    timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    ax.text(0.1, footer_y, timestamp_text, fontsize=10, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='gray')
+    
+    # Module identifier - left justified
+    module_text = "Module: 00.0A - Module Status Overview"
+    ax.text(0.1, footer_y - 0.3, module_text, fontsize=10, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='gray')
+    
     # Legend for PNG
-    legend_y = 1.5
+    legend_y = 2.0
     ax.text(0.5, legend_y, "Legend:", fontsize=10, fontweight='bold',
             ha='left', va='center', fontfamily='Arial')
     ax.text(0.5, legend_y - 0.2, "• ACTIVE: Module will be executed and included in final PDF", fontsize=9, fontweight='normal',
@@ -233,7 +265,7 @@ def generate_module_status_overview():
     ax.text(0.5, legend_y - 0.6, "• Module ID format: XX.YY where XX = main module, YY = submodule", fontsize=9, fontweight='normal',
             ha='left', va='center', fontfamily='Arial')
     
-    plt.savefig(png_file, dpi=300, bbox_inches='tight')
+    plt.savefig(png_file, dpi=300)
     plt.close()
     
     print(f"✅ Module Status Overview generated: {png_file} and {pdf_file}")
