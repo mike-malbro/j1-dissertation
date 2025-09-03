@@ -64,12 +64,12 @@ def generate_cover_page():
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Module identifier
-    module_text = "Module: 00.0A - Cover Generator"
+    module_text = "Module: 00.00 - Cover Generator"
     ax.text(1, 0.1, module_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Save as PDF
-    output_file = output_dir / f"cover_page_00.0A_{timestamp}.pdf"
+    output_file = output_dir / f"cover_page_00.00_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
         pdf.savefig(fig, dpi=300)
     

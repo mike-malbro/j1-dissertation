@@ -77,9 +77,9 @@ def generate_module_status_overview():
         # Column headers
         ax.text(0.5, 9.0, "Module ID", fontsize=11, fontweight='bold',
                 ha='left', va='center', fontfamily='Arial')
-        ax.text(2.0, 9.0, "Module Name", fontsize=11, fontweight='bold',
+        ax.text(2.5, 9.0, "Module Name", fontsize=11, fontweight='bold',
                 ha='left', va='center', fontfamily='Arial')
-        ax.text(6.5, 9.0, "Status", fontsize=11, fontweight='bold',
+        ax.text(7.0, 9.0, "Status", fontsize=11, fontweight='bold',
                 ha='center', va='center', fontfamily='Arial')
         
         # Separator line
@@ -109,18 +109,18 @@ def generate_module_status_overview():
                 # Main module - bold
                 ax.text(0.5, y_position, f"{module_id}", fontsize=11, fontweight='bold',
                         ha='left', va='center', fontfamily='Arial')
-                ax.text(2.0, y_position, f"{module_name}", fontsize=11, fontweight='bold',
+                ax.text(2.5, y_position, f"{module_name}", fontsize=11, fontweight='bold',
                         ha='left', va='center', fontfamily='Arial')
-                ax.text(6.5, y_position, f"{status_text}", fontsize=11, fontweight='bold',
+                ax.text(7.0, y_position, f"{status_text}", fontsize=11, fontweight='bold',
                         ha='center', va='center', fontfamily='Arial', color=status_color)
                 y_position -= 0.3
             else:
                 # Submodule - normal weight, indented
                 ax.text(0.8, y_position, f"  {module_id}", fontsize=10, fontweight='normal',
                         ha='left', va='center', fontfamily='Arial')
-                ax.text(2.5, y_position, f"{module_name}", fontsize=10, fontweight='normal',
+                ax.text(3.0, y_position, f"{module_name}", fontsize=10, fontweight='normal',
                         ha='left', va='center', fontfamily='Arial')
-                ax.text(6.5, y_position, f"{status_text}", fontsize=10, fontweight='normal',
+                ax.text(7.0, y_position, f"{status_text}", fontsize=10, fontweight='normal',
                         ha='center', va='center', fontfamily='Arial', color=status_color)
                 y_position -= 0.25
             
@@ -203,9 +203,9 @@ def generate_module_status_overview():
     # Column headers
     ax.text(0.5, 9.0, "Module ID", fontsize=11, fontweight='bold',
             ha='left', va='center', fontfamily='Arial')
-    ax.text(2.0, 9.0, "Module Name", fontsize=11, fontweight='bold',
+    ax.text(2.5, 9.0, "Module Name", fontsize=11, fontweight='bold',
             ha='left', va='center', fontfamily='Arial')
-    ax.text(6.5, 9.0, "Status", fontsize=11, fontweight='bold',
+    ax.text(7.0, 9.0, "Status", fontsize=11, fontweight='bold',
             ha='center', va='center', fontfamily='Arial')
     
     # Separator line
@@ -227,17 +227,17 @@ def generate_module_status_overview():
         if module_type == 'Module':
             ax.text(0.5, y_position, f"{module_id}", fontsize=11, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial')
-            ax.text(2.0, y_position, f"{module_name}", fontsize=11, fontweight='bold',
+            ax.text(2.5, y_position, f"{module_name}", fontsize=11, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial')
-            ax.text(6.5, y_position, f"{status_text}", fontsize=11, fontweight='bold',
+            ax.text(7.0, y_position, f"{status_text}", fontsize=11, fontweight='bold',
                     ha='center', va='center', fontfamily='Arial', color=status_color)
             y_position -= 0.3
         else:
             ax.text(0.8, y_position, f"  {module_id}", fontsize=10, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial')
-            ax.text(2.5, y_position, f"{module_name}", fontsize=10, fontweight='normal',
+            ax.text(3.0, y_position, f"{module_name}", fontsize=10, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial')
-            ax.text(6.5, y_position, f"{status_text}", fontsize=10, fontweight='normal',
+            ax.text(7.0, y_position, f"{status_text}", fontsize=10, fontweight='normal',
                     ha='center', va='center', fontfamily='Arial', color=status_color)
             y_position -= 0.25
     
