@@ -70,21 +70,14 @@
       "path": "01.00_J1_Journal_1/01.0B_Graphical_Abstract",
       "description": "Graphical Abstract - Download Link: https://docs.google.com/drawings/d/1-E-Lo4s4F6iZ2LfmdsQgRWTP4AhyuyQTUKa7lW4ucHM/edit. Insert png into pdf as Figure."
     },
-    "01.0C": {
-      "id": "01.0C",
-      "name": "Problem System Model",
-      "type": "Submodule",
-      "active": true,
-      "path": "01.00_J1_Journal_1/01.0C_Problem_System_Model",
-      "description": "Problem System Model - Download Link: https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit. Insert png into pdf as Figure."
-    },
+
     "01.0D": {
       "id": "01.0D",
-      "name": "Model Library Diagram",
+      "name": "System Schematic",
       "type": "Submodule",
       "active": true,
-      "path": "01.00_J1_Journal_1/01.0D_Model_Library_Diagram",
-      "description": "Model Library Diagram - Download Link: https://docs.google.com/drawings/d/1la5TOLOvfLjC9-IUAdIHMXR63o-SdUFJeVahzvAO0Fk/edit. Insert png into pdf as Figure."
+      "path": "01.00_J1_Journal_1/01.0D_System_Schematic",
+      "description": "System Schematic - Download Link: https://docs.google.com/drawings/d/1qTCK0cqBHrxtbqp_ntYsKlqzfCKB48lm_N1r_IKNZJI/edit. Insert png into pdf as Figure."
     },
     "01.0E.1": {
       "id": "01.0E.1",
@@ -373,6 +366,22 @@
       "active": true,
       "path": "0Z.00_Google_Sheet_Helper_Functions/0Z.0X_Misc_Google_Sheet_Interactive_Scripts",
       "description": "misc Gsheet interactive scripts here"
+    },
+    "01.0C_Legacy": {
+      "id": "01.0C_Legacy",
+      "name": "Problem System Model (Legacy)",
+      "type": "Submodule",
+      "active": false,
+      "path": "legacy/appendix/01.0C_Problem_System_Model_Legacy",
+      "description": "Problem System Model - Legacy module moved to appendix. Download Link: https://docs.google.com/drawings/d/1Mx3Uug0W3zOUvEeE9tmppbM0gTn-0mD_vgZJv6hXcCo/edit. Insert png into pdf as Figure."
+    },
+    "01.0D_Legacy": {
+      "id": "01.0D_Legacy",
+      "name": "Model Library Diagram (Legacy)",
+      "type": "Submodule",
+      "active": false,
+      "path": "legacy/appendix/01.0D_Model_Library_Diagram_Legacy",
+      "description": "Model Library Diagram - Legacy module moved to appendix. Download Link: https://docs.google.com/drawings/d/1la5TOLOvfLjC9-IUAdIHMXR63o-SdUFJeVahzvAO0Fk/edit. Insert png into pdf as Figure."
     }
   },
   "metadata": {
