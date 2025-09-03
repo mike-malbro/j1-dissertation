@@ -70,89 +70,137 @@ def generate_table_of_contents():
     # Get active modules
     active_modules = get_active_modules()
     
-    # Create figure with professional styling
-    fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
-    ax.set_xlim(0, 8.5)
-    ax.set_ylim(0, 11)
-    ax.axis('off')
+    # Create output file
+    output_file = output_dir / f"table_of_contents_00.0B_{timestamp}.pdf"
     
-    # Title
-    title_text = "Table of Contents"
-    ax.text(4.25, 10.5, title_text, fontsize=14, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial')
+    with PdfPages(output_file) as pdf:
+        # Create first page
+        fig = plt.figure(figsize=(8.5, 11), facecolor='white')
+        ax = fig.add_subplot(111)
+        ax.set_xlim(0, 8.5)
+        ax.set_ylim(0, 11)
+        ax.axis('off')
+        
+        # Title
+        title_text = "Table of Contents"
+        ax.text(4.25, 10.5, title_text, fontsize=14, fontweight='normal',
+                ha='center', va='center', fontfamily='Arial')
 
-    subtitle_text = "Michael Logan Maloney PhD Dissertation Notebook"
-    ax.text(4.25, 10, subtitle_text, fontsize=14, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial')
+        subtitle_text = "Michael Logan Maloney PhD Dissertation Notebook"
+        ax.text(4.25, 10, subtitle_text, fontsize=14, fontweight='normal',
+                ha='center', va='center', fontfamily='Arial')
 
-    # Generate TOC entries
-    y_position = 9
-    page_number = 1
+        # Generate TOC entries
+        y_position = 9.5  # Start higher to give more space
+        page_number = 1
+        current_page = 1
 
-    # Group modules by their main module
-    main_modules = {}
-    for module_id, module_info in active_modules.items():
-        if module_id == 'main.py':
-            continue
+        # Group modules by their main module
+        main_modules = {}
+        for module_id, module_info in active_modules.items():
+            if module_id == 'main.py':
+                continue
 
-        main_id_prefix = module_id.split('.')[0]
-        main_id = main_id_prefix + '.00' # Assuming main modules end with .00
+            main_id_prefix = module_id.split('.')[0]
+            main_id = main_id_prefix + '.00' # Assuming main modules end with .00
 
-        # Handle cases where the main module itself is listed (e.g., 00.00)
-        if module_id == main_id:
-            if main_id not in main_modules:
-                main_modules[main_id] = []
-            main_modules[main_id].insert(0, (module_id, module_info)) # Ensure main module is first
-        else:
-            if main_id not in main_modules:
-                main_modules[main_id] = []
-            main_modules[main_id].append((module_id, module_info))
+            # Handle cases where the main module itself is listed (e.g., 00.00)
+            if module_id == main_id:
+                if main_id not in main_modules:
+                    main_modules[main_id] = []
+                main_modules[main_id].insert(0, (module_id, module_info)) # Ensure main module is first
+            else:
+                if main_id not in main_modules:
+                    main_modules[main_id] = []
+                main_modules[main_id].append((module_id, module_info))
 
-    # Sort main modules by ID
-    sorted_main_modules = sorted(main_modules.items())
+        # Sort main modules by ID
+        sorted_main_modules = sorted(main_modules.items())
 
-    for main_id, submodules in sorted_main_modules:
-        # Add main module
-        main_module_info = active_modules.get(main_id, {'name': 'Unknown', 'type': 'Module'})
-        main_text = f"{main_id} {main_module_info['name']}"
-        ax.text(0.5, y_position, main_text, fontsize=14, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial')
-        ax.text(7.5, y_position, str(page_number), fontsize=14, fontweight='normal',
-                ha='right', va='center', fontfamily='Arial')
-        y_position -= 0.4
-        page_number += 1
+        for main_id, submodules in sorted_main_modules:
+            # Check if we need a new page
+            if y_position < 1.5:  # Leave more space at bottom
+                # Save current page and start new one
+                pdf.savefig(fig, dpi=300)
+                plt.close()
+                current_page += 1
+                
+                # Create next page
+                fig = plt.figure(figsize=(8.5, 11), facecolor='white')
+                ax = fig.add_subplot(111)
+                ax.set_xlim(0, 8.5)
+                ax.set_ylim(0, 11)
+                ax.axis('off')
+                
+                # Page header
+                ax.text(4.25, 10.5, f"Table of Contents (Page {current_page})", fontsize=14, fontweight='normal',
+                        ha='center', va='center', fontfamily='Arial')
+                ax.text(4.25, 10, "Michael Logan Maloney PhD Dissertation Notebook", fontsize=14, fontweight='normal',
+                        ha='center', va='center', fontfamily='Arial')
+                
+                y_position = 9.5
 
-        # Add submodules
-        # Sort submodules to ensure consistent order
-        sorted_submodules = sorted([s for s in submodules if s[0] != main_id])
-        for sub_id, sub_info in sorted_submodules:
-            sub_text = f"  {sub_id} {sub_info['name']}"
-            ax.text(0.5, y_position, sub_text, fontsize=14, fontweight='normal',
+            # Add main module
+            main_module_info = active_modules.get(main_id, {'name': 'Unknown', 'type': 'Module'})
+            main_text = f"{main_id} {main_module_info['name']}"
+            ax.text(0.5, y_position, main_text, fontsize=14, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial')
             ax.text(7.5, y_position, str(page_number), fontsize=14, fontweight='normal',
                     ha='right', va='center', fontfamily='Arial')
-            y_position -= 0.3
+            y_position -= 0.4
             page_number += 1
 
-        y_position -= 0.2  # Extra space between main modules
+            # Add submodules
+            # Sort submodules to ensure consistent order
+            sorted_submodules = sorted([s for s in submodules if s[0] != main_id])
+            for sub_id, sub_info in sorted_submodules:
+                # Check if we need a new page
+                if y_position < 1.5:
+                    # Save current page and start new one
+                    pdf.savefig(fig, dpi=300)
+                    plt.close()
+                    current_page += 1
+                    
+                    # Create next page
+                    fig = plt.figure(figsize=(8.5, 11), facecolor='white')
+                    ax = fig.add_subplot(111)
+                    ax.set_xlim(0, 8.5)
+                    ax.set_ylim(0, 11)
+                    ax.axis('off')
+                    
+                    # Page header
+                    ax.text(4.25, 10.5, f"Table of Contents (Page {current_page})", fontsize=14, fontweight='normal',
+                            ha='center', va='center', fontfamily='Arial')
+                    ax.text(4.25, 10, "Michael Logan Maloney PhD Dissertation Notebook", fontsize=14, fontweight='normal',
+                            ha='center', va='center', fontfamily='Arial')
+                    
+                    y_position = 9.5
+                
+                sub_text = f"  {sub_id} {sub_info['name']}"
+                ax.text(0.5, y_position, sub_text, fontsize=14, fontweight='normal',
+                        ha='left', va='center', fontfamily='Arial')
+                ax.text(7.5, y_position, str(page_number), fontsize=14, fontweight='normal',
+                        ha='right', va='center', fontfamily='Arial')
+                y_position -= 0.3
+                page_number += 1
 
-    # Footer information
-    footer_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    ax.text(4.25, 0.5, footer_text, fontsize=10, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial')
+            y_position -= 0.2  # Extra space between main modules
 
-    # Page number
-    ax.text(4.25, 0.3, "2", fontsize=14, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial')
+        # Footer information
+        footer_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        ax.text(4.25, 0.5, footer_text, fontsize=10, fontweight='normal',
+                ha='center', va='center', fontfamily='Arial')
 
-    # Module identifier
-    module_text = "Module: 00.0B - Table of Contents Generator"
-    ax.text(4.25, 0.1, module_text, fontsize=10, fontweight='normal',
-            ha='center', va='center', fontfamily='Arial')
-    
-    # Save as PDF
-    output_file = output_dir / f"table_of_contents_00.0B_{timestamp}.pdf"
-    with PdfPages(output_file) as pdf:
+        # Page number
+        ax.text(4.25, 0.3, str(current_page), fontsize=14, fontweight='normal',
+                ha='center', va='center', fontfamily='Arial')
+
+        # Module identifier
+        module_text = "Module: 00.0B - Table of Contents Generator"
+        ax.text(4.25, 0.1, module_text, fontsize=10, fontweight='normal',
+                ha='center', va='center', fontfamily='Arial')
+        
+        # Save the final page
         pdf.savefig(fig, dpi=300)
     
     plt.close()
