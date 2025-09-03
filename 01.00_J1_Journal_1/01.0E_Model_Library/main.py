@@ -55,11 +55,11 @@ def download_google_sheet_data():
         # Parse CSV into pandas DataFrame
         df = pd.read_csv(io.StringIO(csv_data))
         
-        return df, csv_path
+        return df
         
     except Exception as e:
         print(f"❌ Error downloading spreadsheet data: {e}")
-        return None, None
+        return None
 
 def process_model_library_data(df):
     """Process the model library data into a clean format"""
@@ -87,94 +87,93 @@ def process_model_library_data(df):
         return None
 
 def create_model_library_table(df):
-    """Create a clean, neat, perfect matplotlib table from the model library data"""
+    """Create an ultra-clean, professional LaTeX-style table from the model library data"""
     
     if df is None or df.empty:
         return None
     
     try:
-        # Clean and truncate data for better table display
+        # Clean and prepare data for professional table display
         display_df = df.copy()
         
-        # Truncate long text in cells to prevent overflow
-        max_cell_length = 50
+        # Clean column names for better display
+        clean_columns = []
         for col in display_df.columns:
-            if display_df[col].dtype == 'object':
-                display_df[col] = display_df[col].astype(str).str[:max_cell_length]
-                # Add ellipsis for truncated text
-                display_df.loc[display_df[col].str.len() == max_cell_length, col] += '...'
+            # Clean column names - remove special characters and make readable
+            clean_col = str(col).replace('_', ' ').title()
+            clean_col = clean_col.replace('Prep Prompt', 'Prep Prompt')
+            clean_columns.append(clean_col)
         
-        # Truncate column names if too long
-        display_df.columns = [col[:30] + '...' if len(col) > 30 else col for col in display_df.columns]
+        # Clean and format data values
+        clean_data = []
+        for _, row in display_df.iterrows():
+            clean_row = []
+            for value in row:
+                if pd.isna(value):
+                    clean_row.append('N/A')
+                else:
+                    # Clean the text and format for display
+                    clean_value = str(value).strip()
+                    # Truncate very long text but keep it readable
+                    if len(clean_value) > 80:
+                        clean_value = clean_value[:77] + '...'
+                    clean_row.append(clean_value)
+            clean_data.append(clean_row)
         
-        # Create figure for the table with proper sizing
-        fig, ax = plt.subplots(figsize=(14, 10))
+        # Create figure for the professional table
+        fig, ax = plt.subplots(figsize=(12, 8))
         ax.axis('tight')
         ax.axis('off')
         
-        # Create table with proper cell sizing
-        table = ax.table(cellText=display_df.values, colLabels=display_df.columns, 
+        # Create table with professional styling
+        table = ax.table(cellText=clean_data, colLabels=clean_columns, 
                         cellLoc='left', loc='center',
                         bbox=[0, 0, 1, 1])
         
-        # Style the table for clean, professional appearance
+        # Professional table styling
         table.auto_set_font_size(False)
-        table.set_fontsize(10)
+        table.set_fontsize(9)
         
-        # Set proper column widths based on content
-        col_widths = []
-        for col in display_df.columns:
-            # Calculate width based on column name and content length
-            col_content_length = max(len(str(col)), 
-                                   display_df[col].astype(str).str.len().max())
-            col_widths.append(min(0.25, max(0.15, col_content_length * 0.01)))
-        
-        # Apply column widths
+        # Set professional column widths
+        col_widths = [0.25, 0.75]  # First column narrow, second column wide
         for i, width in enumerate(col_widths):
-            for j in range(len(display_df) + 1):
+            for j in range(len(clean_data) + 1):
                 table[(j, i)].set_width(width)
         
-        # Style header row - clean black text on white background
-        for i in range(len(display_df.columns)):
+        # Style header row - professional black text on white background
+        for i in range(len(clean_columns)):
             table[(0, i)].set_facecolor('white')
             table[(0, i)].set_text_props(weight='bold', color='black', 
-                                        family='Arial', size=11)
-            # Add subtle border
+                                        family='Arial', size=10)
+            # Professional borders
             table[(0, i)].set_edgecolor('black')
-            table[(0, i)].set_linewidth(1.5)
+            table[(0, i)].set_linewidth(1.0)
         
-        # Style data rows - clean black text on alternating backgrounds
-        for i in range(1, len(display_df) + 1):
-            for j in range(len(display_df.columns)):
-                # Clean black text
+        # Style data rows - ultra-clean professional appearance
+        for i in range(1, len(clean_data) + 1):
+            for j in range(len(clean_columns)):
+                # Ultra-clean black text
                 table[(i, j)].set_text_props(weight='normal', color='black', 
-                                            family='Arial', size=10)
-                # Subtle alternating row colors
-                if i % 2 == 0:
-                    table[(i, j)].set_facecolor('#f8f9fa')  # Very light gray
-                else:
-                    table[(i, j)].set_facecolor('white')
-                # Clean borders
-                table[(i, j)].set_edgecolor('#dee2e6')  # Light gray borders
+                                            family='Arial', size=9)
+                # Clean white background with subtle borders
+                table[(i, j)].set_facecolor('white')
+                table[(i, j)].set_edgecolor('#e0e0e0')  # Very light gray borders
                 table[(i, j)].set_linewidth(0.5)
         
-        # Set overall table properties
-        table.auto_set_column_width(col=list(range(len(display_df.columns))))
+        # Professional table layout
+        plt.tight_layout(pad=0.3)
         
-        # Adjust table layout for perfect fit
-        plt.tight_layout(pad=0.5)
-        
-        # Save table as high-quality image
+        # Save as high-quality professional image
         table_path = Path(__file__).parent / "output" / "model_library_table.png"
         table_path.parent.mkdir(exist_ok=True)
         plt.savefig(table_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
         
-        print(f"✅ Created clean, neat model library table: {table_path}")
+        print(f"✅ Created ultra-clean professional LaTeX-style table: {table_path}")
         return table_path
         
     except Exception as e:
-        print(f"❌ Error creating table: {e}")
+        print(f"❌ Error creating professional table: {e}")
         return None
 
 def generate_model_library_document():
@@ -186,7 +185,7 @@ def generate_model_library_document():
     
     # Download and process Google Sheet data
     print(f"📥 Downloading fresh Model Library data from Google Sheet...")
-    df, csv_path = download_google_sheet_data()
+    df = download_google_sheet_data()
     
     if df is not None:
         # Process the data
