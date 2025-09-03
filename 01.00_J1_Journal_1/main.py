@@ -43,7 +43,7 @@ def generate_j1_cover_page():
 
 \\vspace{{2cm}}
 
-\\noindent\\Large\\textbf{{J1 - Working Title: An Optimal Load Allocation for Multi CRAC for Harrisburg Data Center}}
+\\noindent\\Large\\textbf{{J1 - Working Title: An Optimal Load Allocation for a Heterogeneous Multi Unit CRAC System in Harrisburg Data Center Room}}
 
 \\vspace{{2cm}}
 
