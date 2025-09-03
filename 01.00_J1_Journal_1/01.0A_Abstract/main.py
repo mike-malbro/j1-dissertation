@@ -19,7 +19,7 @@ PAPER_TYPE = "Working Version to develop the J1 Concept on Paper"
 PAPER_YEAR = "2025"
 
 # PAPER TITLE
-WORKING_TITLE = "J1 Working Title: An Optimal Load Allocation for Multi CRAC for Harrisburg Data Center"
+WORKING_TITLE = "J1 Working Title: An Optimal Load Allocation for a Heterogeneous Multi Unit CRAC System in Harrisburg Data Center Room"
 
 # AUTHOR INFORMATION
 AUTHOR_NAME = "Michael Maloney"
