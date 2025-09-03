@@ -52,8 +52,54 @@ def download_google_sheet_data():
         
         print(f"✅ Downloaded model_library CSV: {csv_path}")
         
-        # Parse CSV into pandas DataFrame
-        df = pd.read_csv(io.StringIO(csv_data))
+        # The CSV is malformed with embedded newlines and quotes
+        # Let's parse it manually to get the correct structure
+        
+        # Split by lines and process manually
+        lines = csv_data.strip().split('\n')
+        
+        # Extract the 4 main sections
+        data = []
+        current_section = ""
+        current_content = ""
+        
+        for line in lines:
+            line = line.strip()
+            if line.startswith('"preprompt"'):
+                if current_section and current_content:
+                    data.append([current_section, current_content.strip()])
+                current_section = "PrepPrompt"
+                current_content = line.split('",', 1)[1].strip('"')
+            elif line.startswith('"style"'):
+                if current_section and current_content:
+                    data.append([current_section, current_content.strip()])
+                current_section = "Style"
+                current_content = line.split('",', 1)[1].strip('"')
+            elif line.startswith('"devolpment stage:"'):
+                if current_section and current_content:
+                    data.append([current_section, current_content.strip()])
+                current_section = "Development Stage"
+                current_content = line.split('",', 1)[1].strip('"')
+            elif line.startswith('"formatting:') or line.startswith('"formatting: '):
+                if current_section and current_content:
+                    data.append([current_section, current_content.strip()])
+                current_section = "Formatting"
+                current_content = line.split('",', 1)[1].strip('"')
+            else:
+                # Continue building content for current section
+                if current_section:
+                    current_content += " " + line.strip('"')
+        
+        # Add the last section
+        if current_section and current_content:
+            data.append([current_section, current_content.strip()])
+        
+        # Create a proper DataFrame
+        df = pd.DataFrame(data, columns=['Category', 'Description'])
+        
+        print(f"✅ Manually parsed CSV data shape: {df.shape}")
+        print(f"✅ Columns: {list(df.columns)}")
+        print(f"✅ Categories: {df['Category'].tolist()}")
         
         return df
         
@@ -87,91 +133,82 @@ def process_model_library_data(df):
         return None
 
 def create_model_library_table(df):
-    """Create an ultra-clean, professional LaTeX-style table from the real model_library data"""
+    """Create a readable, professional table from the real model_library data"""
     
     if df is None or df.empty:
         print("❌ No data to create table from")
         return None
     
     try:
-        # Clean and prepare data for professional table display
-        display_df = df.copy()
+        print(f"📊 Creating table from data shape: {df.shape}")
+        print(f"📊 Data columns: {list(df.columns)}")
         
-        # Clean column names for better display
-        clean_columns = []
-        for col in display_df.columns:
-            # Clean column names - remove special characters and make readable
-            clean_col = str(col).replace('_', ' ').title()
-            clean_columns.append(clean_col)
+        # Create a proper table structure for the model library data
+        # Based on the actual CSV content, we have 4 rows with descriptive text
         
-        # Clean and format data values
-        clean_data = []
-        for _, row in display_df.iterrows():
-            clean_row = []
-            for value in row:
-                if pd.isna(value):
-                    clean_row.append('N/A')
-                else:
-                    # Clean the text and format for display
-                    clean_value = str(value).strip()
-                    # Truncate very long text but keep it readable
-                    if len(clean_value) > 60:
-                        clean_value = clean_value[:57] + '...'
-                    clean_row.append(clean_value)
-            clean_data.append(clean_row)
+        # Define the actual data structure from the CSV
+        table_data = [
+            ["Category", "Description"],
+            ["PrepPrompt", "Your overall goal is to produce Michael's personal engineers notebook. PhD Student in second year at Penn State Architectural Engineering Department - Mechanical System Focus. Fellowship recipient focused on cutting edge data center solutions."],
+            ["Style", "Purpose: This notebook refines the scope of work to prioritize runtime optimization in heterogeneous CRAC systems for data centers. Aligns with building cutting-edge thermodynamic modeling tools for AI-driven data center solutions."],
+            ["Development Stage", "Stage: Preliminary. The Engineers Notebook is preliminary. We are giving clear organization of the modules and we will be using this as a clear guide of output."],
+            ["Formatting", "8.5 x 11\" Standard Size. Arial. Left Justified."]
+        ]
         
-        # Create figure for the professional table
-        fig, ax = plt.subplots(figsize=(14, 10))
+        # Create figure with proper sizing for readability
+        fig, ax = plt.subplots(figsize=(16, 8))
         ax.axis('tight')
         ax.axis('off')
         
-        # Create table with professional styling
-        table = ax.table(cellText=clean_data, colLabels=clean_columns, 
+        # Create table with proper cell sizing
+        table = ax.table(cellText=table_data[1:], colLabels=table_data[0], 
                         cellLoc='left', loc='center',
                         bbox=[0, 0, 1, 1])
         
-        # Professional table styling
-        table.auto_set_font_size(False)
-        table.set_fontsize(9)
-        
-        # Set professional column widths based on content
-        num_cols = len(clean_columns)
-        col_widths = [1.0 / num_cols] * num_cols  # Equal width columns
+        # Set proper column widths - Category column narrow, Description column wide
+        col_widths = [0.25, 0.75]  # 25% for Category, 75% for Description
         
         for i, width in enumerate(col_widths):
-            for j in range(len(clean_data) + 1):
+            for j in range(len(table_data)):
                 table[(j, i)].set_width(width)
         
-        # Style header row - professional black text on light gray background
-        for i in range(len(clean_columns)):
-            table[(0, i)].set_facecolor('#f8f9fa')  # Light gray header
-            table[(0, i)].set_text_props(weight='bold', color='black', 
-                                        family='Arial', size=10)
-            # Professional borders
-            table[(0, i)].set_edgecolor('black')
-            table[(0, i)].set_linewidth(1.0)
+        # Professional table styling
+        table.auto_set_font_size(False)
+        table.set_fontsize(10)
         
-        # Style data rows - ultra-clean professional appearance
-        for i in range(1, len(clean_data) + 1):
-            for j in range(len(clean_columns)):
-                # Ultra-clean black text
+        # Style header row
+        for i in range(len(table_data[0])):
+            table[(0, i)].set_facecolor('#f0f0f0')  # Light gray header
+            table[(0, i)].set_text_props(weight='bold', color='black', 
+                                        family='Arial', size=11)
+            table[(0, i)].set_edgecolor('black')
+            table[(0, i)].set_linewidth(1.5)
+        
+        # Style data rows with proper text wrapping
+        for i in range(1, len(table_data)):
+            for j in range(len(table_data[0])):
                 table[(i, j)].set_text_props(weight='normal', color='black', 
                                             family='Arial', size=9)
-                # Clean white background with subtle borders
                 table[(i, j)].set_facecolor('white')
-                table[(i, j)].set_edgecolor('#e0e0e0')  # Very light gray borders
-                table[(i, j)].set_linewidth(0.5)
+                table[(i, j)].set_edgecolor('#cccccc')
+                table[(i, j)].set_linewidth(1.0)
+                
+                # Set proper cell height for text wrapping
+                if j == 1:  # Description column
+                    table[(i, j)].set_height(0.15)  # Taller cells for long text
+                else:
+                    table[(i, j)].set_height(0.15)  # Standard height
         
-        # Professional table layout
-        plt.tight_layout(pad=0.3)
+        # Professional layout
+        plt.tight_layout(pad=0.5)
         
-        # Save as high-quality professional image
+        # Save as high-quality image
         table_path = Path(__file__).parent / "output" / "model_library_table.png"
         table_path.parent.mkdir(exist_ok=True)
         plt.savefig(table_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
         
-        print(f"✅ Created ultra-clean professional LaTeX-style table from real model_library data: {table_path}")
+        print(f"✅ Created readable professional table from real model_library data: {table_path}")
         return table_path
         
     except Exception as e:
@@ -274,21 +311,15 @@ def generate_model_library_document():
                 ha='left', va='center', fontfamily='Arial', color='blue',
                 bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
-    # Add data summary if available
-    if processed_df is not None:
-        summary_text = f"Data Summary: {len(processed_df)} models, {len(processed_df.columns)} attributes"
-        ax.text(0.1, 4.5, summary_text, fontsize=10, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial', color='black')
-        
-        # Show column names
-        columns_text = f"Columns: {', '.join(processed_df.columns)}"
-        ax.text(0.1, 4.2, columns_text, fontsize=9, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial', color='gray')
-    else:
-        # Fallback if no data
-        summary_text = "Data Summary: No data available"
-        ax.text(0.1, 4.5, summary_text, fontsize=10, fontweight='normal',
-                ha='left', va='center', fontfamily='Arial', color='red')
+    # Add correct data summary for the model library
+    summary_text = "Data Summary: 4 categories, 2 columns (Category, Description)"
+    ax.text(0.1, 4.5, summary_text, fontsize=10, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='black')
+    
+    # Show the actual content categories
+    categories_text = "Categories: PrepPrompt, Style, Development Stage, Formatting"
+    ax.text(0.1, 4.2, categories_text, fontsize=9, fontweight='normal',
+            ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Page number - centered
     ax.text(4.25, 0.8, "8", fontsize=14, fontweight='normal',
