@@ -23,7 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 def download_google_sheet_data():
-    """Download data from Google Sheet 'model_library'"""
+    """Download data from Google Sheet 'models' tab"""
     
     # Google Spreadsheet URL
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1907094472#gid=1907094472"
@@ -31,8 +31,8 @@ def download_google_sheet_data():
     # Extract the spreadsheet ID from the URL
     spreadsheet_id = "1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA"
     
-    # Convert to CSV download URL (this will get the "model_library" sheet)
-    csv_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/gviz/tq?tqx=out:csv&sheet=model_library"
+    # Convert to CSV download URL (this will get the "models" sheet)
+    csv_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/gviz/tq?tqx=out:csv&sheet=models"
     
     try:
         # Download the CSV data
@@ -46,11 +46,11 @@ def download_google_sheet_data():
         downloads_dir = Path(__file__).parent / ".." / ".." / "downloads"
         downloads_dir.mkdir(exist_ok=True)
         
-        csv_path = downloads_dir / "01.0E_model_library.csv"
+        csv_path = downloads_dir / "01.0E_models.csv"
         with open(csv_path, 'w', encoding='utf-8') as f:
             f.write(csv_data)
         
-        print(f"✅ Downloaded model library CSV: {csv_path}")
+        print(f"✅ Downloaded models CSV: {csv_path}")
         
         # Parse CSV into pandas DataFrame
         df = pd.read_csv(io.StringIO(csv_data))
@@ -90,7 +90,7 @@ def create_model_library_table():
     """Create an ultra-clean, professional LaTeX-style table with proper model library data"""
     
     try:
-        # Create professional model library data structure
+        # Create professional model library data structure for PhD research
         model_data = [
             ["Model ID", "Model Name", "Type", "Status", "Description"],
             ["M001", "Harrisburg DC CRAC System", "Thermodynamic", "Active", "Primary CRAC system model for Harrisburg data center with heterogeneous unit configuration"],
@@ -123,7 +123,7 @@ def create_model_library_table():
             for j in range(len(model_data)):
                 table[(j, i)].set_width(width)
         
-        # Style header row - professional black text on white background
+        # Style header row - professional black text on light gray background
         for i in range(len(model_data[0])):
             table[(0, i)].set_facecolor('#f8f9fa')  # Light gray header
             table[(0, i)].set_text_props(weight='bold', color='black', 
@@ -152,7 +152,7 @@ def create_model_library_table():
         plt.savefig(table_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
         
-        print(f"✅ Created ultra-clean professional LaTeX-style table with proper data: {table_path}")
+        print(f"✅ Created ultra-clean professional LaTeX-style table with proper PhD research data: {table_path}")
         return table_path
         
     except Exception as e:
@@ -166,8 +166,8 @@ def generate_model_library_document():
     output_dir.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Create professional model library table with proper data
-    print(f"📊 Creating professional Model Library table...")
+    # Create professional model library table with proper PhD research data
+    print(f"📊 Creating professional Model Library table with PhD research data...")
     table_path = create_model_library_table()
     
     if table_path is None:
