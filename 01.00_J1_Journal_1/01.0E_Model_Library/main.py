@@ -87,50 +87,90 @@ def process_model_library_data(df):
         return None
 
 def create_model_library_table(df):
-    """Create a matplotlib table from the model library data"""
+    """Create a clean, neat, perfect matplotlib table from the model library data"""
     
     if df is None or df.empty:
         return None
     
     try:
-        # Create figure for the table
-        fig, ax = plt.subplots(figsize=(12, 8))
+        # Clean and truncate data for better table display
+        display_df = df.copy()
+        
+        # Truncate long text in cells to prevent overflow
+        max_cell_length = 50
+        for col in display_df.columns:
+            if display_df[col].dtype == 'object':
+                display_df[col] = display_df[col].astype(str).str[:max_cell_length]
+                # Add ellipsis for truncated text
+                display_df.loc[display_df[col].str.len() == max_cell_length, col] += '...'
+        
+        # Truncate column names if too long
+        display_df.columns = [col[:30] + '...' if len(col) > 30 else col for col in display_df.columns]
+        
+        # Create figure for the table with proper sizing
+        fig, ax = plt.subplots(figsize=(14, 10))
         ax.axis('tight')
         ax.axis('off')
         
-        # Create table
-        table = ax.table(cellText=df.values, colLabels=df.columns, 
-                        cellLoc='center', loc='center',
+        # Create table with proper cell sizing
+        table = ax.table(cellText=display_df.values, colLabels=display_df.columns, 
+                        cellLoc='left', loc='center',
                         bbox=[0, 0, 1, 1])
         
-        # Style the table
+        # Style the table for clean, professional appearance
         table.auto_set_font_size(False)
-        table.set_fontsize(9)
-        table.scale(1.2, 1.5)
+        table.set_fontsize(10)
         
-        # Style header row
-        for i in range(len(df.columns)):
-            table[(0, i)].set_facecolor('#4CAF50')
-            table[(0, i)].set_text_props(weight='bold', color='white')
+        # Set proper column widths based on content
+        col_widths = []
+        for col in display_df.columns:
+            # Calculate width based on column name and content length
+            col_content_length = max(len(str(col)), 
+                                   display_df[col].astype(str).str.len().max())
+            col_widths.append(min(0.25, max(0.15, col_content_length * 0.01)))
         
-        # Style alternating rows for better readability
-        for i in range(1, len(df) + 1):
-            for j in range(len(df.columns)):
+        # Apply column widths
+        for i, width in enumerate(col_widths):
+            for j in range(len(display_df) + 1):
+                table[(j, i)].set_width(width)
+        
+        # Style header row - clean black text on white background
+        for i in range(len(display_df.columns)):
+            table[(0, i)].set_facecolor('white')
+            table[(0, i)].set_text_props(weight='bold', color='black', 
+                                        family='Arial', size=11)
+            # Add subtle border
+            table[(0, i)].set_edgecolor('black')
+            table[(0, i)].set_linewidth(1.5)
+        
+        # Style data rows - clean black text on alternating backgrounds
+        for i in range(1, len(display_df) + 1):
+            for j in range(len(display_df.columns)):
+                # Clean black text
+                table[(i, j)].set_text_props(weight='normal', color='black', 
+                                            family='Arial', size=10)
+                # Subtle alternating row colors
                 if i % 2 == 0:
-                    table[(i, j)].set_facecolor('#f0f0f0')
+                    table[(i, j)].set_facecolor('#f8f9fa')  # Very light gray
                 else:
                     table[(i, j)].set_facecolor('white')
+                # Clean borders
+                table[(i, j)].set_edgecolor('#dee2e6')  # Light gray borders
+                table[(i, j)].set_linewidth(0.5)
         
-        # Adjust table layout
-        plt.tight_layout()
+        # Set overall table properties
+        table.auto_set_column_width(col=list(range(len(display_df.columns))))
         
-        # Save table as image
+        # Adjust table layout for perfect fit
+        plt.tight_layout(pad=0.5)
+        
+        # Save table as high-quality image
         table_path = Path(__file__).parent / "output" / "model_library_table.png"
         table_path.parent.mkdir(exist_ok=True)
         plt.savefig(table_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
         
-        print(f"✅ Created model library table: {table_path}")
+        print(f"✅ Created clean, neat model library table: {table_path}")
         return table_path
         
     except Exception as e:
