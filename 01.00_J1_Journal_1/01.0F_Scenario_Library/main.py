@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Module 01.0E - Model Library
+Module 01.0F - Scenario Library
 Michael Logan Maloney PhD Dissertation Notebook
 
 Author: Michael Maloney
 PhD Student - Penn State Architectural Engineering Department
 Mechanical System Focus
 
-Model Library module with Google Spreadsheet integration.
+Scenario Library module with Google Spreadsheet integration.
 Downloads spreadsheet, converts to PDF, then to JPG, and inserts into document.
 """
 
@@ -29,13 +29,13 @@ def download_google_spreadsheet_as_pdf():
     """Download Google Spreadsheet as PDF - like Schedule module"""
     
     # Google Spreadsheet URL
-    spreadsheet_url = "https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1907094472#gid=1907094472"
+    spreadsheet_url = "https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1793100996#gid=1793100996"
     
     # Extract the spreadsheet ID from the URL
     spreadsheet_id = "1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA"
     
-    # Convert to PDF download URL targeting model_library tab with correct gid
-    gid = "1782368295"  # This is the correct gid for the model_library tab
+    # Convert to PDF download URL targeting scenario_library tab with correct gid
+    gid = "1793100996"  # This is the correct gid for the scenario_library tab
     pdf_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=pdf&gid={gid}"
     
     try:
@@ -47,11 +47,11 @@ def download_google_spreadsheet_as_pdf():
         downloads_dir = Path(__file__).parent / ".." / ".." / "downloads"
         downloads_dir.mkdir(exist_ok=True)
         
-        pdf_path = downloads_dir / "01.0E_model_library.pdf"
+        pdf_path = downloads_dir / "01.0F_scenario_library.pdf"
         with open(pdf_path, 'wb') as f:
             f.write(response.content)
         
-        print(f"✅ Downloaded model library PDF: {pdf_path}")
+        print(f"✅ Downloaded scenario library PDF: {pdf_path}")
         return pdf_path
         
     except Exception as e:
@@ -70,7 +70,7 @@ def convert_pdf_to_jpg(pdf_path):
             image = images[0]
             
             # Save as JPG
-            jpg_path = pdf_path.parent / "01.0E_model_library.jpg"
+            jpg_path = pdf_path.parent / "01.0F_scenario_library.jpg"
             image.save(jpg_path, 'JPEG', quality=95)
             
             print(f"✅ Converted PDF to JPG: {jpg_path}")
@@ -84,14 +84,14 @@ def convert_pdf_to_jpg(pdf_path):
         # Fallback to placeholder image
         try:
             fig, ax = plt.subplots(figsize=(8, 6))
-            ax.text(0.5, 0.5, 'Model Library Spreadsheet\n(PDF Conversion Failed)', 
+            ax.text(0.5, 0.5, 'Scenario Library Spreadsheet\n(PDF Conversion Failed)', 
                     ha='center', va='center', fontsize=16, transform=ax.transAxes)
             ax.set_xlim(0, 1)
             ax.set_ylim(0, 1)
             ax.axis('off')
             
             # Save as JPG
-            jpg_path = pdf_path.parent / "01.0E_model_library.jpg"
+            jpg_path = pdf_path.parent / "01.0F_scenario_library.jpg"
             plt.savefig(jpg_path, dpi=150, bbox_inches='tight', format='jpg')
             plt.close()
             
@@ -102,8 +102,8 @@ def convert_pdf_to_jpg(pdf_path):
             print(f"❌ Error creating fallback image: {fallback_error}")
             return None
 
-def generate_model_library_page():
-    """Generate Model Library page with integrated Google Spreadsheet"""
+def generate_scenario_library_page():
+    """Generate Scenario Library page with integrated Google Spreadsheet"""
     
     output_dir = Path(__file__).parent / "output"
     output_dir.mkdir(exist_ok=True)
@@ -117,7 +117,7 @@ def generate_model_library_page():
         jpg_path = None
     
     # Google Spreadsheet link
-    spreadsheet_link = "https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1907094472#gid=1907094472"
+    spreadsheet_link = "https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1793100996#gid=1793100996"
     
     # Create figure with professional styling
     fig, ax = plt.subplots(figsize=(8.5, 11), facecolor='white')
@@ -126,11 +126,11 @@ def generate_model_library_page():
     ax.axis('off')
     
     # Title - Left justified with book-style spacing
-    title_text = "Model Library"
+    title_text = "Scenario Library"
     ax.text(0.1, 9.9, title_text, fontsize=18, fontweight='bold', 
             ha='left', va='center', fontfamily='Arial', color='black')
     
-    # Add the Model Library image - prominently displayed with book-style spacing
+    # Add the Scenario Library image - prominently displayed with book-style spacing
     if jpg_path and jpg_path.exists():
         try:
             img = Image.open(jpg_path)
@@ -159,37 +159,37 @@ def generate_model_library_page():
                     ha='left', va='center', fontfamily='Arial', color='black')
             
             # Small one-sentence description with reduced spacing
-            ax.text(0.1, y_pos - 0.8, "Model library data from Google Spreadsheet.", 
+            ax.text(0.1, y_pos - 0.8, "Scenario library data from Google Spreadsheet.", 
                     fontsize=12, fontweight='normal', ha='left', va='center', 
                     fontfamily='Arial', color='black')
             
             # Google Spreadsheet link - small and clean with reduced spacing
-            ax.text(0.1, y_pos - 1.1, "Source: Google Spreadsheet (model_library tab)", fontsize=9, fontweight='normal',
+            ax.text(0.1, y_pos - 1.1, "Source: Google Spreadsheet (scenario_library tab)", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=spreadsheet_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
             
         except Exception as e:
-            print(f"⚠️ Warning: Could not load model library image: {e}")
+            print(f"⚠️ Warning: Could not load scenario library image: {e}")
             # Add placeholder text with book spacing
-            ax.text(0.1, 6, "Model Library Spreadsheet", fontsize=14, fontweight='bold',
+            ax.text(0.1, 6, "Scenario Library Spreadsheet", fontsize=14, fontweight='bold',
                     ha='left', va='center', fontfamily='Arial', color='gray')
-            ax.text(0.1, 5.5, "(Model Library will be integrated from Google Spreadsheet)", fontsize=10,
+            ax.text(0.1, 5.5, "(Scenario Library will be integrated from Google Spreadsheet)", fontsize=10,
                     ha='left', va='center', fontfamily='Arial', color='gray')
-            ax.text(0.1, 5.2, "Source: Google Spreadsheet (model_library tab)", fontsize=9, fontweight='normal',
+            ax.text(0.1, 5.2, f"Source: {spreadsheet_link}", fontsize=9, fontweight='normal',
                     ha='left', va='center', fontfamily='Arial', color='blue',
                     url=spreadsheet_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     else:
         # Add placeholder text with book spacing
-        ax.text(0.1, 6, "Model Library Spreadsheet", fontsize=14, fontweight='bold',
+        ax.text(0.1, 6, "Scenario Library Spreadsheet", fontsize=14, fontweight='bold',
                 ha='left', va='center', fontfamily='Arial', color='gray')
-        ax.text(0.1, 5.5, "(Model Library will be integrated from Google Spreadsheet)", fontsize=10,
+        ax.text(0.1, 5.5, "(Scenario Library will be integrated from Google Spreadsheet)", fontsize=10,
                 ha='left', va='center', fontfamily='Arial', color='gray')
-        ax.text(0.1, 5.2, "Source: Google Spreadsheet (model_library tab)", fontsize=9, fontweight='normal',
+        ax.text(0.1, 5.2, f"Source: {spreadsheet_link}", fontsize=9, fontweight='normal',
                 ha='left', va='center', fontfamily='Arial', color='blue',
                 url=spreadsheet_link, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
     
     # Page number - centered
-    ax.text(4.25, 0.8, "8", fontsize=14, fontweight='normal',
+    ax.text(4.25, 0.8, "9", fontsize=14, fontweight='normal',
             ha='center', va='center', fontfamily='Arial', color='black')
     
     # Timestamp - left justified
@@ -198,30 +198,30 @@ def generate_model_library_page():
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Module identifier - left justified
-    module_text = "Module: 01.0E - Model Library"
+    module_text = "Module: 01.0F - Scenario Library"
     ax.text(0.1, 0.4, module_text, fontsize=10, fontweight='normal',
             ha='left', va='center', fontfamily='Arial', color='gray')
     
     # Save as PDF
-    output_file = output_dir / f"model_library_01.0E_{timestamp}.pdf"
+    output_file = output_dir / f"scenario_library_01.0F_{timestamp}.pdf"
     with PdfPages(output_file) as pdf:
         pdf.savefig(fig, dpi=300)
     
     plt.close()
     
-    print(f"✅ Model Library page generated: {output_file}")
+    print(f"✅ Scenario Library page generated: {output_file}")
     return str(output_file)
 
 def main():
-    """Main function to generate Model Library page"""
-    print("📚 Generating Model Library page...")
+    """Main function to generate Scenario Library page"""
+    print("📚 Generating Scenario Library page...")
     
     try:
-        output_file = generate_model_library_page()
-        print(f"📄 Model Library page created successfully: {output_file}")
+        output_file = generate_scenario_library_page()
+        print(f"📄 Scenario Library page created successfully: {output_file}")
         return True
     except Exception as e:
-        print(f"❌ Error generating Model Library page: {e}")
+        print(f"❌ Error generating Scenario Library page: {e}")
         return False
 
 if __name__ == "__main__":

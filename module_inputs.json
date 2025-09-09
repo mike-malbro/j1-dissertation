@@ -87,6 +87,22 @@
       "path": "01.00_J1_Journal_1/01.0E_Model_Library",
       "description": "Model Library - Read Sheet: Download Data from Sheet 'model_library' - then process data into a neat table. https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1907094472#gid=1907094472"
     },
+    "01.0F": {
+      "id": "01.0F",
+      "name": "Scenario Library",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.00_J1_Journal_1/01.0F_Scenario_Library",
+      "description": "Scenario Library - Read Sheet: Download Data from Sheet 'scenario_library' - then process data into a neat table. https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1793100996#gid=1793100996"
+    },
+    "01.0G": {
+      "id": "01.0G",
+      "name": "Simulation Library",
+      "type": "Submodule",
+      "active": true,
+      "path": "01.00_J1_Journal_1/01.0G_Simulation_Library",
+      "description": "Simulation Library - Read Sheet: Download Data from Sheet 'simulation_library' - then process data into a neat table. https://docs.google.com/spreadsheets/d/1q_i0d0X4bdCIv_1Cr6pmbcj4iRqMcsYiPjCxK62E1cA/edit?gid=1793100996#gid=1793100996"
+    },
     "01.0E.1": {
       "id": "01.0E.1",
       "name": "Scenario_1",
